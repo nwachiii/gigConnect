@@ -6,7 +6,7 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 
 import PropTypes from "prop-types";
 import React from "react";
-import { GigconnectLogoB3 } from "@/components/icons/GigconnectLogoB3";
+
 
 export const Footer = ({
   className,
@@ -111,7 +111,7 @@ export const Footer = ({
         </p>
       </div>
       <div className="absolute w-[1144px] h-[32px] top-[24px] left-[148px]">
-        <GigconnectLogoB3 className="!absolute !w-[164px] !h-[32px] !top-0 !left-0" />
+        {/* <GigconnectLogoB3 className="!absolute !w-[164px] !h-[32px] !top-0 !left-0" /> */}
         <div className="inline-flex items-center gap-[10px] absolute top-px left-[790px]">
           <div className="relative w-fit [font-family:'Inter',Helvetica] font-semibold text-[#22262e] text-[16px] text-right tracking-[0] leading-[18px] whitespace-nowrap">
             Join our community
