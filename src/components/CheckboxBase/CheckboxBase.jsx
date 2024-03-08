@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Check8 } from "../icons/Check8";
-import { Check5 } from "../icons/Check5";
-import { Check9 } from "../icons/Check9";
-import { Minus4 } from "../icons/Minus4";
-import { Minus } from "../icons/Minus";
+import {Check5} from '@/assets/icons/Check5';
+import {Check9} from '@/assets/icons/Check9';
+import {Minus4} from '@/assets/icons/Minus4';
+import {Minus} from '@/assets/icons/Minus';
+import { Check8 } from "@/assets/icons/Check8";
 
 export const CheckboxBase = ({
   checked,
@@ -139,10 +138,10 @@ export const CheckboxBase = ({
   );
 };
 
-CheckboxBase.propTypes = {
-  checked: PropTypes.bool,
-  indeterminate: PropTypes.bool,
-  size: PropTypes.oneOf(["md", "sm"]),
-  type: PropTypes.oneOf(["radio", "check-circle", "checkbox"]),
-  state: PropTypes.oneOf(["disbaled", "focused", "hover", "default"]),
-};
+// CheckboxBase.propTypes = {
+//   checked: PropTypes.bool,
+//   indeterminate: PropTypes.bool,
+//   size: PropTypes.oneOf(["md", "sm"]),
+//   type: PropTypes.oneOf(["radio", "check-circle", "checkbox"]),
+//   state: PropTypes.oneOf(["disbaled", "focused", "hover", "default"]),
+// };

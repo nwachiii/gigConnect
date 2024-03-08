@@ -1,18 +1,33 @@
-import { Inter } from "next/font/google";
-import "../styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+import '../styles/globals.css';
+import {Providers} from './providers';
+import {usePathname} from 'next/navigation';
+import React, {useEffect, useState} from 'react';
+import {HeaderEmpty, HeaderWithNav} from '@/components/Headers';
+import {getActivePage} from '@/utils/getActivePage';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Gig Connect App",
-  description: "We connect businesses to top talents all around Africa",
+const metadata = {
+	title: 'Gig Connect App',
+	description: 'We connect businesses to top talents all around Africa',
 };
 
-export default function RootLayout({ children }) {
-  return (
-    <ChakraProvider>
-      <div className={inter.className}>{children}</div>
-    </ChakraProvider>
-  );
+export default function RootLayout({children}) {
+	// const getPath = usePathname();
+	// const [isPageNavigated, setIsPageNavigated] = useState(true);
+
+	// useEffect(() => {
+	// 	getActivePage('auth', getPath) ? setIsPageNavigated(false) : setIsPageNavigated(true);
+	// }, []);
+
+	return (
+		<html lang='en'>
+			<body>
+				<Providers>
+					{/* {isPageNavigated == 'true' ? <HeaderWithNav /> : null} */}
+					{children}
+				</Providers>
+			</body>
+		</html>
+	);
 }
