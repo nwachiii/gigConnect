@@ -7,8 +7,6 @@ import {
   HStack,
   Heading,
   Image,
-  SimpleGrid,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -40,17 +38,27 @@ const LandingPage = () => {
             alt=""
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e3e404e12133fa241c13c34e21a6a900abdd5368f8fc120fe4ce068a3efe869?apiKey=79769cd1053a464cbdb4afd62642704d&"
-            className="max-w-full aspect-[5] w-[164px]"
+            maxW={'165px'}
           />
-          <HStack align={"center"} gap={4}>
+          <HStack display={{ base: 'none', md: 'flex' }} align={"center"} gap={4}>
             <Text fontWeight={600} className="text-zinc-800">
               Our Socials
             </Text>
-            <FaFacebookF />
-            <FaInstagram />
-            <FaYoutube />
-            <FaXTwitter />
-            <FaLinkedinIn />
+            <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+              <FaInstagram color="#053AF9" />
+            </Button>
+            <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+              <FaLinkedinIn color="#053AF9" />
+            </Button>
+            <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+              <FaFacebookF color="#053AF9" />
+            </Button>
+            <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+              <FaXTwitter color="#053AF9" />
+            </Button>
+            <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+              <FaYoutube color="#053AF9" />
+            </Button>
           </HStack>
         </HStack>
         <VStack gap={6} mt={10}>
@@ -58,12 +66,12 @@ const LandingPage = () => {
             fontFamily={"Inter"}
             fontSize={"xxx-large"}
             fontWeight={800}
-            w={{ base: "full", md: "500px" }}
+            w={{ base: '350px', md: '500px'}}
             textAlign={"center"}
           >
             Transforming the Way You Work
           </Heading>
-          <Text fontSize={"large"}>
+          <Text textAlign={'center'} w={{ base: '225px', md: 'full'}} fontSize={"large"}>
             We connect businesses to top talents all around Africa
           </Text>
           <HStack gap={3} align={"center"}>
@@ -89,8 +97,9 @@ const LandingPage = () => {
             alt=""
             loading="lazy"
             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/a2644f8b0751bb4953b484b30b7b19e338265b45a683726e8e0e650a44939424?apiKey=79769cd1053a464cbdb4afd62642704d&"
-            maxW={{ base: "full", md: "980px" }}
+            maxW={{ base: "400px", md: "980px" }}
             mt={4}
+            alignSelf={'center'}
           />
         </VStack>
         <HStack
@@ -99,7 +108,9 @@ const LandingPage = () => {
           px={3}
           py={2}
           justify={"space-between"}
-          minW={"450px"}
+          maxW={{ base: '350px', md: "450px"}}
+          mt={{ base: 5, md: 0 }}
+          w={'full'}
         >
           <Text my={"auto"}>Search for talents</Text>
           <Image
@@ -107,7 +118,7 @@ const LandingPage = () => {
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/70897acfe1af8117c1c0fba16f148b001f0a00eceed01d81b3a033686f7d87cf?apiKey=79769cd1053a464cbdb4afd62642704d&"
             maxW={"full"}
-            minW={"150px"}
+            minW={{ base: '50px', md: "150px"}}
           />
         </HStack>
       </VStack>
@@ -122,59 +133,72 @@ const LandingPage = () => {
           align={"center"}
           justify={"center"}
           fontSize={"14px"}
+          textAlign={'center'}
         >
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Software Developer
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Product Designer
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Content Writer
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Social Media Manager
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Data Analysis
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Video Editor
           </Flex>
-          <Flex border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
+          <Flex justify={"center"} flex={{ base: '1 0 40%', md: 'unset' }} maxW={'180px'} border={"1px solid #EDEEEF"} px={4} py={2} borderRadius={32}>
             Graphic Designer
           </Flex>
         </Flex>
         <Text mt={{ base: 10, md: 20 }} color={"6B7280"} textAlign={"center"}>
           Trusted by:
         </Text>
-        <HStack
+        <Flex
           flexWrap={{ base: "wrap", md: "unset" }}
           align={"center"}
-          gap={5}
-          maxW={"710px"}
+          gap={{ base: 8, md: 5}}
+          maxW={{ base: '300px', md: "710px"}}
+          justify={'center'}
         >
           <Image
             alt=""
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/8bc86019e375b0e4549420b728cf174e10984a2d236cf1a24a3e094fc523a0cd?apiKey=79769cd1053a464cbdb4afd62642704d&"
+            flex={{ base: '1 0 5%', md: 'unset' }}
+            maxW={'75px'}
+
           />
           <Image
             alt=""
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/71199560a0989cf53f65cc6d11c6e6d3b4cf1cf7ae44c7e4f7094af255563d0f?apiKey=79769cd1053a464cbdb4afd62642704d&"
+            flex={{ base: '1 0 5%', md: 'unset' }}
+            maxW={'75px'}
+
           />
           <Image
             alt=""
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/ae0db319b5290940e5f263ba199176dec922bcb0d9b6e62f8fa5d5c5c9f1e394?apiKey=79769cd1053a464cbdb4afd62642704d&"
-          />
+            flex={{ base: '1 0 5%', md: 'unset' }}
+            maxW={'75px'}
+
+       />
           <Image
             alt=""
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5d972321053e3e139e41a8c65e1cfffd8f2579abd8d421e9cb150883dc3d440e?apiKey=79769cd1053a464cbdb4afd62642704d&"
-          />
-        </HStack>
+            flex={{ base: '1 0 5%', md: 'unset' }}
+            maxW={'75px'}
+         />
+        </Flex>
         <ClientSection />
         <WhyGig />
         <TopTalents />
@@ -206,10 +230,11 @@ const LandingPage = () => {
             </Text>
             <Heading
               fontFamily={"Inter"}
-              fontSize={60}
-              letterSpacing={"tighter"}
+              fontSize={{ base: 32, md: 60}}
+              letterSpacing={{md: "tighter"}}
               lineHeight={{ base: "51px", md: "64px" }}
               fontWeight={500}
+              textAlign={'center'}
             >
               Download the Talent app and stay updated on your journey
             </Heading>

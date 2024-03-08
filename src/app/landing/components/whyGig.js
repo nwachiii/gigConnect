@@ -33,11 +33,11 @@ function WhyGig() {
         mt={6}
         fontSize={{ base: "4xl", md: "6xl" }}
         fontWeight="medium"
-        letterSpacing="tighter"
+        letterSpacing={{md: "tighter"}}
         textAlign="center"
         color="black"
         lineHeight={{ base: "51px", md: "64px" }}
-        maxW={{ base: "full", md: "475px" }}
+        maxW={{ base: "300px", md: "475px" }}
       >
         Why GigConnect is the right choice for your business
       </Text>
@@ -48,6 +48,7 @@ function WhyGig() {
             direction={"column"}
             mt={{ base: 0, md: 6 }}
             gap={5}
+            px={{ base: 5, md: 6}}
           >
             <Box
               borderRadius={"32px"}
@@ -56,7 +57,7 @@ function WhyGig() {
               background={"#F6F7F7"}
               w={"full"}
             >
-              <Flex gap={5} direction={{ base: "column", md: "row" }}>
+              <Flex gap={5}>
                 <VStack
                   color={"#22262F"}
                   mt={{ base: 10, md: 44 }}
@@ -99,12 +100,14 @@ function WhyGig() {
                 background={"#F6F7F7"}
                 mt={{ base: 0, md: 6 }}
                 minH={"340px"}
+                align={'start'}
               >
                 <Text
                   fontWeight={500}
-                  fontSize={"30px"}
+                  fontSize={32}
                   letterSpacing={"tighter"}
                   lineHeight={10}
+                  maxW={'300px'}
                 >
                   Complete projects within budget
                 </Text>
@@ -141,12 +144,12 @@ function WhyGig() {
               </VStack>
             </Stack>
           </VStack>
-          <Flex w={{ base: "full", md: "38%" }} ml={{ base: 0, md: 5 }}>
+          <Flex w={{ base: "full", md: "38%" }} ml={{ base: 0, md: 5 }} px={{ base: 5, md: 6}}>
             <Image
               alt=""
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/409996d426fddddd02b231f56369b4d6e84c10744b484ac50f9e5716befd16ea?apiKey=79769cd1053a464cbdb4afd62642704d&"
-              className="grow w-full aspect-[0.6] max-md:max-w-full"
+              w={'full'}
             />
           </Flex>
         </Stack>
@@ -194,7 +197,7 @@ function WhyGig() {
         mt={10}
         w={"full"}
       >
-        <Stack flexDirection={{ base: "column", md: "row" }} gap={5}>
+        <Stack flexDirection={{ base: "column", md: "row" }} gap={5} px={{ base: 5, md: 6}}>
           <Flex width={{ base: "full", md: "38%" }}>
             <Image
               alt=""
@@ -255,7 +258,7 @@ function WhyGig() {
           </VStack>
         </Stack>
         <Button
-          display={"flex"}
+          display={{base: 'none', md: "flex"}}
           gap={2}
           py={2}
           px={4}
@@ -265,6 +268,7 @@ function WhyGig() {
           borderRadius={"12px"}
           alignSelf={"center"}
           background={"#053AF9"}
+          
         >
           <Text color={"#fff"} my={"auto"}>
             Find Opportunities

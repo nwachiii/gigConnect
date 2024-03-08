@@ -27,13 +27,14 @@ function ClientSection() {
         </Text>
         <Heading
           fontFamily={"Inter"}
-          fontSize={60}
+          fontSize={{ base: 32, md: 60 }}
           fontWeight={500}
-          letterSpacing={{ base: "51px", md: "-0.05em" }}
+          letterSpacing={{ md: "-0.05em" }}
           color={"white"}
           mt={6}
           textAlign={"center"}
-          w={"650px"}
+          w={"full"}
+          maxW={{ md: '650px'}}
         >
           Find the perfect talent for your project
         </Heading>
@@ -41,8 +42,8 @@ function ClientSection() {
           mt={9}
           color={"#EDEEEF"}
           textAlign={"center"}
-          fontSize={30}
-          lineHeight={"2.5rem"}
+          fontSize={{ base: 20, md: 32 }}
+          lineHeight={{ md: "2.5rem"}}
         >
           Seamlessly connect with top-tier talent, ensuring that your project is
           in the hands of experts who can get the job done.

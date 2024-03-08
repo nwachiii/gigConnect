@@ -33,6 +33,7 @@ function TopTalents() {
           whiteSpace={"nowrap"}
           border={"1.5px solid #EDEEEF"}
           lineHeight={5}
+          bg={'#FFFFFF'}
         >
           Hire top talents now!
         </Text>
@@ -40,11 +41,11 @@ function TopTalents() {
           fontFamily={"Inter"}
           fontWeight={500}
           mt={6}
-          fontSize={"60px"}
+          fontSize={{ base: 32, md: 56 }}
           textAlign={"center"}
           letterSpacing={"tighter"}
           color={"#000"}
-          lineHeight={{ base: "51px", md: "64px" }}
+          lineHeight={{ base:'48px', md: '64px'}}
         >
           Browse by category and find talents
         </Heading>
@@ -62,6 +63,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             <Text
               lineHeight={7}
@@ -95,6 +97,7 @@ function TopTalents() {
             border={"1.5px solid #C8CACE"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             <Text
               lineHeight={7}
@@ -128,6 +131,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             <Text
               lineHeight={7}
@@ -161,6 +165,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             {" "}
             <Text
@@ -195,6 +200,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             {" "}
             <Text
@@ -229,6 +235,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             {" "}
             <Text
@@ -263,6 +270,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             {" "}
             <Text
@@ -297,6 +305,7 @@ function TopTalents() {
             border={"1.5px solid #EDEEEF"}
             minH={"168px"}
             justify={"space-between"}
+            align={'start'}
           >
             {" "}
             <Text
@@ -329,6 +338,7 @@ function TopTalents() {
           w={"full"}
           mt={6}
           align={"center"}
+          gap={{ base: 5, md: 0}}
         >
           <Text fontSize={30} color={"#2A2E35"}>
             Looking for work?
@@ -354,7 +364,6 @@ function TopTalents() {
           </Button>
         </Stack>
       </VStack>
-      
     </Box>
   );
 }
