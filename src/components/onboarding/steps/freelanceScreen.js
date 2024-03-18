@@ -38,8 +38,8 @@ export const FreelanceScreen = () => {
             borderRadius={"14px"}
           >
             <Text fontSize={14} fontWeight={500}>
-                1/2
-              </Text>
+              1/2
+            </Text>
           </Box>
         </Box>
         <Heading
@@ -152,8 +152,8 @@ export const FreelanceGoal = () => {
             borderRadius={"14px"}
           >
             <Text fontSize={14} fontWeight={500}>
-                2/2
-              </Text>
+              2/2
+            </Text>
           </Box>
         </Box>
         <Heading
