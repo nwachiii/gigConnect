@@ -16,8 +16,11 @@ import {
   ProfileSkillsStep,
 } from "../profile/steps";
 
-export const ProfileCreation = () => {
-  const [step, setStep] = useState(9);
+export const ProfileCreation = ({ setScreenNumber }) => {
+  const [step, setStep] = useState(0);
+  const withSetProfileStep = Component => props => <Component {...props} setStep={setStep} />
+  const ProfileSteps = withSetProfileStep(profileSteps[step])
+
   return (
     <VStack
       w={"full"}
@@ -28,7 +31,11 @@ export const ProfileCreation = () => {
       mb={16}
     >
       <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack gap={3}>
+        <HStack
+          gap={3}
+          cursor={"pointer"}
+          onClick={() => setScreenNumber((prev) => prev - 1)}
+        >
           <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
             <BsChevronLeft />
           </Stack>
@@ -37,20 +44,20 @@ export const ProfileCreation = () => {
           </Text>
         </HStack>
       </HStack>
-      {profileSteps[step]}
+      <ProfileSteps/>
     </VStack>
   );
 };
 
 const profileSteps = [
-  <ProfileStep key={0} />,
-  <ProfileInfoStep key={1} />,
-  <ProfileExpStep key={2} />,
-  <ProfileEduStep key={3} />,
-  <ProfileLangStep key={4} />,
-  <ProfileSkillsStep key={5} />,
-  <ProfileBioStep key={6} />,
-  <ProfileServicesStep key={7} />,
-  <ProfileRateStep key={8} />,
-  <ProfileScreenStep key={9} />
+  ProfileStep,
+  ProfileInfoStep,
+  ProfileExpStep,
+  ProfileEduStep,
+  ProfileLangStep,
+  ProfileSkillsStep,
+  ProfileBioStep,
+  ProfileServicesStep,
+  ProfileRateStep,
+  ProfileScreenStep,
 ];

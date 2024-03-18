@@ -4,14 +4,19 @@ import { GettingStarted } from "./steps/gettingStarted";
 import { HeaderEmpty } from "../Headers";
 import { FreelanceGoal, FreelanceScreen } from "./steps/freelanceScreen";
 import { ProfileCreation } from "./steps/profileCreation";
-import { useState } from "react";
+import { cloneElement, useState } from "react";
 
 export const AccountOnboarding = () => {
-  const [step, setStep] = useState(3);
+  const [screenNumber, setScreenNumber] = useState(0);
+  const withSetScreenNumber = Component => props => <Component {...props} setScreenNumber={setScreenNumber} />;
+  const OnboardingScreen = withSetScreenNumber(onboardingScreens[screenNumber]);
+
   return (
     <Box bg={"#F5F5F5"} minH={"100vh"}>
       <HeaderEmpty />
-      <Flex justify={"center"}>{onboardingScreens[step]}</Flex>
+      <Flex justify={"center"}>
+        <OnboardingScreen />
+      </Flex>
     </Box>
   );
 };
@@ -19,8 +24,8 @@ export const AccountOnboarding = () => {
 export default AccountOnboarding;
 
 const onboardingScreens = [
-  <GettingStarted key={0} />,
-  <FreelanceScreen key={1} />,
-  <FreelanceGoal key={2} />,
-  <ProfileCreation key={3} />,
+  GettingStarted,
+  FreelanceScreen,
+  FreelanceGoal,
+  ProfileCreation,
 ];

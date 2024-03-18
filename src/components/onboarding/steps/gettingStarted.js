@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-export const GettingStarted = () => {
+export const GettingStarted = ({ setScreenNumber }) => {
   return (
     <Box
       bg={"#fff"}
@@ -89,6 +89,7 @@ export const GettingStarted = () => {
             color={"#fff"}
             borderRadius={"12px"}
             boxShadow={"sm"}
+            onClick={() => setScreenNumber(1)}
           >
             Get Started
           </Button>

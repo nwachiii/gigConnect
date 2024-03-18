@@ -14,7 +14,7 @@ import { GoPlus } from "react-icons/go";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 
-export const ProfileStep = () => {
+export const ProfileStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -59,6 +59,7 @@ export const ProfileStep = () => {
           px={4}
           py={2}
           rounded={"12px"}
+          onClick={() => setStep(1)}
         >
           <Text textAlign={"center"} fontSize={14} color={"#FFF"}>
             Import from LinkedIn
@@ -96,7 +97,7 @@ export const ProfileStep = () => {
   );
 };
 
-export const ProfileInfoStep = () => {
+export const ProfileInfoStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -142,6 +143,7 @@ export const ProfileInfoStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep(2)}
         >
           Next, add your experience
         </Button>
@@ -150,7 +152,7 @@ export const ProfileInfoStep = () => {
   );
 };
 
-export const ProfileExpStep = () => {
+export const ProfileExpStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -419,6 +421,7 @@ export const ProfileExpStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, add your experience
         </Button>
@@ -427,7 +430,7 @@ export const ProfileExpStep = () => {
   );
 };
 
-export const ProfileEduStep = () => {
+export const ProfileEduStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -702,6 +705,7 @@ export const ProfileEduStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, add your education
         </Button>
@@ -710,7 +714,7 @@ export const ProfileEduStep = () => {
   );
 };
 
-export const ProfileLangStep = () => {
+export const ProfileLangStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -866,6 +870,7 @@ export const ProfileLangStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, add your skills
         </Button>

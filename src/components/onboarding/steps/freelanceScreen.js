@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronLeft } from "react-icons/bs";
 
-export const FreelanceScreen = () => {
+export const FreelanceScreen = ({ setScreenNumber }) => {
   return (
     <VStack
       w={"full"}
@@ -19,7 +19,7 @@ export const FreelanceScreen = () => {
       border={"1px solid #ebebeb"}
     >
       <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack gap={3}>
+        <HStack gap={3} cursor={'pointer'} onClick={() => setScreenNumber((prev) => prev - 1)}>
           <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
             <BsChevronLeft />
           </Stack>
@@ -114,6 +114,7 @@ export const FreelanceScreen = () => {
             fontSize={14}
             py={"6px"}
             h={"max-content"}
+            onClick={() => setScreenNumber(2)}
           >
             Next
           </Button>
@@ -123,7 +124,7 @@ export const FreelanceScreen = () => {
   );
 };
 
-export const FreelanceGoal = () => {
+export const FreelanceGoal = ({ setScreenNumber }) => {
   return (
     <VStack
       w={"full"}
@@ -133,7 +134,7 @@ export const FreelanceGoal = () => {
       border={"1px solid #ebebeb"}
     >
       <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack gap={3}>
+        <HStack gap={3} cursor={'pointer'} onClick={() => setScreenNumber((prev) => prev - 1)}>
           <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
             <BsChevronLeft />
           </Stack>
@@ -238,6 +239,7 @@ export const FreelanceGoal = () => {
             py={"6px"}
             fontSize={14}
             h={"max-content"}
+            onClick={() => setScreenNumber(3)}
           >
             Create Profile
           </Button>

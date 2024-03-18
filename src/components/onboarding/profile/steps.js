@@ -17,7 +17,7 @@ import { GoPlus } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { RiSearchLine } from "react-icons/ri";
 
-export const ProfileSkillsStep = () => {
+export const ProfileSkillsStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -81,6 +81,7 @@ export const ProfileSkillsStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, write an overview
         </Button>
@@ -89,7 +90,7 @@ export const ProfileSkillsStep = () => {
   );
 };
 
-export const ProfileBioStep = () => {
+export const ProfileBioStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -177,6 +178,7 @@ export const ProfileBioStep = () => {
           px={4}
           py={"6px"}
           fontSize={14}
+          onClick={() => setStep((prev) => prev + 1)}
           h={"max-content"}
         >
           Next, choose your categories
@@ -186,7 +188,7 @@ export const ProfileBioStep = () => {
   );
 };
 
-export const ProfileServicesStep = () => {
+export const ProfileServicesStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -249,6 +251,7 @@ export const ProfileServicesStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, set your rate
         </Button>
@@ -257,7 +260,7 @@ export const ProfileServicesStep = () => {
   );
 };
 
-export const ProfileRateStep = () => {
+export const ProfileRateStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -389,6 +392,7 @@ export const ProfileRateStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Next, add your profile photo and location
         </Button>
@@ -397,7 +401,7 @@ export const ProfileRateStep = () => {
   );
 };
 
-export const ProfileScreenStep = () => {
+export const ProfileScreenStep = ({ setStep }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
