@@ -31,3 +31,50 @@ body {
     text-wrap: balance;
   }
 }
+
+
+input[type='checkbox'] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: #F9F9F9;
+  /* Not removed via appearance */
+  /* margin: 6px 0 0; */
+  cursor: pointer;
+  font: inherit;
+  color: #000;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  border: 1px solid #E0E0E0;
+}
+
+input[type='checkbox']::before {
+  content: '';
+  width: 0.95em;
+  height: 0.75em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  border-radius: 10px;
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #191919;
+  /* Windows High Contrast Mode */
+  background-color: #F9F9F9;
+  /* background-image: url('https://icons8.com/icon/sz8cPVwzLrMP/check-mark-emoji'); */
+  cursor: pointer;
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
+}
+
+input[type='checkbox']:focus {
+  outline: max(2px, 0.15em) solid transparent;
+  outline-offset: max(2px, 0.15em);
+}

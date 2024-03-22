@@ -1,143 +1,192 @@
 /* eslint-disable @next/next/no-img-element */
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import React from "react";
+import {
+  Button,
+  Divider,
+  HStack,
+  Image,
+  Stack,
+  StackDivider,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 
-
-export const Footer = ({
-  className,
-  frameClassName,
-  frameClassNameOverride,
-  trustSafetyWrapperClassName,
-  divClassName,
-  divClassNameOverride,
-  frameClassName1,
-  frame = "/img/frame-3.svg",
-  href,
-}) => {
+export const Footer = ({}) => {
   return (
-    <div className={`relative w-[1440px] h-[312px] bg-[#ffffff] ${className}`}>
-      <img className="w-[1440px] absolute h-px -top-px left-0 object-cover" alt="Line" src="/img/line-12-3.svg" />
-      <div className="absolute w-[1146px] h-[216px] top-[80px] left-[148px]">
-        <div className="inline-flex flex-col items-start gap-[16px] absolute top-[25px] left-[730px]">
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#22262e] text-[16px] tracking-[0] leading-[18px] whitespace-nowrap">
-            Company
-          </div>
-          <div className="inline-flex flex-col items-start gap-[10px] relative flex-[0_0_auto]">
-            <div className="inline-flex items-start gap-[10px] relative flex-[0_0_auto]">
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${frameClassName}`}
+    <VStack
+      px={{ base: 5, md: 20 }}
+      mt={{ base: 10, md: 24 }}
+      py={12}
+      borderTop={"1.5px solid #F6F7F7"}
+    >
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        gap={{ base: 5, md: "unset" }}
+        mt={3}
+        justify={"space-between"}
+        maxW={{ base: "full", md: "1144px" }}
+        w={"full"}
+        fontWeight={600}
+        lineHeight={5}
+      >
+        <Image src={"/img/brand/GigConnectLogo.svg"} alt="logo" w={'full'} maxW={'165px'} />
+        <HStack gap={{ base: 1, md: 3}}>
+          <Text whiteSpace={'nowrap'} color={"#22262F"}>Join our community</Text>
+          <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+            <FaInstagram color="#053AF9" />
+          </Button>
+          <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+            <FaLinkedinIn color="#053AF9" />
+          </Button>
+          <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+            <FaFacebookF color="#053AF9" />
+          </Button>
+          <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+            <FaXTwitter color="#053AF9" />
+          </Button>
+          <Button w={10} h={10} p={2} rounded={"full"} background={"#F8F8F8"}>
+            <FaYoutube color="#053AF9" />
+          </Button>
+        </HStack>
+      </Stack>
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        gap={{ base: 0, md: 5 }}
+        w={"full"}
+        maxW={{ base: "full", md: "1144px" }}
+      >
+        <VStack width={{ base: "full", md: "60%" }}>
+          <VStack align={"start"} w={"full"} gap={3}>
+            <Text color={"#22262F"} fontWeight={600} lineHeight={5}>
+              Contact Information
+            </Text>
+            <HStack gap={{ base: 1, md: 3}} textAlign={"center"} lineHeight={"130%"}>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
+                whiteSpace={'nowrap'}
               >
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  Join our Affiliate Program
-                </div>
-              </div>
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${frameClassNameOverride}`}
+                hello@gigconnect.com
+              </Text>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid rgba(255, 255, 255, 0.7)"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
+                whiteSpace={'nowrap'}
               >
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  Partnerships
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-start gap-[10px] relative flex-[0_0_auto]">
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${trustSafetyWrapperClassName}`}
+                +234 0950 993 093
+              </Text>
+            </HStack>
+            <Text
+              px={4}
+              py={2}
+              lineHeight={6}
+              border={"1px solid rgba(255, 255, 255, 0.6)"}
+              backdropBlur={"24px"}
+              borderRadius={"48px"}
+              bg={"rgba(255, 255, 255, 0.7)"}
+            >
+              <span className="font-bold">Address:</span> No 191B jide Oki
+              street off Ligali Ayorinde lane Victoria Island Lagos, Nigeria
+            </Text>
+          </VStack>
+        </VStack>
+        <VStack w={{ base: "full", md: "40%" }} ml={{ base: 0, md: 5 }} >
+          <VStack
+            align={"start"}
+            fontSize={"14px"}
+            color={"#22262F"}
+            mt={{ base: 10, md: 0 }}
+            px={{ base: 2, md: 0}}
+          >
+            <Text fontWeight={600}>Company</Text>
+            <HStack justify={"space-between"} mt={4} textAlign={"center"}>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
               >
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  Trust &amp; Safety
-                </div>
-              </div>
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${divClassName}`}
+                Join our Affiliate Program
+              </Text>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
               >
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  Terms of Service
-                </div>
-              </div>
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${divClassNameOverride}`}
+                Partnerships
+              </Text>
+            </HStack>
+            <HStack flexWrap={'wrap'} gap={3} mt={3} whiteSpace={"nowrap"}>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
               >
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  Privacy Policy
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="inline-flex flex-col items-start gap-[14px] absolute top-[25px] left-0">
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#22262e] text-[16px] tracking-[0] leading-[18px] whitespace-nowrap">
-            Contact Information
-          </div>
-          <div className="inline-flex flex-col items-start gap-[10px] relative flex-[0_0_auto]">
-            <div className="inline-flex items-start gap-[10px] relative flex-[0_0_auto]">
-              <div
-                className={`inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)] ${frameClassName1}`}
+                Trust & Safety
+              </Text>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
               >
-                <a
-                  className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap"
-                  href={href}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  hello@gigconnect.com
-                </a>
-              </div>
-              <div className="inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] text-center tracking-[0] leading-[18px] whitespace-nowrap">
-                  +234 0950 993 093
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative flex-[0_0_auto] bg-[#ffffffad] rounded-[12px] overflow-hidden border border-solid border-[#edeeef94] backdrop-blur-[48px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(48px)_brightness(100%)]">
-              <p className="relative w-[565px] mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] tracking-[0] leading-[24px]">
-                <span className="font-bold">Address:</span>
-                <span className="[font-family:'Inter',Helvetica] font-normal text-[#22262f] text-[14px] tracking-[0] leading-[24px]">
-                  {" "}
-                  No 191B jide Oki street off Ligali Ayorinde lane Victoria Island Lagos, Nigeria
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <img className="absolute w-[1144px] h-px top-[167px] left-0 object-cover" alt="Line" src="/img/line-11-1.svg" />
-        <img className="w-[1144px] absolute h-px -top-px left-0 object-cover" alt="Line" src="/img/line-12-2.svg" />
-        <p className="absolute top-[192px] left-[452px] opacity-90 [font-family:'Inter',Helvetica] font-normal text-[#8c8c8c] text-[12px] text-center tracking-[0] leading-[24px] whitespace-nowrap">
-          © 2023 GigConnect - All Rights Reserved.
-        </p>
-      </div>
-      <div className="absolute w-[1144px] h-[32px] top-[24px] left-[148px]">
-        {/* <GigconnectLogoB3 className="!absolute !w-[164px] !h-[32px] !top-0 !left-0" /> */}
-        <div className="inline-flex items-center gap-[10px] absolute top-px left-[790px]">
-          <div className="relative w-fit [font-family:'Inter',Helvetica] font-semibold text-[#22262e] text-[16px] text-right tracking-[0] leading-[18px] whitespace-nowrap">
-            Join our community
-          </div>
-          <div className="relative w-[30px] h-[30px] bg-[#f7f7f7] rounded-[15px]">
-            <img className="absolute w-[12px] h-[12px] top-[9px] left-[9px]" alt="Group" src="/img/group-27-1.png" />
-          </div>
-          <div className="relative w-[30px] h-[30px] bg-[#f7f7f7] rounded-[15px]">
-            <img className="absolute w-[11px] h-[11px] top-[9px] left-[9px]" alt="Group" src="/img/group-4-1.png" />
-          </div>
-          <div className="relative w-[30px] h-[30px] bg-[#f7f7f7] rounded-[15px]">
-            <img className="absolute w-[7px] h-[13px] top-[9px] left-[12px]" alt="Group" src="/img/group-1.png" />
-          </div>
-          <div className="relative w-[30px] h-[30px] bg-[#f7f7f7] rounded-[15px]">
-            <img className="absolute w-[13px] h-[13px] top-[9px] left-[8px]" alt="Frame" src={frame} />
-          </div>
-          <div className="relative w-[30px] h-[30px] bg-[#f7f7f7] rounded-[15px]">
-            <img className="absolute w-[13px] h-[13px] top-[9px] left-[8px]" alt="Frame" src="/img/frame-2.svg" />
-          </div>
-        </div>
-      </div>
-    </div>
+                Terms of Service
+              </Text>
+              <Text
+                px={4}
+                py={2}
+                border={"1px solid #053AF9"}
+                backdropBlur={"24px"}
+                borderRadius={"48px"}
+                bg={"rgba(255, 255, 255, 0.7)"}
+              >
+                Privacy Policy
+              </Text>
+            </HStack>
+          </VStack>
+        </VStack>
+      </Stack>
+      <Divider
+        mt={4}
+        borderColor={"#326DC0"}
+        w={"full"}
+        maxW={{ base: "full", md: "1144px" }}
+      />
+      <Text
+        fontSize={"12px"}
+        mt={4}
+        lineHeight={6}
+        textAlign={"center"}
+        color={"#8C8C8C"}
+      >
+        © 2024 GigConnect - All Rights Reserved.
+      </Text>
+    </VStack>
   );
-};
-
-Footer.propTypes = {
-  frame: PropTypes.string,
-  href: PropTypes.string,
 };

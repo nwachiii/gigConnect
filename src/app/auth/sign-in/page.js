@@ -1,173 +1,178 @@
-/* eslint-disable @next/next/no-img-element */
+"use client";
+import * as Yup from "yup";
 import { BsEyeSlash } from "react-icons/bs";
+import { Formik, Form, Field } from "formik";
+import { Footer } from "@/components/Footer";
+import { useMutation } from "@tanstack/react-query";
+import { GCButton } from "@/ui-lib/ui-lib-components/Button";
 import {
   Box,
   Flex,
-  HStack,
-  Text,
-  Link,
-  Image,
-  Button,
+  Heading,
   VStack,
   Input,
   InputGroup,
   InputRightElement,
-  Heading,
+  Text,
+  Image,
+  useToast,
+  Link,
+  Stack,
 } from "@chakra-ui/react";
-import GigConnectLogo from "@/assets/logo.svg";
-import { Footer } from "@/components/Footer";
+import { GoogleBtn } from "@/assets/icons/GoogleBtn";
+import { useRouter } from "next/navigation";
+
+// Validation Schema
+const SignInSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().required("Required"),
+});
+
+export const sharedInputStyles = {
+  borderRadius: "12px",
+  fontWeight: "500",
+  height: "51px",
+  border: "1px solid #E0E0E0",
+  background: "#FFF",
+  focusBorderColor: "gray.50",
+  _placeholder: {
+    color: "#888A8F",
+    fontSize: "12px",
+    fontWeight: "400",
+  },
+};
 
 export const SignIn = () => {
+  const toast = useToast();
+  const router = useRouter();
+  // React Query Mutation for signing in
+  // const mutation = useMutation((data) => console.log('Ready to sign in', data), {
+  // 	onSuccess: () => {
+  // 		toast({title: 'Signed in successfully', status: 'success'});
+  // 	},
+  // 	onError: (error) => {
+  // 		toast({title: 'Sign in failed', description: error.message, status: 'error'});
+  // 	},
+  // });
+
   return (
     <Box background={"#fff"} w={"full"} justify={"center"}>
-      <Link href="/">
-        <Image src={GigConnectLogo.src} alt="logo" p={10} />
-      </Link>
+      <Flex maxW="1400px" mx="auto" px="70px">
+        <Link href="/">
+          <Image src={"/img/brand/GigConnectLogo.svg"} alt="logo" p={10} />
+        </Link>
+      </Flex>
       <Flex alignItems={"center"} justify={"center"}>
         <Box
-          width="460px"
-          height="626px"
+          width={{ base: "90%", md: "460px" }}
           bg="#ffffffcc"
           borderRadius={10}
           border="1px solid #ebebeb"
           p={10}
         >
-          <Heading
-            fontFamily={"Inter"}
-            fontWeight="extrabold"
-            color="#0c0c0c"
-            fontSize="28px"
-            width={"222px"}
-            mb={8}
-          >
-            Sign in to your account
+          <Heading fontWeight="800" color="#0D0D0D" fontSize="32px" mb={8}>
+            Sign in to <br /> your account
           </Heading>
-          <Flex direction={"column"} alignItems="center" gap="28px" w={"full"}>
-            <VStack align={"start"} w={"full"}>
-              <Text fontWeight="medium" fontSize="12px">
-                Email
-              </Text>
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                border="1px solid #e0e0e0"
-                borderRadius={"12px"}
-                px="16px"
-                py="18px"
-                fontSize="12px"
-              />
-            </VStack>
-            {/* Password */}
-            <VStack align={"start"} w={"full"}>
-              <Text fontSize="12px">Password</Text>
-              <InputGroup>
-                <Input
-                  type="password"
-                  placeholder="Enter password"
-                  border="1px solid #e0e0e0"
-                  borderRadius={"12px"}
-                  px="16px"
-                  py="18px"
-                  fontSize="12px"
-                />
-                <InputRightElement>
-                  <BsEyeSlash size={25} color="#727272" />
-                </InputRightElement>
-              </InputGroup>
-            </VStack>
-            {/* Keep me signed in */}
-            <HStack align={"center"} justify={"space-between"} w={"full"}>
-              <HStack alignItems="center" gap="4px">
-                <Box
-                  position="relative"
-                  width="24px"
-                  height="24px"
-                  bg="#f8f8f8"
-                  rounded="8px"
-                  border="1.5px solid #e0e0e0"
-                />
-                <Text
-                  position="relative"
-                  width="fit-content"
-                  fontFamily="Inter"
-                  fontWeight="medium"
-                  color="#0c0c0c"
-                  fontSize="12px"
-                  textAlign="center"
-                  lineHeight="18px"
-                  whiteSpace="nowrap"
-                >
-                  Keep me signed in
-                </Text>
-              </HStack>
-              <Text
-                fontWeight={500}
-                color="#0c0c0c"
-                fontSize="12px"
-                textAlign="right"
-                lineHeight="18px"
-                whiteSpace="nowrap"
-              >
-                Forgot Password?
-              </Text>
-            </HStack>
-            {/* Sign in */}
-            <Button
-              alignItems="center"
-              justifyContent="center"
-              gap="10px"
-              px="28px"
-              py="12px"
-              bg="#0c0c0c"
-              borderRadius={"10px"}
-              color={"#fff"}
-              w={"full"}
-              fontWeight={500}
-            >
-              Sign in
-            </Button>
-            {/* Sign in with Google */}
-            <Button
-              alignItems="center"
-              justifyContent="center"
-              gap="10px"
-              px="28px"
-              py="12px"
-              bg="#f0f0f0"
-              borderRadius={10}
-              w={"full"}
-            >
-              <Flex
-                alignItems="center"
-                justifyContent="center"
-                gap="4px"
-                position="relative"
-              >
-                <Image
-                  src="/img/google-g-logo-1.svg"
-                  alt="Google g logo"
-                  boxSize={"16px"}
-                />
-                <Text
-                  fontWeight="medium"
-                  color="#0c0c0c"
-                  fontSize="14px"
-                  textAlign="center"
-                >
-                  Sign in with Google
-                </Text>
-              </Flex>
-            </Button>
-            {/* Create an Account */}
-            <HStack gap={1} fontSize={14}>
-              <Text color="#878a8f">Don’t have an Account? </Text>
-              <Link href="/auth/create-account/select-type">
-                <Text fontWeight="medium" color="#0c0c0c">
-                  Create an Account
-                </Text>
-              </Link>
-            </HStack>
-          </Flex>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={SignInSchema}
+            onSubmit={(values) => {
+              // mutation.mutate(values);
+              console.log({ ...values });
+              router.push("/workspace");
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <VStack spacing={"28px"}>
+                  <Field name="email">
+                    {({ field }) => (
+                      <VStack align={"start"} w={"full"}>
+                        <Text fontWeight="500" fontSize="12px" color="#0D0D0D">
+                          Email
+                        </Text>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Enter your email"
+                          isInvalid={errors.email && touched.email}
+                          {...sharedInputStyles}
+                        />
+                        {errors.email && touched.email ? (
+                          <Text fontSize="sm" color="red.500">
+                            {errors.email}
+                          </Text>
+                        ) : null}
+                      </VStack>
+                    )}
+                  </Field>
+                  <Field name="password">
+                    {({ field }) => (
+                      <VStack align={"start"} w={"full"}>
+                        <Text fontWeight="500" fontSize="12px" color="#0D0D0D">
+                          Password
+                        </Text>
+                        <InputGroup>
+                          <Input
+                            {...field}
+                            type="password"
+                            placeholder="Enter password"
+                            isInvalid={errors.password && touched.password}
+                            {...sharedInputStyles}
+                          />
+                          <InputRightElement>
+                            <BsEyeSlash size={25} color="#727272" />
+                          </InputRightElement>
+                        </InputGroup>
+                        {errors.password && touched.password ? (
+                          <Text fontSize="sm" color="red.500">
+                            {errors.password}
+                          </Text>
+                        ) : null}
+                      </VStack>
+                    )}
+                  </Field>
+                  <Stack w="full" spacing="28px">
+                    <GCButton
+                      type="submit"
+                      w={"full"}
+                      bg="#0D0D0D"
+                      py={"12px"}
+                      h="42px"
+                      color={"#fff"}
+                    >
+                      Sign in
+                    </GCButton>
+                    <GCButton
+                      type="submit"
+                      w={"full"}
+                      py={"12px"}
+                      h="42px"
+                      color={"#0D0D0D"}
+                      bg={"#F0F0F0"}
+                      leftIcon={<GoogleBtn />}
+                    >
+                      Sign in with Google
+                    </GCButton>
+                    <Text
+                      textAlign={"center"}
+                      color="#888A8F"
+                      fontSize={"14px"}
+                      fontWeight={"400"}
+                    >
+                      Don’t have an Account?{" "}
+                      <Link
+                        href="/auth/create-account/select-type"
+                        style={{ fontWeight: "500", color: "#0D0D0D" }}
+                      >
+                        Create an Account
+                      </Link>
+                    </Text>
+                  </Stack>
+                </VStack>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </Flex>
       <Footer />
