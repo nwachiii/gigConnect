@@ -39,7 +39,7 @@ function WhyGig() {
         lineHeight={{ base: "51px", md: "64px" }}
         maxW={{ base: "300px", md: "475px" }}
       >
-        Why GigConnect is the right choice for your business
+        Why GigConnect <br /> is the right choice for your business
       </Text>
       <Box mt={9} maxW={{ base: "full", md: "1144px" }} w={"full"}>
         <Stack direction={{ base: "column", md: "row" }} gap={5}>
@@ -171,7 +171,6 @@ function WhyGig() {
           For Talent
         </Text>
         <Heading
-          fontFamily={"Inter"}
           fontSize={{ base: "36px", md: "60px" }}
           lineHeight={{ base: "50px", md: "64px" }}
           textAlign={"center"}

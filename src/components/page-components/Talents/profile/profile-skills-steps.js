@@ -355,10 +355,10 @@ export const ProfileRateStep = ({ setStep }) => {
         >
           <VStack align={"start"} gap={"4px"} py={2}>
             <Text fontSize={18} fontWeight={600}>
-              You'll get
+              {`You'll get`}
             </Text>
             <Text fontSize={14} color={"#4C5361"}>
-              The estimated amount you'll receive after service fees
+              {`The estimated amount you'll receive after service fees`}
             </Text>
           </VStack>
           <HStack align={"start"}>

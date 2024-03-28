@@ -26,7 +26,6 @@ function ClientSection() {
           For Client
         </Text>
         <Heading
-          fontFamily={"Inter"}
           fontSize={{ base: 32, md: 60 }}
           fontWeight={500}
           letterSpacing={{ md: "-0.05em" }}

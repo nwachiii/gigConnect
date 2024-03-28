@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import {Footer} from '@/components/Footer';
+import {Footer} from '@/components/generic-components/Footer';
 // import Link from 'next/link';
-import {CheckboxBase} from '@/components/CheckboxBase';
-import {HeaderEmpty} from '@/components/Headers';
+import {CheckboxBase} from '@/components/generic-components/CheckboxBase';
+import {HeaderEmpty} from '@/components/generic-components/Headers';
 import {GCButton} from '@/ui-lib/ui-lib-components/Button';
 import React from 'react';
 import {Box, Flex, Grid, HStack, Text, Image, Button, Heading, Link, VStack, useRadio, useRadioGroup, Stack} from '@chakra-ui/react';
@@ -18,7 +18,7 @@ const SelectionCard = ({title, description, iconSrc, ...props}) => {
 		<Box as='label'>
 			<input {...input} />
 			<VStack {...checkbox} borderWidth='1px' borderRadius='16px' p={6} shadow='md' _checked={{bg: '#053AF9', color: '#FFFFFF', transition: '200ms all ease-in-out'}} cursor='pointer' spacing={4} alignItems='center'>
-				<Image boxSize='58px' src={iconSrc} alt={title} />
+				<Image {...checkbox} boxSize='58px' src={iconSrc} alt={title} _checked={{filter: 'invert(50%)'}} />
 				<VStack spacing={2} alignItems='center'>
 					<Heading size='md' color='currentcolor'>
 						{title}
@@ -35,11 +35,13 @@ const SelectionCard = ({title, description, iconSrc, ...props}) => {
 };
 
 // Component to manage the radio group state
-const SelectionGroup = ({options}) => {
+const SelectionGroup = ({options, setRole}) => {
 	const {getRootProps, getRadioProps} = useRadioGroup({
 		name: 'accountType',
 		defaultValue: options[0].value,
-		onChange: console.log,
+		onChange: (e) => {
+			return setRole(e);
+		},
 	});
 
 	const group = getRootProps();
@@ -53,7 +55,7 @@ const SelectionGroup = ({options}) => {
 	);
 };
 
-export const SelectAccountType = () => {
+export const SelectAccountType = ({handleScreen, setRole}) => {
 	const options = [
 		{
 			title: 'Talent',
@@ -83,14 +85,12 @@ export const SelectAccountType = () => {
 						</Text>
 					</VStack>
 					<Stack w='647px' px='70px' h='436px' borderRadius={'16px'} border='1px solid #EDEEEF' justify={'center'} align='center' spacing='27px'>
-						{/* <Grid {...group} templateColumns='repeat(2, 1fr)' gap={'47px'}> */}
-						<SelectionGroup options={options} />
-						{/* </Grid> */}
-						<Link color='black' href='/auth/create-account'>
-							<GCButton w='371px' h='42px' bg='#0D0D0D' borderRadius='10px' color='#FFF' fontSize='14px' fontWeight='500' mx='auto'>
-								Next
-							</GCButton>
-						</Link>
+						<SelectionGroup options={options} setRole={setRole} />
+
+						<GCButton onClick={() => handleScreen('showCreateAccountForm')} w='371px' h='42px' bg='#0D0D0D' borderRadius='10px' color='#FFF' fontSize='14px' fontWeight='500' mx='auto'>
+							Next
+						</GCButton>
+
 						<Flex justify='center' gap='8px' color='#888A8F' fontSize={'14px'} fontWeight={'400'}>
 							<Text>Already have an Account? </Text>
 							<Link color='#0D0D0D' href='/auth/sign-in'>

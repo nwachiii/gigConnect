@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import {AbsoluteCenter, Box} from '@chakra-ui/react';
-import {HeaderWithNav} from '@/components/Headers';
+import {HeaderWithNav} from '@/components/generic-components/Headers';
 
 export const JobContracts = () => {
 	return (
