@@ -25,7 +25,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { RiHomeLine } from "react-icons/ri";
 import { GCButton } from "@/ui-lib/ui-lib-components/Button";
-// import JobsIcon from "@/assets/icons/Navbar/jobs-icon";
+import JobsIcon from "@/assets/icons/Navbar/jobs-icon";
 import { TalentIcon } from "@/assets/icons/Navbar/talent-icon";
 import { MessagesIcon } from "@/assets/icons/Navbar/messages-icon";
 import { TransactionHistoryIcon } from "@/assets/icons/Navbar/transaction-history-icon";
@@ -59,12 +59,6 @@ export const HeaderWithNav = () => {
       ? { backgroundColor: "#053AF9", color: "#FFFFFF" }
       : { backgroundColor: "transparent", color: "#202329" };
   };
-
-  // useEffect(() => {
-  // 	if (typeof window !== 'undefined') {
-  // 		console.log('Router pathname:', router.pathname);
-  // 	}
-  // }, [router.pathname]);
 
   return (
     <Flex

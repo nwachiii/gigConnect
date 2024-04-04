@@ -8,9 +8,13 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { BsChevronLeft } from "react-icons/bs";
+import { freelanceOptions } from "./options";
+import { RadioButton } from "./radio";
 
 export const FreelanceScreen = ({ setScreenNumber }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
   return (
     <VStack
       w={"full"}
@@ -20,7 +24,11 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
       border={"1px solid #ebebeb"}
     >
       <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack gap={3} cursor={'pointer'} onClick={() => setScreenNumber((prev) => prev - 1)}>
+        <HStack
+          gap={3}
+          cursor={"pointer"}
+          onClick={() => setScreenNumber((prev) => prev - 1)}
+        >
           <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
             <BsChevronLeft />
           </Stack>
@@ -63,37 +71,14 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
           p={2}
           w={"full"}
         >
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Image src="/img/radio.svg" />
-            <Text fontSize={14} color={"#454C58"}>
-              I am new to this
-            </Text>
-          </HStack>
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              I have some experience
-            </Text>
-          </HStack>
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              I am an expert
-            </Text>
-          </HStack>
+          {freelanceOptions.map((option, index) => (
+            <RadioButton
+              key={index}
+              label={option.label}
+              isChecked={selectedOption === option.value}
+              onChange={() => setSelectedOption(option.value)}
+            />
+          ))}
         </VStack>
         <HStack gap={4} mb={4}>
           <Button
@@ -116,6 +101,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
             fontSize={14}
             py={"6px"}
             h={"max-content"}
+            isDisabled={selectedOption === null}
             onClick={() => setScreenNumber(2)}
           >
             Next
@@ -136,7 +122,11 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
       border={"1px solid #ebebeb"}
     >
       <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack gap={3} cursor={'pointer'} onClick={() => setScreenNumber((prev) => prev - 1)}>
+        <HStack
+          gap={3}
+          cursor={"pointer"}
+          onClick={() => setScreenNumber((prev) => prev - 1)}
+        >
           <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
             <BsChevronLeft />
           </Stack>
