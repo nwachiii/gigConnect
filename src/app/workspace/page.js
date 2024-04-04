@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import {HeaderWithNav} from '@/components/Headers';
+import {HeaderWithNav} from '@/components/generic-components/Headers';
 import {Image, Stack, Text, Box, Flex} from '@chakra-ui/react';
 import {JobPostings} from '@/components/page-components/Workspace/Postings';
 import {DiscoverTopRatedTalent} from '@/components/page-components/Workspace/DiscoverTopRatedTalent';
@@ -13,7 +13,7 @@ export const Workspace = () => {
 		<Box minH='100vh' bg='#F5F5F5'>
 			<HeaderWithNav />
 			{/* banner */}
-			<Stack maxW='1440px' w='full' padding='13px 44px' alignItems='center' justifyContent='space-between' spacing='36px' mx="auto">
+			<Stack maxW='1440px' w='full' padding='13px 44px' alignItems='center' justifyContent='space-between' spacing='36px' mx='auto'>
 				{/* Subnav */}
 				<Flex w='full' align='center' justifyContent={'space-between'}>
 					<Box color='#2E2E2E' lineHeight='18px'>
@@ -41,7 +41,7 @@ export const Workspace = () => {
 
 				{/* Main Content */}
 				<Flex w='full' columnGap='20px'>
-					<Stack w='full' spacing="20px">
+					<Stack w='full' spacing='20px'>
 						<JobPostings />
 						<WorkspaceContracts />
 					</Stack>

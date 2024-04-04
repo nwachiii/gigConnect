@@ -3,8 +3,8 @@
 import {Fragment, useState} from 'react';
 
 import {VStack, Stack, Heading, Text, Flex} from '@chakra-ui/react';
-import {HeaderEmpty} from '@/components/Headers/EmptyHeader';
-import {Footer} from '@/components/Footer';
+import {HeaderEmpty} from '@/components/generic-components/Headers/EmptyHeader';
+import {Footer} from '@/components/generic-components/Footer';
 import {OTPInput} from 'chakra-otp-input';
 import {GCButton} from '@/ui-lib/ui-lib-components/Button';
 import {useRouter} from 'next/navigation';

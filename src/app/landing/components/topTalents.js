@@ -38,7 +38,6 @@ function TopTalents() {
           Hire top talents now!
         </Text>
         <Heading
-          fontFamily={"Inter"}
           fontWeight={500}
           mt={6}
           fontSize={{ base: 32, md: 56 }}
