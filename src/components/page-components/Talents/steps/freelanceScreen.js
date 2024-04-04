@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsChevronLeft } from "react-icons/bs";
-import { freelanceOptions } from "./options";
+import { freelanceGoals, freelanceOptions } from "./options";
 import { RadioButton } from "./radio";
 
 export const FreelanceScreen = ({ setScreenNumber }) => {
@@ -89,6 +89,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
             py={"6px"}
             h={"max-content"}
             fontSize={14}
+            onClick={() => setScreenNumber(2)}
           >
             Skip for now
           </Button>
@@ -113,6 +114,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
 };
 
 export const FreelanceGoal = ({ setScreenNumber }) => {
+  const [selectedOption, setSelectedOption] = useState(null)
   return (
     <VStack
       w={"full"}
@@ -169,46 +171,14 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
           p={2}
           w={"full"}
         >
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              To earn my main income
-            </Text>
-          </HStack>
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              To make money on the side
-            </Text>
-          </HStack>
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              To get experience, for a full-time job
-            </Text>
-          </HStack>
-          <HStack
-            border={"1px solid #edeeef"}
-            w={"full"}
-            p={4}
-            rounded={"12px"}
-          >
-            <Text fontSize={14} color={"#454C58"}>
-              I don’t have a goal in mind yet
-            </Text>
-          </HStack>
+          {freelanceGoals.map((option, index) => (
+            <RadioButton
+              key={index}
+              label={option.label}
+              isChecked={selectedOption === option.value}
+              onChange={() => setSelectedOption(option.value)}
+            />
+          ))}
         </VStack>
         <HStack gap={4} mb={4}>
           <Button
@@ -218,6 +188,7 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
             px={4}
             py={"6px"}
             fontSize={14}
+            onClick={() => setScreenNumber(3)}
             h={"max-content"}
           >
             Skip for now
@@ -231,6 +202,7 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
             py={"6px"}
             fontSize={14}
             h={"max-content"}
+            isDisabled={selectedOption === null}
             onClick={() => setScreenNumber(3)}
           >
             Create Profile

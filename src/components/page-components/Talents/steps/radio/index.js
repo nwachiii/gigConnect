@@ -1,3 +1,5 @@
+import { Box, HStack, Image, Text } from "@chakra-ui/react";
+
 export const RadioButton = ({
   label,
   isChecked,
@@ -10,11 +12,13 @@ export const RadioButton = ({
     rounded={"12px"}
     onClick={onChange}
   >
-    {isChecked ? (
-      <Image src="/img/icons/radio-check.svg" alt="Checked" />
-    ) : (
-      <Image src="/img/icons/radio.svg" alt="Unchecked" />
-    )}
+    <Box cursor={'pointer'}>
+      {isChecked ? (
+        <Image src="/img/icons/radio-checked.svg" alt="Checked" />
+      ) : (
+        <Image src="/img/icons/radio.svg" alt="Unchecked" />
+      )}
+    </Box>
     <Text fontSize={14} color={"#454C58"}>
       {label}
     </Text>

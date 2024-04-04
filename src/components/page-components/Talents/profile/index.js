@@ -13,6 +13,9 @@ import {
 import { GoPlus } from "react-icons/go";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
+import { useState } from "react";
+import { FieldArray, Form, Formik } from "formik";
+import { ExperienceForm } from "../../profile-components/experience";
 
 export const ProfileStep = ({ setStep }) => {
   return (
@@ -98,6 +101,13 @@ export const ProfileStep = ({ setStep }) => {
 };
 
 export const ProfileInfoStep = ({ setStep }) => {
+  const [profession, setProfession] = useState("");
+
+  const handleChange = (event) => {
+    const text = event.target.value;
+    const newText = text.replace(/[^a-zA-Z\s]/g, "");
+    setProfession(newText);
+  };
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -129,8 +139,12 @@ export const ProfileInfoStep = ({ setStep }) => {
           border={"1px solid #edeeef"}
           w={"full"}
           maxW={"365px"}
-          p={4}
-          rounded={"12px"}
+          p={"10px 16px"}
+          rounded={"8px"}
+          h={"44px"}
+          type="text"
+          value={profession}
+          onChange={handleChange}
         />
       </VStack>
       <HStack gap={4} mb={4}>
@@ -139,11 +153,11 @@ export const ProfileInfoStep = ({ setStep }) => {
           color={"white"}
           rounded={"12px"}
           fontWeight={400}
-          px={4}
-          py={"6px"}
+          p={"6px 16px"}
           fontSize={14}
-          h={"max-content"}
+          h={"34px"}
           onClick={() => setStep(2)}
+          isDisabled={profession === ""}
         >
           Next, add your experience
         </Button>
@@ -168,12 +182,7 @@ export const ProfileExpStep = ({ setStep }) => {
           </Text>
         </Box>
       </Box>
-      <Heading
-        fontWeight={700}
-        // maxW={"360px"}
-        fontSize={24}
-        lineHeight={"32px"}
-      >
+      <Heading fontWeight={700} fontSize={24} lineHeight={"32px"}>
         If you have relevant work experience, add it here.
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
@@ -181,225 +190,66 @@ export const ProfileExpStep = ({ setStep }) => {
         But if you’re just starting out, you can still create a great profile.
         Just head on to the next page.
       </Text>
-      <Button
-        bg={"#fff"}
-        justifyContent={"space-between"}
-        w={"full"}
-        maxW={"410px"}
-        border={"1px solid #edeeef"}
-        py={8}
+      <Formik
+        initialValues={{
+          experiences: [
+            { title: "", company: "", startDate: "", endDate: "" }, // initialize with an empty form
+          ],
+        }}
       >
-        <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-          Add experience
-        </Text>
-        <Box
-          bg={"#F6F7F7"}
-          border={"1px solid #edeeef"}
-          cursor={"pointer"}
-          p={3}
-          rounded={"full"}
-        >
-          <GoPlus color="#4C5361" size={30} />
-        </Box>
-      </Button>
-      <VStack
-        bg={"#FFF"}
-        rounded={"12px"}
-        border={"1px solid #edeeef"}
-        align={"start"}
-        gap={2}
-        w={"full"}
-      >
-        <HStack
-          borderBottom={"1px solid #edeeef"}
-          justify={"space-between"}
-          w={"full"}
-          p={2}
-        >
-          <Text>Add work experience</Text>
-          <Box
-            bg={"#F6F7F7"}
-            border={"1px solid #edeeef"}
-            cursor={"pointer"}
-            p={2}
-            rounded={"full"}
-          >
-            <HiOutlineMinus color="#4C5361" size={20} />
-          </Box>
-        </HStack>
-        <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-          <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Title*
-              </Text>
-              <Input placeholder="Ex Software Developer" py={6} w={"full"} />
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Company*
-              </Text>
-              <Input placeholder="Enter company name" py={6} w={"full"} />
-            </VStack>
-          </VStack>
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            w={"full"}
-            maxW={"605px"}
-          >
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Start Date*
-              </Text>
-              <HStack w={"full"}>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  borderRadius={"8px"}
-                  py={6}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Month
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  py={6}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Year
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-              </HStack>
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                End Date*
-              </Text>
-              <HStack w={"full"}>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  borderRadius={"8px"}
-                  py={6}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Month
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  py={6}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Year
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-              </HStack>
-            </VStack>
-          </Stack>
-          <HStack>
-            <Checkbox />
-            <Text>I am currently working in this role</Text>
-          </HStack>
-          <VStack align={"start"} w={"full"} maxW={"545px"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Location*
-            </Text>
-            <HStack w={"full"}>
-              <Input
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                placeholder=""
-                value={"Lekki, Lagos"}
+        {({ values }) => {
+          return (
+            <Form>
+              <FieldArray
+                name="experiences"
+                render={(arrayHelpers) => (
+                  <div>
+                    <Button
+                      bg={"#fff"}
+                      justifyContent={"space-between"}
+                      w={"full"}
+                      maxW={"410px"}
+                      border={"1px solid #edeeef"}
+                      py={8}
+                    >
+                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                        Add experience
+                      </Text>
+                      <Box
+                        bg={"#F6F7F7"}
+                        border={"1px solid #edeeef"}
+                        cursor={"pointer"}
+                        p={3}
+                        rounded={"full"}
+                      >
+                        <GoPlus
+                          color="#4C5361"
+                          size={30}
+                          cursor={"pointer"}
+                          onClick={() => arrayHelpers.push("")}
+                        />
+                      </Box>
+                    </Button>
+                    {values.experiences.length > 0
+                      ? values.experiences.map((experience, index) => (
+                          <ExperienceForm
+                            key={index}
+                            experience={experience}
+                            index={index}
+                            remove={arrayHelpers.remove}
+                          />
+                        ))
+                      : null}
+                  </div>
+                )}
               />
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Nigeria
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </HStack>
-          </VStack>
-          <VStack w={'full'} maxW={'605px'} align={'start'}>
-            <Text color={"#4C5361"}>Description</Text>
-            <Textarea
-              placeholder="Description"
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
-              border={"1px solid #edeeef"}
-              borderRadius={"8px"}
-              py={6}
-              px={4}
-              minH={"115px"}
-              fontWeight={400}
-              resize={"none"}
-            />
-          </VStack>
-        </VStack>
-        <HStack w={'full'} justify={'end'} pb={4} mt={4} pr={4}>
-        <Button
-          bg={"#F6F7F7"}
-          color={"#4C5361"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={20}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-          border={'1px solid #EDEEEF'}
-        >
-          Clear
-        </Button>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={12}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-        >
-          Save
-        </Button>
-        </HStack>
-      </VStack>
+            </Form>
+          );
+        }}
+      </Formik>
+
       <HStack gap={2} mb={4}>
-      <Button
+        <Button
           bg={"#F6F7F7"}
           color={"#4C5361"}
           rounded={"12px"}
@@ -408,7 +258,7 @@ export const ProfileExpStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          border={'1px solid #EDEEEF'}
+          border={"1px solid #EDEEEF"}
         >
           Skip for now
         </Button>
@@ -455,7 +305,8 @@ export const ProfileEduStep = ({ setStep }) => {
         Clients like to know what you know - add your education here.
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
-        You don’t have to have a degree. Adding any relevant education helps make your profile more visible.
+        You don’t have to have a degree. Adding any relevant education helps
+        make your profile more visible.
       </Text>
       <Button
         bg={"#fff"}
@@ -637,7 +488,7 @@ export const ProfileEduStep = ({ setStep }) => {
               </Button>
             </HStack>
           </VStack>
-          <VStack w={'full'} maxW={'605px'} align={'start'}>
+          <VStack w={"full"} maxW={"605px"} align={"start"}>
             <Text color={"#4C5361"}>Description</Text>
             <Textarea
               placeholder="Description"
@@ -654,36 +505,36 @@ export const ProfileEduStep = ({ setStep }) => {
             />
           </VStack>
         </VStack>
-        <HStack w={'full'} justify={'end'} pb={4} mt={4} pr={4}>
-        <Button
-          bg={"#F6F7F7"}
-          color={"#4C5361"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={20}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-          border={'1px solid #EDEEEF'}
-        >
-          Clear
-        </Button>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={12}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-        >
-          Save
-        </Button>
+        <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
+          <Button
+            bg={"#F6F7F7"}
+            color={"#4C5361"}
+            rounded={"12px"}
+            fontWeight={400}
+            px={20}
+            py={2}
+            fontSize={14}
+            h={"max-content"}
+            border={"1px solid #EDEEEF"}
+          >
+            Clear
+          </Button>
+          <Button
+            bg={"#053AF9"}
+            color={"white"}
+            rounded={"12px"}
+            fontWeight={400}
+            px={12}
+            py={2}
+            fontSize={14}
+            h={"max-content"}
+          >
+            Save
+          </Button>
         </HStack>
       </VStack>
       <HStack gap={2} mb={4}>
-      <Button
+        <Button
           bg={"#F6F7F7"}
           color={"#4C5361"}
           rounded={"12px"}
@@ -692,7 +543,7 @@ export const ProfileEduStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          border={'1px solid #EDEEEF'}
+          border={"1px solid #EDEEEF"}
         >
           Skip for now
         </Button>
@@ -730,11 +581,7 @@ export const ProfileLangStep = ({ setStep }) => {
           </Text>
         </Box>
       </Box>
-      <Heading
-        fontWeight={700}
-        fontSize={24}
-        lineHeight={"32px"}
-      >
+      <Heading fontWeight={700} fontSize={24} lineHeight={"32px"}>
         Looking good. Next, tell us which languages you speak.
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
@@ -790,65 +637,64 @@ export const ProfileLangStep = ({ setStep }) => {
         </HStack>
         <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
           <HStack align={"start"} w={"full"} maxW={"545px"} gap={8}>
-            <VStack align={'start'} w={'full'}>
+            <VStack align={"start"} w={"full"}>
               <Text color="#4C5361" textShadow={"sm"}>
                 Language (English is required)
               </Text>
-                <Button
-                  bg={"#F2F4F7"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #D0D5DD"}
-                  borderRadius={"8px"}
-                  py={6}
-                  placeholder=""
-                  value={"Lekki, Lagos"}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    English
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
+              <Button
+                bg={"#F2F4F7"}
+                justifyContent={"space-between"}
+                w={"full"}
+                border={"1px solid #D0D5DD"}
+                borderRadius={"8px"}
+                py={6}
+                placeholder=""
+                value={"Lekki, Lagos"}
+              >
+                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                  English
+                </Text>
+                <HiOutlineChevronDown color="#4C5361" size={25} />
+              </Button>
             </VStack>
-            <VStack align={'start'} w={'full'}>
+            <VStack align={"start"} w={"full"}>
               <Text color="#4C5361" textShadow={"sm"}>
-               Proficiency
+                Proficiency
               </Text>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  py={6}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Nigeria
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
+              <Button
+                bg={"#fff"}
+                justifyContent={"space-between"}
+                w={"full"}
+                border={"1px solid #edeeef"}
+                py={6}
+                borderRadius={"8px"}
+                fontWeight={400}
+              >
+                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                  Nigeria
+                </Text>
+                <HiOutlineChevronDown color="#4C5361" size={25} />
+              </Button>
             </VStack>
-            
           </HStack>
         </VStack>
-        <HStack w={'full'} justify={'end'} pb={4} mt={4} pr={4}>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={12}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-        >
-          Save
-        </Button>
+        <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
+          <Button
+            bg={"#053AF9"}
+            color={"white"}
+            rounded={"12px"}
+            fontWeight={400}
+            px={12}
+            py={2}
+            fontSize={14}
+            h={"max-content"}
+          >
+            Save
+          </Button>
         </HStack>
       </VStack>
       <HStack gap={2} mb={4}>
-      <Button
+        <Button
           bg={"#F6F7F7"}
           color={"#4C5361"}
           rounded={"12px"}
@@ -857,7 +703,7 @@ export const ProfileLangStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          border={'1px solid #EDEEEF'}
+          border={"1px solid #EDEEEF"}
         >
           Skip for now
         </Button>
