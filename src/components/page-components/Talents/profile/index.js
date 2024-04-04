@@ -16,6 +16,7 @@ import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 import { useState } from "react";
 import { FieldArray, Form, Formik } from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
+import { EducationForm } from "../../profile-components/education";
 
 export const ProfileStep = ({ setStep }) => {
   return (
@@ -54,7 +55,7 @@ export const ProfileStep = ({ setStep }) => {
         w={"full"}
         maxW={"360px"}
       >
-        <HStack
+        <Button
           justify={"center"}
           background={"#053AF9"}
           border={"1px solid #edeeef"}
@@ -63,12 +64,13 @@ export const ProfileStep = ({ setStep }) => {
           py={2}
           rounded={"12px"}
           onClick={() => setStep(1)}
+          fontWeight={400}
         >
           <Text textAlign={"center"} fontSize={14} color={"#FFF"}>
             Import from LinkedIn
           </Text>
-        </HStack>
-        <HStack
+        </Button>
+        <Button
           justify={"center"}
           bg={"#F6F7F7"}
           border={"1px solid #edeeef"}
@@ -76,13 +78,15 @@ export const ProfileStep = ({ setStep }) => {
           px={4}
           py={2}
           rounded={"12px"}
+          fontWeight={400}
+          gap={2}
         >
           <IoCloudUploadOutline />
           <Text fontSize={14} color={"#454C58"}>
             Upload your resume
           </Text>
-        </HStack>
-        <HStack
+        </Button>
+        <Button
           justify={"center"}
           bg={"#F6F7F7"}
           border={"1px solid #edeeef"}
@@ -90,11 +94,12 @@ export const ProfileStep = ({ setStep }) => {
           px={4}
           py={2}
           rounded={"12px"}
+          fontWeight={400}
         >
           <Text fontSize={14} color={"#454C58"}>
             Fill out manually (10 min)
           </Text>
-        </HStack>
+        </Button>
       </VStack>
     </VStack>
   );
@@ -192,14 +197,12 @@ export const ProfileExpStep = ({ setStep }) => {
       </Text>
       <Formik
         initialValues={{
-          experiences: [
-            { title: "", company: "", startDate: "", endDate: "" }, // initialize with an empty form
-          ],
+          experiences: [{ title: "", company: "", startDate: "", endDate: "" }],
         }}
       >
         {({ values }) => {
           return (
-            <Form>
+            <Form style={{ width: "100%" }}>
               <FieldArray
                 name="experiences"
                 render={(arrayHelpers) => (
@@ -230,16 +233,18 @@ export const ProfileExpStep = ({ setStep }) => {
                         />
                       </Box>
                     </Button>
-                    {values.experiences.length > 0
-                      ? values.experiences.map((experience, index) => (
-                          <ExperienceForm
-                            key={index}
-                            experience={experience}
-                            index={index}
-                            remove={arrayHelpers.remove}
-                          />
-                        ))
-                      : null}
+                    <VStack align={"start"} gap={8} w={"full"} mt={10}>
+                      {values.experiences.length > 0
+                        ? values.experiences.map((experience, index) => (
+                            <ExperienceForm
+                              key={index}
+                              experience={experience}
+                              index={index}
+                              remove={arrayHelpers.remove}
+                            />
+                          ))
+                        : null}
+                    </VStack>
                   </div>
                 )}
               />
@@ -247,7 +252,6 @@ export const ProfileExpStep = ({ setStep }) => {
           );
         }}
       </Formik>
-
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -258,6 +262,7 @@ export const ProfileExpStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -308,231 +313,63 @@ export const ProfileEduStep = ({ setStep }) => {
         You don’t have to have a degree. Adding any relevant education helps
         make your profile more visible.
       </Text>
-      <Button
-        bg={"#fff"}
-        justifyContent={"space-between"}
-        w={"full"}
-        maxW={"410px"}
-        border={"1px solid #edeeef"}
-        py={8}
+      <Formik
+        initialValues={{
+          education: [''],
+        }}
       >
-        <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-          Add education
-        </Text>
-        <Box
-          bg={"#F6F7F7"}
-          border={"1px solid #edeeef"}
-          cursor={"pointer"}
-          p={3}
-          rounded={"full"}
-        >
-          <GoPlus color="#4C5361" size={30} />
-        </Box>
-      </Button>
-      <VStack
-        bg={"#FFF"}
-        rounded={"12px"}
-        border={"1px solid #edeeef"}
-        align={"start"}
-        gap={2}
-        w={"full"}
-      >
-        <HStack
-          borderBottom={"1px solid #edeeef"}
-          justify={"space-between"}
-          w={"full"}
-          p={2}
-        >
-          <Text>Add education</Text>
-          <Box
-            bg={"#F6F7F7"}
-            border={"1px solid #edeeef"}
-            cursor={"pointer"}
-            p={2}
-            rounded={"full"}
-          >
-            <HiOutlineMinus color="#4C5361" size={20} />
-          </Box>
-        </HStack>
-        <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-          <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                School/Organisation*
-              </Text>
-              <Input placeholder="Ex Northpole University" py={6} w={"full"} />
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Degree (Optional)
-              </Text>
-              <Input placeholder="Enter company name" py={6} w={"full"} />
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Field of Study
-              </Text>
-              <Input placeholder="Ex Computer Science" py={6} w={"full"} />
-            </VStack>
-          </VStack>
-          <HStack>
-            <Checkbox />
-            <Text>I am currently studying here</Text>
-          </HStack>
-          <Text fontWeight={700}>Date Attended</Text>
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            w={"full"}
-            maxW={"605px"}
-          >
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Start Date*
-              </Text>
-              <HStack w={"full"}>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  borderRadius={"8px"}
-                  py={6}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Month
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  py={6}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Year
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-              </HStack>
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                End Date*
-              </Text>
-              <HStack w={"full"}>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  borderRadius={"8px"}
-                  py={6}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Month
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-                <Button
-                  bg={"#fff"}
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  py={6}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                >
-                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                    Year
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={25} />
-                </Button>
-              </HStack>
-            </VStack>
-          </Stack>
-
-          <VStack align={"start"} w={"full"} maxW={"545px"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Location*
-            </Text>
-            <HStack w={"full"}>
-              <Input
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                placeholder=""
-                value={"Lekki, Lagos"}
+        {({ values }) => {
+          return (
+            <Form style={{ width: "100%" }}>
+              <FieldArray
+                name="education"
+                render={(arrayHelpers) => (
+                  <div>
+                    <Button
+                      bg={"#fff"}
+                      justifyContent={"space-between"}
+                      w={"full"}
+                      maxW={"410px"}
+                      border={"1px solid #edeeef"}
+                      py={8}
+                    >
+                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                        Add education
+                      </Text>
+                      <Box
+                        bg={"#F6F7F7"}
+                        border={"1px solid #edeeef"}
+                        cursor={"pointer"}
+                        p={3}
+                        rounded={"full"}
+                      >
+                        <GoPlus
+                          color="#4C5361"
+                          size={30}
+                          cursor={"pointer"}
+                          onClick={() => arrayHelpers.push("")}
+                        />
+                      </Box>
+                    </Button>
+                    <VStack align={"start"} gap={8} w={"full"} mt={10}>
+                      {values.education.length > 0
+                        ? values.education.map((education, index) => (
+                            <EducationForm
+                              key={index}
+                              education={education}
+                              index={index}
+                              remove={arrayHelpers.remove}
+                            />
+                          ))
+                        : null}
+                    </VStack>
+                  </div>
+                )}
               />
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Nigeria
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </HStack>
-          </VStack>
-          <VStack w={"full"} maxW={"605px"} align={"start"}>
-            <Text color={"#4C5361"}>Description</Text>
-            <Textarea
-              placeholder="Description"
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
-              border={"1px solid #edeeef"}
-              borderRadius={"8px"}
-              py={6}
-              px={4}
-              minH={"115px"}
-              fontWeight={400}
-              resize={"none"}
-            />
-          </VStack>
-        </VStack>
-        <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
-          <Button
-            bg={"#F6F7F7"}
-            color={"#4C5361"}
-            rounded={"12px"}
-            fontWeight={400}
-            px={20}
-            py={2}
-            fontSize={14}
-            h={"max-content"}
-            border={"1px solid #EDEEEF"}
-          >
-            Clear
-          </Button>
-          <Button
-            bg={"#053AF9"}
-            color={"white"}
-            rounded={"12px"}
-            fontWeight={400}
-            px={12}
-            py={2}
-            fontSize={14}
-            h={"max-content"}
-          >
-            Save
-          </Button>
-        </HStack>
-      </VStack>
+            </Form>
+          );
+        }}
+      </Formik>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -544,6 +381,7 @@ export const ProfileEduStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
+          onClick={() => setStep((prev) => prev + 1)}
         >
           Skip for now
         </Button>

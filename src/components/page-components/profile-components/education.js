@@ -1,18 +1,8 @@
+import { Box, Button, Checkbox, HStack, Input, Stack, Text, Textarea, VStack } from "@chakra-ui/react";
 import { Field } from "formik";
-import {
-  Box,
-  Button,
-  Checkbox,
-  HStack,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-  VStack,
-} from "@chakra-ui/react";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 
-export const ExperienceForm = ({ remove, index }) => {
+export const EducationForm = ({ remove, index }) => {
   return (
     <VStack
       bg={"#FFF"}
@@ -21,7 +11,6 @@ export const ExperienceForm = ({ remove, index }) => {
       align={"start"}
       gap={2}
       w={"full"}
-      key={index}
     >
       <HStack
         borderBottom={"1px solid #edeeef"}
@@ -29,7 +18,7 @@ export const ExperienceForm = ({ remove, index }) => {
         w={"full"}
         p={2}
       >
-        <Text fontWeight={500}>Add work experience</Text>
+        <Text fontWeight={500}>Add education</Text>
         <Box
           bg={"#F6F7F7"}
           border={"1px solid #edeeef"}
@@ -37,41 +26,35 @@ export const ExperienceForm = ({ remove, index }) => {
           p={2}
           rounded={"full"}
         >
-          <HiOutlineMinus
-            cursor={"pointer"}
-            onClick={() => remove(index)}
-            color="#4C5361"
-            size={20}
-          />
+          <HiOutlineMinus cursor={'pointer'} onClick={() => remove(index)} color="#4C5361" size={20} />
         </Box>
       </HStack>
       <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
         <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
           <VStack align={"start"} w={"full"}>
             <Text color="#4C5361" textShadow={"sm"}>
-              Title*
+              School/Organisation*
             </Text>
-            <Field
-              name={`experiences.${index}.title`}
-              as={Input}
-              placeholder="Ex Software Developer"
-              py={6}
-              w={"full"}
-            />
+            <Field as={Input} placeholder="Ex Northpole University" py={6} w={"full"} />
           </VStack>
           <VStack align={"start"} w={"full"}>
             <Text color="#4C5361" textShadow={"sm"}>
-              Company*
+              Degree (Optional)
             </Text>
-            <Field
-              name={`experiences.${index}.company`}
-              as={Input}
-              placeholder="Enter company name"
-              py={6}
-              w={"full"}
-            />
+            <Field as={Input} placeholder="Enter company name" py={6} w={"full"} />
+          </VStack>
+          <VStack align={"start"} w={"full"}>
+            <Text color="#4C5361" textShadow={"sm"}>
+              Field of Study
+            </Text>
+            <Field as={Input} placeholder="Ex Computer Science" py={6} w={"full"} />
           </VStack>
         </VStack>
+        <HStack>
+          <Checkbox />
+          <Text>I am currently studying here</Text>
+        </HStack>
+        <Text fontWeight={700}>Date Attended</Text>
         <Stack
           direction={{ base: "column", md: "row" }}
           w={"full"}
@@ -148,17 +131,13 @@ export const ExperienceForm = ({ remove, index }) => {
             </HStack>
           </VStack>
         </Stack>
-        <HStack>
-          <Checkbox />
-          <Text>I am currently working in this role</Text>
-        </HStack>
+
         <VStack align={"start"} w={"full"} maxW={"545px"}>
           <Text color="#4C5361" textShadow={"sm"}>
             Location*
           </Text>
           <HStack w={"full"}>
-            <Field
-              as={Input}
+            <Field as={Input}
               bg={"#fff"}
               justifyContent={"space-between"}
               w={"full"}
