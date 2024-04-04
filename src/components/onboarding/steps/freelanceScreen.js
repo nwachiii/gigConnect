@@ -3,6 +3,7 @@ import {
   Button,
   HStack,
   Heading,
+  Image,
   Stack,
   Text,
   VStack,
@@ -68,6 +69,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
             p={4}
             rounded={"12px"}
           >
+            <Image src="/img/radio.svg" />
             <Text fontSize={14} color={"#454C58"}>
               I am new to this
             </Text>
