@@ -17,7 +17,7 @@ import {
 } from "../profile/profile-skills-steps";
 
 export const ProfileCreation = ({ setScreenNumber }) => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(4);
   // eslint-disable-next-line react/display-name
   const withSetProfileStep = Component => props => <Component {...props} setStep={setStep} />
   const ProfileSteps = withSetProfileStep(profileSteps[step])

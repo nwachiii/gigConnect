@@ -17,6 +17,7 @@ import { useState } from "react";
 import { FieldArray, Form, Formik } from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
 import { EducationForm } from "../../profile-components/education";
+import { LanguageForm } from "../../profile-components/language";
 
 export const ProfileStep = ({ setStep }) => {
   return (
@@ -63,8 +64,8 @@ export const ProfileStep = ({ setStep }) => {
           px={4}
           py={2}
           rounded={"12px"}
-          onClick={() => setStep(1)}
           fontWeight={400}
+          isDisabled={true}
         >
           <Text textAlign={"center"} fontSize={14} color={"#FFF"}>
             Import from LinkedIn
@@ -80,6 +81,7 @@ export const ProfileStep = ({ setStep }) => {
           rounded={"12px"}
           fontWeight={400}
           gap={2}
+          isDisabled
         >
           <IoCloudUploadOutline />
           <Text fontSize={14} color={"#454C58"}>
@@ -94,6 +96,7 @@ export const ProfileStep = ({ setStep }) => {
           px={4}
           py={2}
           rounded={"12px"}
+          onClick={() => setStep(1)}
           fontWeight={400}
         >
           <Text fontSize={14} color={"#454C58"}>
@@ -229,7 +232,7 @@ export const ProfileExpStep = ({ setStep }) => {
                           color="#4C5361"
                           size={30}
                           cursor={"pointer"}
-                          onClick={() => arrayHelpers.push("")}
+                          onClick={values.experiences.length > 4 ? null : () => arrayHelpers.push("")}
                         />
                       </Box>
                     </Button>
@@ -315,7 +318,7 @@ export const ProfileEduStep = ({ setStep }) => {
       </Text>
       <Formik
         initialValues={{
-          education: [''],
+          education: [{ title: '', company: '', location: ''}],
         }}
       >
         {({ values }) => {
@@ -347,7 +350,7 @@ export const ProfileEduStep = ({ setStep }) => {
                           color="#4C5361"
                           size={30}
                           cursor={"pointer"}
-                          onClick={() => arrayHelpers.push("")}
+                          onClick={values.education.length > 4 ? null : () => arrayHelpers.push("")}
                         />
                       </Box>
                     </Button>
@@ -427,110 +430,69 @@ export const ProfileLangStep = ({ setStep }) => {
         languages you speak. English is a must, but do you speak any other
         languages?
       </Text>
-      <Button
-        bg={"#fff"}
-        justifyContent={"space-between"}
-        w={"full"}
-        maxW={"410px"}
-        border={"1px solid #edeeef"}
-        py={8}
+
+      <Formik
+        initialValues={{
+          languages: [{ lang: '', proficiency: ''}],
+        }}
       >
-        <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-          Add a language
-        </Text>
-        <Box
-          bg={"#F6F7F7"}
-          border={"1px solid #edeeef"}
-          cursor={"pointer"}
-          p={3}
-          rounded={"full"}
-        >
-          <GoPlus color="#4C5361" size={30} />
-        </Box>
-      </Button>
-      <VStack
-        bg={"#FFF"}
-        rounded={"12px"}
-        border={"1px solid #edeeef"}
-        align={"start"}
-        gap={2}
-        w={"full"}
-      >
-        <HStack
-          borderBottom={"1px solid #edeeef"}
-          justify={"space-between"}
-          w={"full"}
-          p={2}
-        >
-          <Text>Add language</Text>
-          <Box
-            bg={"#F6F7F7"}
-            border={"1px solid #edeeef"}
-            cursor={"pointer"}
-            p={2}
-            rounded={"full"}
-          >
-            <HiOutlineMinus color="#4C5361" size={20} />
-          </Box>
-        </HStack>
-        <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-          <HStack align={"start"} w={"full"} maxW={"545px"} gap={8}>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Language (English is required)
-              </Text>
-              <Button
-                bg={"#F2F4F7"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #D0D5DD"}
-                borderRadius={"8px"}
-                py={6}
-                placeholder=""
-                value={"Lekki, Lagos"}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  English
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Proficiency
-              </Text>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Nigeria
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </VStack>
-          </HStack>
-        </VStack>
-        <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
-          <Button
-            bg={"#053AF9"}
-            color={"white"}
-            rounded={"12px"}
-            fontWeight={400}
-            px={12}
-            py={2}
-            fontSize={14}
-            h={"max-content"}
-          >
-            Save
-          </Button>
-        </HStack>
-      </VStack>
+        {({ values, setFieldValue }) => {
+          return (
+            <Form style={{ width: "100%" }}>
+              <FieldArray
+                name="languages"
+                render={(arrayHelpers) => (
+                  <div>
+                    <Button
+                      bg={"#fff"}
+                      justifyContent={"space-between"}
+                      w={"full"}
+                      maxW={"410px"}
+                      border={"1px solid #edeeef"}
+                      py={8}
+                    >
+                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                        Add a language
+                      </Text>
+                      <Box
+                        bg={"#F6F7F7"}
+                        border={"1px solid #edeeef"}
+                        cursor={"pointer"}
+                        p={3}
+                        rounded={"full"}
+                        onClick={() => {
+                          if (values.languages.length <= 4) {
+                            arrayHelpers.push("");
+                          }
+                        }}
+                      >
+                        <GoPlus
+                          color="#4C5361"
+                          size={30}
+                          cursor={"pointer"}
+                        />
+                      </Box>
+                    </Button>
+                    <VStack align={"start"} gap={8} w={"full"} mt={10}>
+                      {values.languages.length > 0
+                        ? values.languages.map((language, index) => (
+                            <LanguageForm
+                              key={index}
+                              language={language}
+                              index={index}
+                              remove={arrayHelpers.remove}
+                              setFieldValue={setFieldValue}
+                            />
+                          ))
+                        : null}
+                    </VStack>
+                  </div>
+                )}
+              />
+            </Form>
+          );
+        }}
+      </Formik>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}

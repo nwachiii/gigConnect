@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   HStack,
   Heading,
   Image,
@@ -13,11 +14,26 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { GoPlus } from "react-icons/go";
-import { HiOutlineChevronDown } from "react-icons/hi2";
+import { HiMiniXMark, HiOutlineChevronDown } from "react-icons/hi2";
 import { RiSearchLine } from "react-icons/ri";
+import { IoIosAdd } from "react-icons/io";
+import { listSkills } from "../../profile-components/lib";
 
 export const ProfileSkillsStep = ({ setStep }) => {
+  const [skills, setSkills] = useState([]);
+  const [suggestedSkills, setSuggestedSkills] = useState(listSkills)
+  const addSkill = (skill) => {
+    setSkills([...skills, skill]);
+    setSuggestedSkills(listSkills.filter(item => item !== skill));
+  };
+
+  const removeSkill = (skill) => {
+    setSkills(skills.filter(item => item !== skill));
+    setSuggestedSkills([...listSkills, skill]);
+  };
+
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -43,20 +59,86 @@ export const ProfileSkillsStep = ({ setStep }) => {
       </Text>
       <VStack align={"start"} w={"full"} maxW={"410px"}>
         <Text fontWeight={600}>Your skills</Text>
-        <Input placeholder="Search and select a skill" py={6} w={"full"} />
+        <Stack
+          flexWrap={'wrap'}
+          h={skills.length > 0 ? 'auto' : "48px"}
+          border={"1px solid #EDEEEF"}
+          rounded={"8px"}
+          p={"8px"}
+          w={"full"}
+          align={'start'}
+          flexDirection={'row'}
+        >
+          {skills.length > 0 ? (
+            skills.map((skill, index) => {
+              return (
+                <Button
+                  key={index}
+                  bg={"#053AF9"}
+                  border={"1px solid #EDEEEF"}
+                  padding={"5px 11px"}
+                  rounded={"full"}
+                  w={"max-content"}
+                  justify={"space-between"}
+                  color={'white'}
+                  h={'28px'}
+                  fontWeight={500}
+                >
+                  <Text
+                    whiteSpace={"nowrap"}
+                    fontSize={14}
+                    fontWeight={500}
+                  >
+                    {skill}
+                  </Text>
+                  <HiMiniXMark size={25} onClick={() => removeSkill(skill)} />
+                </Button>
+              );
+            })
+          ) : <Text fontSize={14} color={"#878C95"}>
+            Search and select a skill
+          </Text>}
+        </Stack>
       </VStack>
       <VStack align={"start"} w={"full"}>
         <Text>Search skills</Text>
         <InputGroup alignItems={"center"}>
           <InputLeftElement p={2} left={"3px"} top={"5px"}>
-            <RiSearchLine size={25} />
+            <RiSearchLine color="#707581" size={25} />
           </InputLeftElement>
           <Input placeholder="Search" py={6} w={"full"} />
         </InputGroup>
         <Text>For the best results, add 10-15 skills max</Text>
       </VStack>
-      <VStack>
+      <VStack w={"full"} align={"start"}>
         <Text fontWeight={600}>Suggested skills</Text>
+        <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
+          {suggestedSkills.map((skill, index) => {
+            return (
+              <Button
+                key={index}
+                bg={"#F6F7F7"}
+                border={"1px solid #EDEEEF"}
+                padding={"5px 11px"}
+                rounded={"full"}
+                w={"max-content"}
+                justify={"space-between"}
+                h={'28px'}
+                onClick={() => addSkill(skill)}
+              >
+                <Text
+                  whiteSpace={"nowrap"}
+                  fontSize={14}
+                  fontWeight={500}
+                  color={"#4C5361"}
+                >
+                  {skill}
+                </Text>
+                <IoIosAdd size={25} color="#4C5361" />
+              </Button>
+            );
+          })}
+        </Flex>
       </VStack>
       <HStack gap={2} mb={4}>
         <Button
@@ -68,6 +150,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -82,6 +165,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
+          isDisabled={skills.length < 1}
         >
           Next, write an overview
         </Button>
@@ -91,6 +175,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
 };
 
 export const ProfileBioStep = ({ setStep }) => {
+  const [userOverview, setUserOverview] = useState("");
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -106,12 +191,7 @@ export const ProfileBioStep = ({ setStep }) => {
           </Text>
         </Box>
       </Box>
-      <Heading
-        fontWeight={700}
-        // maxW={"360px"}
-        fontSize={24}
-        lineHeight={"32px"}
-      >
+      <Heading fontWeight={700} fontSize={24} lineHeight={"32px"}>
         Great. Now write a bio to tell the world about yourself.
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
@@ -151,6 +231,8 @@ export const ProfileBioStep = ({ setStep }) => {
               minH={"115px"}
               fontWeight={400}
               resize={"none"}
+              value={userOverview}
+              onChange={(e) => setUserOverview(e.target.value)}
             />
             <Text>At least 100 characters</Text>
           </VStack>
@@ -165,6 +247,7 @@ export const ProfileBioStep = ({ setStep }) => {
           px={4}
           py={"6px"}
           fontSize={14}
+          onClick={() => setStep((prev) => prev + 1)}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
         >
@@ -179,6 +262,7 @@ export const ProfileBioStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           onClick={() => setStep((prev) => prev + 1)}
+          isDisabled={userOverview.length < 100}
           h={"max-content"}
         >
           Next, choose your categories
@@ -276,12 +360,7 @@ export const ProfileRateStep = ({ setStep }) => {
           </Text>
         </Box>
       </Box>
-      <Heading
-        fontWeight={700}
-        // maxW={"360px"}
-        fontSize={24}
-        lineHeight={"32px"}
-      >
+      <Heading fontWeight={700} fontSize={24} lineHeight={"32px"}>
         Now, let’s set your hourly rate.
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
