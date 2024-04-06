@@ -431,13 +431,14 @@ export const ProfileLangStep = ({ setStep }) => {
       </Text>
       <Formik
         initialValues={{
-          languages: [{ lang: "English", proficiency: "" }],
+          languages: [{ lang: '', proficiency: "" }],
         }}
       >
         {({ values, setFieldValue }) => {
           const isDisabled = values.languages.some(
-            (language) => language.proficiency === ""
+            (language) => !language.lang || !language.proficiency
           );
+          console.log(values);
           return (
             <Form style={{ width: "100%" }}>
               <FieldArray

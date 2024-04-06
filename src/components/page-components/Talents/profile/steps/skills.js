@@ -90,7 +90,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
                   padding={"5px 11px"}
                   rounded={"full"}
                   w={"max-content"}
-                  justify={"space-between"}
+                  gap={'10px'}
                   color={"white"}
                   h={"28px"}
                   fontWeight={500}

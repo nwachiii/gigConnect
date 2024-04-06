@@ -10,6 +10,7 @@ import {
   Select,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { Field } from "formik";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
@@ -17,31 +18,59 @@ import { listLanguages, proficiencyLevels } from "./lib";
 import { useState } from "react";
 
 export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
-  const [isSaved, setIsSaved] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
+  language.lang = index < 1 ? "English" : language.lang;
+
+  const toast = useToast()
+  const handleRemoveLang = () => {
+    if (index > 1) {
+      remove(index)
+    } else {
+      toast({
+        status: 'error',
+        position: 'top-right',
+        duration: 3000,
+        description: 'You must have at least one language'
+      })
+    }
+  }
+
   return (
     <>
       {isSaved ? (
         <HStack
-          bg={"#FFF"}
+          bg={"#F6F7F7"}
           rounded={"12px"}
           border={"1px solid #edeeef"}
-          align={"start"}
-          gap={2}
           w={"full"}
+          justify={"space-between"}
+          p={2}
         >
-          <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-            <Text>{language.lang}</Text>
-            <Text>{language.proficiency.label}</Text>
-            <Text>{language.proficiency.description}</Text>
+          <VStack align={"start"} gap={1}>
+            <Text fontWeight={500}>{language.lang}</Text>
+            <Text fontSize={14}>{language.proficiency.label}</Text>
+            <Text fontSize={12}>{language.proficiency.description}</Text>
           </VStack>
-          <VStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
-            <Box padding={"12px"} border={"1px solid #FEE4E2"}>
-              <Image src="/img/icons/editt-icon.svg" alt="" />
+          <HStack justify={"end"}>
+            <Box
+              padding={"12px"}
+              cursor={"pointer"}
+              border={"1px solid #EDEEEF"}
+              rounded={"full"}
+              onClick={() => setIsSaved(false)}
+            >
+              <Image src="/img/icons/edit-icon.svg" alt="" />
             </Box>
-            <Box padding={"12px"} border={"1px solid #FEE4E2"}>
+            <Box
+              padding={"12px"}
+              cursor={"pointer"}
+              border={"1px solid #FEE4E2"}
+              rounded={"full"}
+              onClick={handleRemoveLang}
+            >
               <Image src="/img/icons/trash-icon.svg" alt="" />
             </Box>
-          </VStack>
+          </HStack>
         </HStack>
       ) : (
         <VStack
@@ -65,7 +94,7 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
               cursor={"pointer"}
               p={2}
               rounded={"full"}
-              onClick={() => remove(index)}
+              onClick={handleRemoveLang}
             >
               <HiOutlineMinus color="#4C5361" size={20} />
             </Box>
@@ -162,6 +191,8 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
               py={2}
               fontSize={14}
               h={"max-content"}
+              onClick={() => setIsSaved(true)}
+              isDisabled={language.proficiency === "" || language.lang === ""}
             >
               Save
             </Button>
