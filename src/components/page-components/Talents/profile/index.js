@@ -1,18 +1,14 @@
 import {
   Box,
   Button,
-  Checkbox,
   HStack,
   Heading,
   Input,
-  Stack,
   Text,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { GoPlus } from "react-icons/go";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 import { useState } from "react";
 import { FieldArray, Form, Formik } from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
@@ -35,12 +31,7 @@ export const ProfileStep = ({ setStep }) => {
           </Text>
         </Box>
       </Box>
-      <Heading
-        fontWeight={700}
-        // maxW={"360px"}
-        fontSize={24}
-        lineHeight={"32px"}
-      >
+      <Heading fontWeight={700} fontSize={24} lineHeight={"32px"}>
         How would you like to tell us about yourself?
       </Heading>
       <Text fontSize={12} color={"#4C5361"}>
@@ -232,7 +223,11 @@ export const ProfileExpStep = ({ setStep }) => {
                           color="#4C5361"
                           size={30}
                           cursor={"pointer"}
-                          onClick={values.experiences.length > 4 ? null : () => arrayHelpers.push("")}
+                          onClick={
+                            values.experiences.length > 4
+                              ? null
+                              : () => arrayHelpers.push("")
+                          }
                         />
                       </Box>
                     </Button>
@@ -318,7 +313,7 @@ export const ProfileEduStep = ({ setStep }) => {
       </Text>
       <Formik
         initialValues={{
-          education: [{ title: '', company: '', location: ''}],
+          education: [{ title: "", company: "", location: "" }],
         }}
       >
         {({ values }) => {
@@ -350,7 +345,11 @@ export const ProfileEduStep = ({ setStep }) => {
                           color="#4C5361"
                           size={30}
                           cursor={"pointer"}
-                          onClick={values.education.length > 4 ? null : () => arrayHelpers.push("")}
+                          onClick={
+                            values.education.length > 4
+                              ? null
+                              : () => arrayHelpers.push("")
+                          }
                         />
                       </Box>
                     </Button>
@@ -430,13 +429,15 @@ export const ProfileLangStep = ({ setStep }) => {
         languages you speak. English is a must, but do you speak any other
         languages?
       </Text>
-
       <Formik
         initialValues={{
-          languages: [{ lang: '', proficiency: ''}],
+          languages: [{ lang: "English", proficiency: "" }],
         }}
       >
         {({ values, setFieldValue }) => {
+          const isDisabled = values.languages.some(
+            (language) => language.proficiency === ""
+          );
           return (
             <Form style={{ width: "100%" }}>
               <FieldArray
@@ -466,11 +467,7 @@ export const ProfileLangStep = ({ setStep }) => {
                           }
                         }}
                       >
-                        <GoPlus
-                          color="#4C5361"
-                          size={30}
-                          cursor={"pointer"}
-                        />
+                        <GoPlus color="#4C5361" size={30} cursor={"pointer"} />
                       </Box>
                     </Button>
                     <VStack align={"start"} gap={8} w={"full"} mt={10}>
@@ -489,38 +486,40 @@ export const ProfileLangStep = ({ setStep }) => {
                   </div>
                 )}
               />
+              <HStack gap={2} mb={4} pt={4}>
+                <Button
+                  bg={"#F6F7F7"}
+                  color={"#4C5361"}
+                  rounded={"12px"}
+                  fontWeight={400}
+                  px={4}
+                  py={"6px"}
+                  fontSize={14}
+                  h={"max-content"}
+                  onClick={() => setStep((prev) => prev + 1)}
+                  border={"1px solid #EDEEEF"}
+                >
+                  Skip for now
+                </Button>
+                <Button
+                  bg={"#053AF9"}
+                  color={"white"}
+                  rounded={"12px"}
+                  fontWeight={400}
+                  px={4}
+                  py={"6px"}
+                  fontSize={14}
+                  h={"max-content"}
+                  onClick={() => setStep((prev) => prev + 1)}
+                  isDisabled={isDisabled}
+                >
+                  Next, add your skills
+                </Button>
+              </HStack>
             </Form>
           );
         }}
       </Formik>
-      <HStack gap={2} mb={4}>
-        <Button
-          bg={"#F6F7F7"}
-          color={"#4C5361"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={4}
-          py={"6px"}
-          fontSize={14}
-          h={"max-content"}
-          border={"1px solid #EDEEEF"}
-        >
-          Skip for now
-        </Button>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={4}
-          py={"6px"}
-          fontSize={14}
-          h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
-        >
-          Next, add your skills
-        </Button>
-      </HStack>
     </VStack>
   );
 };

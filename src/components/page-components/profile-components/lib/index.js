@@ -25,3 +25,82 @@ export const listSkills = [
   "Negotiation",
   "Database Management",
 ];
+
+export const listServices = [
+  "Website Development",
+  "Mobile App Development",
+  "Graphic Design",
+  "Digital Marketing Consultation",
+  "Content Writing",
+  "SEO (Search Engine Optimization)",
+  "Social Media Management",
+  "Video Production",
+  "Photography Services",
+  "UI/UX Design",
+  "Data Analysis",
+  "Financial Consulting",
+  "Legal Consultation",
+  "Language Translation",
+  "Virtual Assistant Services",
+  "Event Planning",
+  "Fitness Coaching",
+  "Nutritional Counseling",
+  "Home Cleaning",
+  "Personal Styling",
+  "Tutoring Services",
+  "Interior Design Consultation",
+  "Music Lessons",
+  "Landscaping Services",
+  "Pet Sitting/Dog Walking"
+]
+
+export const listLanguages = [
+  "English",
+  "Spanish",
+  "Mandarin Chinese",
+  "Hindi",
+  "French",
+  "Arabic",
+  "Bengali",
+  "Russian",
+  "Portuguese",
+  "Urdu",
+  "Indonesian",
+  "German",
+  "Japanese",
+  "Swahili",
+  "Telugu",
+  "Korean",
+  "Turkish",
+  "Tamil",
+  "Italian",
+  "Vietnamese",
+  "Filipino",
+  "Thai",
+  "Yoruba",
+  "Dutch",
+  "Polish"
+]
+
+export const proficiencyLevels = [
+  {
+    value: "basic",
+    label: "Basic",
+    description: "I write clearly in this language",
+  },
+  {
+    value: "conversational",
+    label: "Conversational",
+    description: "I write and speak clearly in this language",
+  },
+  {
+    value: "fluent",
+    label: "Fluent",
+    description: "I write and speak this language to a high level",
+  },
+  {
+    value: "native",
+    label: "Native or Bilingual",
+    description: "I write and speak this language perfectly",
+  },
+];
