@@ -1,6 +1,57 @@
-import { Box, Button, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Heading,
+  Input,
+  Text,
+  VStack,
+  useToast,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 export const ProfileRateStep = ({ setStep }) => {
+  const [fees, setFees] = useState({
+    hour: "",
+    service: "",
+    final: "",
+  });
+  const toast = useToast()
+  const handleInputChange = (event) => {
+    // Allow only numbers
+    const regex = /^[0-9]*$/;
+    if (regex.test(event.target.value)) {
+      if (parseFloat(event.target.value) > 100) {
+        toast({
+          status: 'error',
+          duration: 3000,
+          position: 'top-right',
+          description: 'You cannot charge more than $100 for hourly rate'
+        })
+      } else {
+        setFees((prev) => ({
+          ...prev,
+          hour: event.target.value,
+        }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (fees.hour) {
+      const hourFee = parseFloat(fees.hour);
+      const serviceFee = hourFee * 0.05; // 5% of hourly fee
+      const finalFee = hourFee - serviceFee;
+
+      setFees((prev) => ({
+        ...prev,
+        service: serviceFee.toFixed(2),
+        final: finalFee.toFixed(2), 
+      }));
+    }
+  }, [fees.hour]);
+
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -49,10 +100,26 @@ export const ProfileRateStep = ({ setStep }) => {
             </Text>
           </VStack>
           <HStack align={"start"}>
-            <Box border={"1px solid #EDEEEF"} px={4} py={3} rounded={"8px"}>
+            <Flex
+              border={"1px solid #EDEEEF"}
+              p={"10px 14px"}
+              h={"44px"}
+              rounded={"8px"}
+            >
               /hr
-            </Box>
-            <Input placeholder="$0.00" py={6} px={4} w={"full"} maxW={"90px"} />
+            </Flex>
+            <Input
+              value={fees.hour}
+              placeholder="$0.00"
+              p={"10px 16px"}
+              w={"full"}
+              h={"44px"}
+              maxW={"90px"}
+              onChange={handleInputChange}
+              onBlur={(e) => {
+                e.target.value = parseFloat(e.target.value).toFixed(2);
+              }}
+            />
           </HStack>
         </HStack>
         <HStack
@@ -73,10 +140,23 @@ export const ProfileRateStep = ({ setStep }) => {
             </Text>
           </VStack>
           <HStack align={"start"}>
-            <Box border={"1px solid #EDEEEF"} px={4} py={3} rounded={"8px"}>
+            <Flex
+              border={"1px solid #EDEEEF"}
+              p={"10px 14px"}
+              h={"44px"}
+              rounded={"8px"}
+            >
               /hr
-            </Box>
-            <Input placeholder="$0.00" py={6} px={4} w={"full"} maxW={"90px"} />
+            </Flex>
+            <Input
+              value={fees.service}
+              isDisabled
+              placeholder="$0.00"
+              p={"10px 16px"}
+              h={"44px"}
+              w={"full"}
+              maxW={"90px"}
+            />
           </HStack>
         </HStack>
         <HStack
@@ -97,10 +177,23 @@ export const ProfileRateStep = ({ setStep }) => {
             </Text>
           </VStack>
           <HStack align={"start"}>
-            <Box border={"1px solid #EDEEEF"} px={4} py={3} rounded={"8px"}>
+            <Flex
+              border={"1px solid #EDEEEF"}
+              p={"10px 14px"}
+              h={"44px"}
+              rounded={"8px"}
+            >
               /hr
-            </Box>
-            <Input placeholder="$0.00" py={6} px={4} w={"full"} maxW={"90px"} />
+            </Flex>
+            <Input
+              value={fees.final}
+              isDisabled
+              placeholder="$0.00"
+              p={"10px 16px"}
+              w={"full"}
+              h={"44px"}
+              maxW={"90px"}
+            />
           </HStack>
         </HStack>
       </VStack>
@@ -114,6 +207,7 @@ export const ProfileRateStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -128,6 +222,7 @@ export const ProfileRateStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
+          isDisabled={fees.hour === ''}
         >
           Next, add your profile photo and location
         </Button>

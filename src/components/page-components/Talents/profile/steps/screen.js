@@ -1,8 +1,8 @@
-import { Box, Button, HStack, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Heading, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 
-export const ProfileScreenStep = ({ setStep }) => {
+export const ProfileScreenStep = () => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
