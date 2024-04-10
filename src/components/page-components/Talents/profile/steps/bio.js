@@ -97,4 +97,4 @@ export const ProfileBioStep = ({ setStep }) => {
         </HStack>
       </VStack>
     );
-  };
+};

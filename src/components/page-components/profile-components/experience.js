@@ -11,8 +11,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
+import { experienceValues } from "@/lib/schema";
+import { CustomDatePicker } from "@/components/generic-components/DatePicker";
 
-export const ExperienceForm = ({ remove, index }) => {
+export const ExperienceForm = ({ remove, index, formik }) => {
+  const isValid = !(formik.errors.experiences && formik.errors.experiences[index])
   return (
     <VStack
       bg={"#FFF"}
@@ -58,13 +62,14 @@ export const ExperienceForm = ({ remove, index }) => {
               py={6}
               w={"full"}
             />
+            <FormErrorMessage name={`experiences.${index}.title`} />
           </VStack>
           <VStack align={"start"} w={"full"}>
             <Text color="#4C5361" textShadow={"sm"}>
               Company*
             </Text>
             <Field
-              name={`experiences.${index}.company`}
+              name={`experiences.${index}.companyName`}
               as={Input}
               placeholder="Enter company name"
               py={6}
@@ -81,6 +86,7 @@ export const ExperienceForm = ({ remove, index }) => {
             <Text color="#4C5361" textShadow={"sm"}>
               Start Date*
             </Text>
+            <CustomDatePicker view={'month'} />
             <HStack w={"full"}>
               <Button
                 bg={"#fff"}
@@ -212,6 +218,7 @@ export const ExperienceForm = ({ remove, index }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
+          onClick={() => formik.setFieldValue(`experiences.${index}`, experienceValues)}
         >
           Clear
         </Button>
@@ -224,6 +231,7 @@ export const ExperienceForm = ({ remove, index }) => {
           py={2}
           fontSize={14}
           h={"max-content"}
+          isDisabled={!isValid}
         >
           Save
         </Button>
