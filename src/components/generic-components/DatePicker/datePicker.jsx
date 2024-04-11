@@ -1,32 +1,36 @@
-import { Select } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Select, VStack } from "@chakra-ui/react";
+import { Field } from "formik";
 import { HiOutlineChevronDown } from "react-icons/hi2";
-export const CustomDatePicker = ({ view, minDate, maxDate }) => {
-  const [values, setValues] = useState([]);
-  useEffect(() => {
-    switch (view) {
-      case "month":
-        setValues(months);
-      case "year":
-        let years = [];
-
-        for (let year = 1924; year <= new Date().getFullYear(); year++) {
-          years.push(year);
-        }
-        setValues(years);
-    }
-  }, [view]);
-
+import { FormErrorMessage } from "../FormErrorMessage";
+export const MonthPicker = ({ name, minDate, endYear, formik, isDisabled }) => {
+  const sameYear = minDate?.year === endYear
+  const MIN_MONTH = sameYear ? minDate?.month : 0;
   return (
-    <Select placeholder={view === "month" ? 'Month' : 'Year'} icon={<HiOutlineChevronDown color="#4C5361" size={25} />} required>
-      {values.map((value, index) => {
-        return (
-          <option key={index} value={view === "month" ? index : value}>
-            {value}
-          </option>
-        );
-      })}
-    </Select>
+    <VStack align={"start"} w={"full"}>
+      <Field
+        as={Select}
+        w={"full"}
+        h={"44px"}
+        placeholder={"Month"}
+        _placeholder={{
+          color: "#4C5361",
+        }}
+        icon={<HiOutlineChevronDown color="#4C5361" size={25} />}
+        onChange={(e) => formik.setFieldValue(name, e.target.value)}
+        name={name}
+        fontSize={14}
+        disabled={isDisabled}
+      >
+        {months.slice(MIN_MONTH).map((value, index) => {
+          return (
+            <option key={index} value={index + 1}>
+              {value}
+            </option>
+          );
+        })}
+      </Field>
+      <FormErrorMessage name={name} />
+    </VStack>
   );
 };
 
@@ -44,3 +48,37 @@ const months = [
   "November",
   "December",
 ];
+
+export const YearPicker = ({ name, minDate, formik, isDisabled }) => {
+  let years = [];
+  for (let year = new Date().getFullYear(); year >= (minDate ?? 1924); year--) {
+    years.push(year);
+  }
+  return (
+    <VStack align={"start"} w={"full"}>
+      <Field
+        w={"full"}
+        as={Select}
+        h={"44px"}
+        placeholder={"Year"}
+        _placeholder={{
+          color: "#4C5361",
+        }}
+        icon={<HiOutlineChevronDown color="#4C5361" size={25} />}
+        onChange={(e) => formik.setFieldValue(name, e.target.value)}
+        name={name}
+        fontSize={14}
+        disabled={isDisabled}
+      >
+        {years.map((value, index) => {
+          return (
+            <option key={index} value={value}>
+              {value}
+            </option>
+          );
+        })}
+      </Field>
+      <FormErrorMessage name={name} />
+    </VStack>
+  );
+};

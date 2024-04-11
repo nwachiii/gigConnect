@@ -3,18 +3,36 @@ import * as Yup from "yup";
 export const experienceValues = {
     title: '',
     companyName: '',
-    startDate: '',
-    endDate: '',
-    location: '',
+    startDate: {
+        month: '',
+        year: ''
+    },
+    endDate: {
+        month: '',
+        year: ''
+    },
+    location: {
+        state: '',
+        country: '',
+    },
     description: ''
 }
 
 const experienceValidation = Yup.object().shape({
     title: Yup.string().required('Required'),
     companyName: Yup.string().required('Required'),
-    startDate: Yup.string().required('Required'),
-    endDate: Yup.string().required('Required'),
-    location: Yup.string().required('Required'),
+    startDate: Yup.object().shape({
+        month: Yup.string().required('Required'),
+        year: Yup.string().required('Required')
+    }),
+    endDate: Yup.object().shape({
+        month: Yup.string().required('Required'),
+        year: Yup.string().required('Required')
+    }),
+    location: Yup.object().shape({
+        state: Yup.string().required('Required'),
+        country: Yup.string().required('Required')
+    }),
     description: Yup.string().required('Required'),
 });
 

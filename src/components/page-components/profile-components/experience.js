@@ -13,10 +13,16 @@ import {
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 import { experienceValues } from "@/lib/schema";
-import { CustomDatePicker } from "@/components/generic-components/DatePicker";
+import {
+  MonthPicker,
+  YearPicker,
+} from "@/components/generic-components/DatePicker";
 
 export const ExperienceForm = ({ remove, index, formik }) => {
-  const isValid = !(formik.errors.experiences && formik.errors.experiences[index])
+  const isValid = !(
+    formik.errors.experiences && formik.errors.experiences[index]
+  );
+  const isDateFilled = !(formik.values.experiences[index].startDate.month && formik.values.experiences[index].startDate.year)
   return (
     <VStack
       bg={"#FFF"}
@@ -86,71 +92,35 @@ export const ExperienceForm = ({ remove, index, formik }) => {
             <Text color="#4C5361" textShadow={"sm"}>
               Start Date*
             </Text>
-            <CustomDatePicker view={'month'} />
-            <HStack w={"full"}>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Month
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Year
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
+            <HStack align={"start"} w={"full"}>
+              <MonthPicker
+                formik={formik}
+                name={`experiences.${index}.startDate.month`}
+              />
+              <YearPicker
+                formik={formik}
+                name={`experiences.${index}.startDate.year`}
+              />
             </HStack>
           </VStack>
           <VStack align={"start"} w={"full"}>
             <Text color="#4C5361" textShadow={"sm"}>
               End Date*
             </Text>
-            <HStack w={"full"}>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Month
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Year
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
+            <HStack align={"start"} w={"full"}>
+              <MonthPicker
+                minDate={formik.values.experiences[index].startDate}
+                endYear={formik.values.experiences[index].endDate.year}
+                formik={formik}
+                isDisabled={isDateFilled}
+                name={`experiences.${index}.endDate.month`}
+              />
+              <YearPicker
+                minDate={formik.values.experiences[index].startDate.year}
+                formik={formik}
+                name={`experiences.${index}.endDate.year`}
+                isDisabled={isDateFilled}
+              />
             </HStack>
           </VStack>
         </Stack>
@@ -165,14 +135,17 @@ export const ExperienceForm = ({ remove, index, formik }) => {
           <HStack w={"full"}>
             <Field
               as={Input}
-              bg={"#fff"}
               justifyContent={"space-between"}
               w={"full"}
               border={"1px solid #edeeef"}
               borderRadius={"8px"}
               py={6}
-              placeholder=""
-              value={"Lekki, Lagos"}
+              placeholder="Lekki, Lagos"
+              _placeholder={{
+                color: "#4C5361",
+              }}
+              value={""}
+              name={`experiences.${index}.location.state`}
             />
             <Button
               bg={"#fff"}
@@ -218,7 +191,9 @@ export const ExperienceForm = ({ remove, index, formik }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => formik.setFieldValue(`experiences.${index}`, experienceValues)}
+          onClick={() =>
+            formik.setFieldValue(`experiences.${index}`, experienceValues)
+          }
         >
           Clear
         </Button>
