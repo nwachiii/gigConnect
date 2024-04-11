@@ -10,13 +10,15 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
+import { HiOutlineMinus } from "react-icons/hi2";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 import { experienceValues } from "@/lib/schema";
 import {
   MonthPicker,
   YearPicker,
 } from "@/components/generic-components/DatePicker";
+import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
+import { countries } from "./lib";
 
 export const ExperienceForm = ({ remove, index, formik }) => {
   const isValid = !(
@@ -132,40 +134,33 @@ export const ExperienceForm = ({ remove, index, formik }) => {
           <Text color="#4C5361" textShadow={"sm"}>
             Location*
           </Text>
-          <HStack w={"full"}>
+          <HStack align={'start'} w={"full"}>
             <Field
               as={Input}
               justifyContent={"space-between"}
               w={"full"}
               border={"1px solid #edeeef"}
               borderRadius={"8px"}
-              py={6}
+              p={'10px 15px'}
               placeholder="Lekki, Lagos"
               _placeholder={{
                 color: "#4C5361",
               }}
-              value={""}
+              h={'44px'}
               name={`experiences.${index}.location.state`}
+              fontSize="14px"
             />
-            <Button
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
-              border={"1px solid #edeeef"}
-              py={6}
-              borderRadius={"8px"}
-              fontWeight={400}
-            >
-              <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                Nigeria
-              </Text>
-              <HiOutlineChevronDown color="#4C5361" size={25} />
-            </Button>
+            <FieldSelect
+              name={`experiences.${index}.location.country`}
+              options={countries}
+              placeholder={'Nigeria'}
+            />
           </HStack>
         </VStack>
         <VStack w={"full"} maxW={"605px"} align={"start"}>
           <Text color={"#4C5361"}>Description</Text>
-          <Textarea
+          <Field
+            as={Textarea}
             placeholder="Description"
             bg={"#fff"}
             justifyContent={"space-between"}
@@ -177,6 +172,7 @@ export const ExperienceForm = ({ remove, index, formik }) => {
             minH={"115px"}
             fontWeight={400}
             resize={"none"}
+            name={`experiences.${index}.description`}
           />
         </VStack>
       </VStack>
