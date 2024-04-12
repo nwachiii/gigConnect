@@ -2,12 +2,10 @@ import {
   Box,
   Button,
   HStack,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Select,
   Text,
   VStack,
   useToast,
@@ -22,7 +20,7 @@ import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
 export const LanguageForm = ({ formik, remove, index }) => {
   const [isSaved, setIsSaved] = useState(false);
   const toast = useToast();
-  const isValid = !(formik.errors.languages && formik.errors.languages[index]);
+  const isValid = !(formik.errors.languages && formik.errors.languages?.[index]);
   const handleRemoveLang = () => {
     if (index >= 1) {
       remove(index);
@@ -36,15 +34,27 @@ export const LanguageForm = ({ formik, remove, index }) => {
     }
   };
 
+  const saveLanguage = () => {
+    setIsSaved(true);
+    toast({
+      title: "Experience Saved",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right",
+    });
+  };
+
+  const proficiencyValue = formik.values.languages[index]?.proficiency;
+  const matchedProficiency = proficiencyLevels.find(level => level.label === proficiencyValue);
+
   return (
     <>
       {isSaved ? (
         <FormSavedBox
-          heading={formik.values.languages[index]?.fieldOfStudy}
-          description={formik.values.languages[index]?.schoolName}
-          tagline={`${START_DATE.format("MMM, YYYY")} - ${
-            isChecked ? "Present" : END_DATE.format("MMM, YYYY")
-          }`}
+          heading={formik.values.languages[index]?.name}
+          description={formik.values.languages[index]?.proficiency}
+          tagline={matchedProficiency?.description}
           handleDelete={handleRemoveLang}
           handleEdit={() => setIsSaved(false)}
         />
@@ -90,7 +100,7 @@ export const LanguageForm = ({ formik, remove, index }) => {
                 <FieldSelect
                   name={`languages.${index}.name`}
                   options={listLanguages}
-                  placeholder={"English"}
+                  placeholder={"Select language"}
                   formik={formik}
                   value={index < 1 && "English"}
                   bg={index < 1 ? '#F2F4F7' : ''}
@@ -132,7 +142,7 @@ export const LanguageForm = ({ formik, remove, index }) => {
                           onClick={() =>
                             formik.setFieldValue(
                               `languages.${index}.proficiency`,
-                              level
+                              level.label
                             )
                           }
                         >
@@ -160,7 +170,7 @@ export const LanguageForm = ({ formik, remove, index }) => {
               py={2}
               fontSize={14}
               h={"max-content"}
-              onClick={() => setIsSaved(true)}
+              onClick={saveLanguage}
               isDisabled={!isValid}
             >
               Save

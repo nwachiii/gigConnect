@@ -276,7 +276,7 @@ export const ProfileExpStep = ({ setStep }) => {
           onClick={() => setStep((prev) => prev + 1)}
           isDisabled={!formik.isValid}
         >
-          Next, add your experience
+          Next, add your education
         </Button>
       </HStack>
     </VStack>
@@ -397,7 +397,7 @@ export const ProfileEduStep = ({ setStep }) => {
           onClick={() => setStep((prev) => prev + 1)}
           isDisabled={!formik.isValid}
         >
-          Next, add your education
+          Next, add your languages
         </Button>
       </HStack>
     </VStack>
@@ -406,7 +406,7 @@ export const ProfileEduStep = ({ setStep }) => {
 
 export const ProfileLangStep = ({ setStep }) => {
   const formik = useFormik({
-    initialValues: { languages: [languageSchema] },
+    initialValues: { languages: [languageValues] },
     validationSchema: languageSchema,
     validateOnMount: true,
   })
@@ -487,6 +487,36 @@ export const ProfileLangStep = ({ setStep }) => {
           />
         </Form>
       </FormikProvider>
+      <HStack gap={2} mb={4}>
+        <Button
+          bg={"#F6F7F7"}
+          color={"#4C5361"}
+          rounded={"12px"}
+          fontWeight={400}
+          px={4}
+          py={"6px"}
+          fontSize={14}
+          h={"max-content"}
+          border={"1px solid #EDEEEF"}
+          onClick={() => setStep((prev) => prev + 1)}
+        >
+          Skip for now
+        </Button>
+        <Button
+          bg={"#053AF9"}
+          color={"white"}
+          rounded={"12px"}
+          fontWeight={400}
+          px={4}
+          py={"6px"}
+          fontSize={14}
+          h={"max-content"}
+          onClick={() => setStep((prev) => prev + 1)}
+          isDisabled={!formik.isValid}
+        >
+          Next, add your skills
+        </Button>
+      </HStack>
     </VStack>
   );
 };

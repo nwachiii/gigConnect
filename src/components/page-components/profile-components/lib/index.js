@@ -84,22 +84,18 @@ export const listLanguages = [
 
 export const proficiencyLevels = [
   {
-    value: "basic",
     label: "Basic",
     description: "I write clearly in this language",
   },
   {
-    value: "conversational",
     label: "Conversational",
     description: "I write and speak clearly in this language",
   },
   {
-    value: "fluent",
     label: "Fluent",
     description: "I write and speak this language to a high level",
   },
   {
-    value: "native",
     label: "Native or Bilingual",
     description: "I write and speak this language perfectly",
   },
