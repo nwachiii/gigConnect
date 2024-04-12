@@ -1,212 +1,262 @@
-import { Box, Button, Checkbox, HStack, Input, Stack, Text, Textarea, VStack } from "@chakra-ui/react";
+import {
+  MonthPicker,
+  YearPicker,
+} from "@/components/generic-components/DatePicker";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
+import { FormSavedBox } from "@/components/generic-components/FormSavedBox";
+import { educationValues } from "@/lib/schema";
+import {
+  Box,
+  Button,
+  Checkbox,
+  HStack,
+  Input,
+  Stack,
+  Text,
+  Textarea,
+  VStack,
+  useToast,
+} from "@chakra-ui/react";
+import dayjs from "dayjs";
 import { Field } from "formik";
-import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
+import { useEffect, useState } from "react";
+import { HiOutlineMinus } from "react-icons/hi2";
 
-export const EducationForm = ({ remove, index }) => {
+export const EducationForm = ({ remove, index, formik }) => {
+  const [isSaved, setIsSaved] = useState(false);
+  const toast = useToast();
+  const IS_CHECKED = formik.values?.education?.[index]?.endDate === "Present";
+  const [isChecked, setIsChecked] = useState(IS_CHECKED);
+  const isValid = !(formik.errors.education && formik.errors.education[index]);
+  const isDateFilled =
+    !(
+      formik.values.education[index]?.startDate?.month &&
+      formik.values.education[index]?.startDate?.year
+    ) || isChecked;
+
+  useEffect(() => {
+    if (isChecked) {
+      formik.setFieldValue(`education.${index}.endDate`, "Present");
+    }
+  }, [isChecked]);
+
+  const START_DATE = dayjs(
+    `${formik.values.education[index]?.startDate?.year}-${formik.values.education[index]?.startDate?.month}-01`
+  );
+  const END_DATE = dayjs(
+    `${formik.values.education[index]?.endDate?.year}-${formik.values.education[index]?.endDate?.month}-01`
+  );
+
+  console.log(IS_CHECKED)
+  const saveEducation = () => {
+    setIsSaved(true);
+    toast({
+      title: "Education Saved",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right",
+    });
+  };
+
+  const handleDelete = () => {
+    if (index < 1) {
+      toast({
+        status: "error",
+        position: "top-right",
+        duration: 3000,
+        description: "You must have at least one education",
+      });
+    } else {
+      remove(index);
+    }
+  };
+
   return (
-    <VStack
-      bg={"#FFF"}
-      rounded={"12px"}
-      border={"1px solid #edeeef"}
-      align={"start"}
-      gap={2}
-      w={"full"}
-    >
-      <HStack
-        borderBottom={"1px solid #edeeef"}
-        justify={"space-between"}
-        w={"full"}
-        p={2}
-      >
-        <Text fontWeight={500}>Add education</Text>
-        <Box
-          bg={"#F6F7F7"}
+    <div style={{ width: "100%" }}>
+      {isSaved ? (
+        <FormSavedBox
+          heading={formik.values.education[index]?.fieldOfStudy}
+          description={formik.values.education[index]?.schoolName}
+          tagline={`${START_DATE.format("MMM, YYYY")} - ${
+            isChecked ? "Present" : END_DATE.format("MMM, YYYY")
+          }`}
+          handleDelete={handleDelete}
+          handleEdit={() => setIsSaved(false)}
+        />
+      ) : (
+        <VStack
+          bg={"#FFF"}
+          rounded={"12px"}
           border={"1px solid #edeeef"}
-          cursor={"pointer"}
-          p={2}
-          rounded={"full"}
-        >
-          <HiOutlineMinus cursor={'pointer'} onClick={() => remove(index)} color="#4C5361" size={20} />
-        </Box>
-      </HStack>
-      <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-        <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              School/Organisation*
-            </Text>
-            <Field as={Input} placeholder="Ex Northpole University" py={6} w={"full"} />
-          </VStack>
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Degree (Optional)
-            </Text>
-            <Field as={Input} placeholder="Enter company name" py={6} w={"full"} />
-          </VStack>
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Field of Study
-            </Text>
-            <Field as={Input} placeholder="Ex Computer Science" py={6} w={"full"} />
-          </VStack>
-        </VStack>
-        <HStack>
-          <Checkbox />
-          <Text>I am currently studying here</Text>
-        </HStack>
-        <Text fontWeight={700}>Date Attended</Text>
-        <Stack
-          direction={{ base: "column", md: "row" }}
+          align={"start"}
+          gap={2}
           w={"full"}
-          maxW={"605px"}
         >
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Start Date*
-            </Text>
-            <HStack w={"full"}>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Month
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Year
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </HStack>
-          </VStack>
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              End Date*
-            </Text>
-            <HStack w={"full"}>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Month
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              >
-                <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                  Year
-                </Text>
-                <HiOutlineChevronDown color="#4C5361" size={25} />
-              </Button>
-            </HStack>
-          </VStack>
-        </Stack>
-
-        <VStack align={"start"} w={"full"} maxW={"545px"}>
-          <Text color="#4C5361" textShadow={"sm"}>
-            Location*
-          </Text>
-          <HStack w={"full"}>
-            <Field as={Input}
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
+          <HStack
+            borderBottom={"1px solid #edeeef"}
+            justify={"space-between"}
+            w={"full"}
+            p={2}
+          >
+            <Text fontWeight={500}>Add education</Text>
+            <Box
+              bg={"#F6F7F7"}
               border={"1px solid #edeeef"}
-              borderRadius={"8px"}
-              py={6}
-              placeholder=""
-              value={"Lekki, Lagos"}
-            />
-            <Button
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
-              border={"1px solid #edeeef"}
-              py={6}
-              borderRadius={"8px"}
-              fontWeight={400}
+              cursor={"pointer"}
+              p={2}
+              rounded={"full"}
             >
-              <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                Nigeria
+              <HiOutlineMinus
+                cursor={"pointer"}
+                onClick={handleDelete}
+                color="#4C5361"
+                size={20}
+              />
+            </Box>
+          </HStack>
+          <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
+            <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  School/Organisation*
+                </Text>
+                <Field
+                  as={Input}
+                  name={`education.${index}.schoolName`}
+                  placeholder="Ex Northpole University"
+                  py={6}
+                  w={"full"}
+                />
+                <FormErrorMessage name={`education.${index}.schoolName`} />
+              </VStack>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  Degree (Optional)
+                </Text>
+                <Field
+                  as={Input}
+                  name={`education.${index}.degree`}
+                  placeholder="Enter degree name"
+                  py={6}
+                  w={"full"}
+                />
+              </VStack>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  Field of Study
+                </Text>
+                <Field
+                  as={Input}
+                  name={`education.${index}.fieldOfStudy`}
+                  placeholder="Ex Computer Science"
+                  py={6}
+                  w={"full"}
+                />
+              </VStack>
+            </VStack>
+            <HStack>
+              <Checkbox isChecked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+              <Text>I am currently studying here</Text>
+            </HStack>
+            <VStack align={"start"} w={"full"}>
+              <Text color={"#454C58"} fontWeight={700}>
+                Date Attended
               </Text>
-              <HiOutlineChevronDown color="#4C5361" size={25} />
+              <Stack
+                direction={{ base: "column", md: "row" }}
+                w={"full"}
+                maxW={"605px"}
+              >
+                <VStack align={"start"} w={"full"}>
+                  <Text color="#4C5361" textShadow={"sm"}>
+                    From
+                  </Text>
+                  <HStack align={"start"} w={"full"}>
+                    <MonthPicker
+                      formik={formik}
+                      name={`education.${index}.startDate.month`}
+                    />
+                    <YearPicker
+                      formik={formik}
+                      name={`education.${index}.startDate.year`}
+                    />
+                  </HStack>
+                </VStack>
+                <VStack align={"start"} w={"full"}>
+                  <Text color="#4C5361" textShadow={"sm"}>
+                    To
+                  </Text>
+                  <HStack align={"start"} w={"full"}>
+                    <MonthPicker
+                      minDate={formik.values.education[index]?.startDate}
+                      endYear={formik.values.education[index]?.endDate?.year}
+                      formik={formik}
+                      isDisabled={isDateFilled}
+                      name={`education.${index}.endDate.month`}
+                    />
+                    <YearPicker
+                      minDate={formik.values.education[index]?.startDate?.year}
+                      formik={formik}
+                      name={`education.${index}.endDate.year`}
+                      isDisabled={isDateFilled}
+                    />
+                  </HStack>
+                </VStack>
+              </Stack>
+            </VStack>
+            <VStack w={"full"} maxW={"605px"} align={"start"}>
+              <Text color={"#4C5361"}>Description</Text>
+              <Textarea
+                placeholder="Description"
+                bg={"#fff"}
+                justifyContent={"space-between"}
+                w={"full"}
+                border={"1px solid #edeeef"}
+                borderRadius={"8px"}
+                py={6}
+                px={4}
+                minH={"115px"}
+                fontWeight={400}
+                resize={"none"}
+                name={`education.${index}.description`}
+              />
+            </VStack>
+          </VStack>
+          <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
+            <Button
+              bg={"#F6F7F7"}
+              color={"#4C5361"}
+              rounded={"12px"}
+              fontWeight={400}
+              px={20}
+              py={2}
+              fontSize={14}
+              h={"max-content"}
+              border={"1px solid #EDEEEF"}
+              onClick={() =>
+                formik.setFieldValue(`education.${index}`, educationValues)
+              }
+            >
+              Clear
+            </Button>
+            <Button
+              bg={"#053AF9"}
+              color={"white"}
+              rounded={"12px"}
+              fontWeight={400}
+              px={12}
+              py={2}
+              fontSize={14}
+              h={"max-content"}
+              isDisabled={!isValid}
+              onClick={saveEducation}
+            >
+              Save
             </Button>
           </HStack>
         </VStack>
-        <VStack w={"full"} maxW={"605px"} align={"start"}>
-          <Text color={"#4C5361"}>Description</Text>
-          <Textarea
-            placeholder="Description"
-            bg={"#fff"}
-            justifyContent={"space-between"}
-            w={"full"}
-            border={"1px solid #edeeef"}
-            borderRadius={"8px"}
-            py={6}
-            px={4}
-            minH={"115px"}
-            fontWeight={400}
-            resize={"none"}
-          />
-        </VStack>
-      </VStack>
-      <HStack w={"full"} justify={"end"} pb={4} mt={4} pr={4}>
-        <Button
-          bg={"#F6F7F7"}
-          color={"#4C5361"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={20}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-          border={"1px solid #EDEEEF"}
-        >
-          Clear
-        </Button>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          px={12}
-          py={2}
-          fontSize={14}
-          h={"max-content"}
-        >
-          Save
-        </Button>
-      </HStack>
-    </VStack>
+      )}
+    </div>
   );
 };

@@ -155,7 +155,7 @@ export const ProfileInfoStep = ({ setStep }) => {
           p={"6px 16px"}
           fontSize={14}
           h={"34px"}
-          onClick={() => setStep(2)}
+          onClick={(prev) => setStep(prev + 1)}
           isDisabled={profession === ""}
         >
           Next, add your experience
@@ -169,11 +169,8 @@ export const ProfileExpStep = ({ setStep }) => {
   const formik = useFormik({
     initialValues: { experiences: [experienceValues] },
     validationSchema: experienceSchema,
-    onSubmit: (values) => {},
     validateOnMount: true,
-  });
-
-  console.log(formik);
+  })
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -239,7 +236,7 @@ export const ProfileExpStep = ({ setStep }) => {
                     ? formik.values.experiences.map((experience, index) => (
                         <ExperienceForm
                           key={index}
-                          experience={experience}
+                          // experience={experience}
                           index={index}
                           remove={arrayHelpers.remove}
                           formik={formik}
@@ -287,6 +284,11 @@ export const ProfileExpStep = ({ setStep }) => {
 };
 
 export const ProfileEduStep = ({ setStep }) => {
+  const formik = useFormik({
+    initialValues: { education: [educationValues] },
+    validationSchema: educationSchema,
+    validateOnMount: true,
+  })
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -314,66 +316,60 @@ export const ProfileEduStep = ({ setStep }) => {
         You don’t have to have a degree. Adding any relevant education helps
         make your profile more visible.
       </Text>
-      <Formik
-        initialValues={{ education: [educationValues] }}
-        validationSchema={educationSchema}
-      >
-        {({ values }) => {
-          return (
-            <Form style={{ width: "100%" }}>
-              <FieldArray
-                name="education"
-                render={(arrayHelpers) => (
-                  <div>
-                    <Button
-                      bg={"#fff"}
-                      justifyContent={"space-between"}
-                      w={"full"}
-                      maxW={"410px"}
-                      border={"1px solid #edeeef"}
-                      py={8}
-                    >
-                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                        Add education
-                      </Text>
-                      <Box
-                        bg={"#F6F7F7"}
-                        border={"1px solid #edeeef"}
-                        cursor={"pointer"}
-                        p={3}
-                        rounded={"full"}
-                      >
-                        <GoPlus
-                          color="#4C5361"
-                          size={30}
-                          cursor={"pointer"}
-                          onClick={
-                            formik.values.education.length > 4
-                              ? null
-                              : () => arrayHelpers.push("")
-                          }
+      <FormikProvider value={formik}>
+        <Form style={{ width: '100%' }}>
+          <FieldArray
+            name="education"
+            render={(arrayHelpers) => (
+              <div>
+                <Button
+                  bg={"#fff"}
+                  justifyContent={"space-between"}
+                  w={"full"}
+                  maxW={"410px"}
+                  border={"1px solid #edeeef"}
+                  py={8}
+                >
+                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                    Add education
+                  </Text>
+                  <Box
+                    bg={"#F6F7F7"}
+                    border={"1px solid #edeeef"}
+                    cursor={"pointer"}
+                    p={3}
+                    rounded={"full"}
+                  >
+                    <GoPlus
+                      color="#4C5361"
+                      size={30}
+                      cursor={"pointer"}
+                      onClick={
+                        formik.values.education.length > 4
+                          ? null
+                          : () => arrayHelpers.push("")
+                      }
+                    />
+                  </Box>
+                </Button>
+                <VStack align={"start"} gap={8} w={"full"} mt={10}>
+                  {formik.values.education.length > 0
+                    ? formik.values.education.map((experience, index) => (
+                        <EducationForm
+                          key={index}
+                          // experience={experience}
+                          index={index}
+                          remove={arrayHelpers.remove}
+                          formik={formik}
                         />
-                      </Box>
-                    </Button>
-                    <VStack align={"start"} gap={8} w={"full"} mt={10}>
-                      {formik.values.education.length > 0
-                        ? formik.values.education.map((education, index) => (
-                            <EducationForm
-                              key={index}
-                              education={education}
-                              index={index}
-                              remove={arrayHelpers.remove}
-                            />
-                          ))
-                        : null}
-                    </VStack>
-                  </div>
-                )}
-              />
-            </Form>
-          );
-        }}
-      </Formik>
+                      ))
+                    : null}
+                </VStack>
+              </div>
+            )}
+          />
+        </Form>
+      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -399,6 +395,7 @@ export const ProfileEduStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
+          isDisabled={!formik.isValid}
         >
           Next, add your education
         </Button>
@@ -408,6 +405,11 @@ export const ProfileEduStep = ({ setStep }) => {
 };
 
 export const ProfileLangStep = ({ setStep }) => {
+  const formik = useFormik({
+    initialValues: { languages: [languageSchema] },
+    validationSchema: languageSchema,
+    validateOnMount: true,
+  })
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -431,96 +433,60 @@ export const ProfileLangStep = ({ setStep }) => {
         languages you speak. English is a must, but do you speak any other
         languages?
       </Text>
-      <Formik
-        initialValues={{ languages: [languageValues] }}
-        validationSchema={languageSchema}
-      >
-        {({ values, setFieldValue }) => {
-          const isDisabled = formik.values.languages.some(
-            (language) => !language.lang || !language.proficiency
-          );
-          return (
-            <Form style={{ width: "100%" }}>
-              <FieldArray
-                name="languages"
-                render={(arrayHelpers) => (
-                  <div>
-                    <Button
-                      bg={"#fff"}
-                      justifyContent={"space-between"}
-                      w={"full"}
-                      maxW={"410px"}
-                      border={"1px solid #edeeef"}
-                      py={8}
-                    >
-                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                        Add a language
-                      </Text>
-                      <Box
-                        bg={"#F6F7F7"}
-                        border={"1px solid #edeeef"}
-                        cursor={"pointer"}
-                        p={3}
-                        rounded={"full"}
-                        onClick={() => {
-                          if (formik.values.languages.length <= 4) {
-                            arrayHelpers.push("");
-                          }
-                        }}
-                      >
-                        <GoPlus color="#4C5361" size={30} cursor={"pointer"} />
-                      </Box>
-                    </Button>
-                    <VStack align={"start"} gap={8} w={"full"} mt={10}>
-                      {formik.values.languages.length > 0
-                        ? formik.values.languages.map((language, index) => (
-                            <LanguageForm
-                              key={index}
-                              language={language}
-                              index={index}
-                              remove={arrayHelpers.remove}
-                              setFieldValue={setFieldValue}
-                            />
-                          ))
-                        : null}
-                    </VStack>
-                  </div>
-                )}
-              />
-              <HStack gap={2} mb={4} pt={4}>
+      <FormikProvider value={formik}>
+        <Form style={{ width: '100%' }}>
+          <FieldArray
+            name="languages"
+            render={(arrayHelpers) => (
+              <div>
                 <Button
-                  bg={"#F6F7F7"}
-                  color={"#4C5361"}
-                  rounded={"12px"}
-                  fontWeight={400}
-                  px={4}
-                  py={"6px"}
-                  fontSize={14}
-                  h={"max-content"}
-                  onClick={() => setStep((prev) => prev + 1)}
-                  border={"1px solid #EDEEEF"}
+                  bg={"#fff"}
+                  justifyContent={"space-between"}
+                  w={"full"}
+                  maxW={"410px"}
+                  border={"1px solid #edeeef"}
+                  py={8}
                 >
-                  Skip for now
+                  <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                    Add language
+                  </Text>
+                  <Box
+                    bg={"#F6F7F7"}
+                    border={"1px solid #edeeef"}
+                    cursor={"pointer"}
+                    p={3}
+                    rounded={"full"}
+                  >
+                    <GoPlus
+                      color="#4C5361"
+                      size={30}
+                      cursor={"pointer"}
+                      onClick={
+                        formik.values.languages.length > 4
+                          ? null
+                          : () => arrayHelpers.push("")
+                      }
+                    />
+                  </Box>
                 </Button>
-                <Button
-                  bg={"#053AF9"}
-                  color={"white"}
-                  rounded={"12px"}
-                  fontWeight={400}
-                  px={4}
-                  py={"6px"}
-                  fontSize={14}
-                  h={"max-content"}
-                  onClick={() => setStep((prev) => prev + 1)}
-                  isDisabled={isDisabled}
-                >
-                  Next, add your skills
-                </Button>
-              </HStack>
-            </Form>
-          );
-        }}
-      </Formik>
+                <VStack align={"start"} gap={8} w={"full"} mt={10}>
+                  {formik.values.languages.length > 0
+                    ? formik.values.languages.map((experience, index) => (
+                        <LanguageForm
+                          key={index}
+                          // experience={experience}
+                          index={index}
+                          remove={arrayHelpers.remove}
+                          formik={formik}
+                        />
+                      ))
+                    : null}
+                </VStack>
+              </div>
+            )}
+          />
+        </Form>
+      </FormikProvider>
     </VStack>
   );
 };

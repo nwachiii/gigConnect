@@ -1,10 +1,10 @@
-import { HStack, VStack, Text, Image } from "@chakra-ui/react";
+import { HStack, VStack, Text, Box, Image } from "@chakra-ui/react";
 
 export const FormSavedBox = ({
   heading,
   description,
   tagline,
-  handleSave,
+  handleDelete,
   handleEdit,
 }) => {
   return (
@@ -18,8 +18,8 @@ export const FormSavedBox = ({
     >
       <VStack align={"start"} gap={1}>
         <Text fontWeight={500}>{heading}</Text>
-        <Text fontSize={14}>{language.proficiency.label}</Text>
-        <Text fontSize={12}>{language.proficiency.description}</Text>
+        <Text fontSize={14}>{description}</Text>
+        <Text fontSize={12}>{tagline}</Text>
       </VStack>
       <HStack justify={"end"}>
         <Box
@@ -27,7 +27,7 @@ export const FormSavedBox = ({
           cursor={"pointer"}
           border={"1px solid #EDEEEF"}
           rounded={"full"}
-          onClick={() => setIsSaved(false)}
+          onClick={handleEdit}
         >
           <Image src="/img/icons/edit-icon.svg" alt="" />
         </Box>
@@ -36,7 +36,7 @@ export const FormSavedBox = ({
           cursor={"pointer"}
           border={"1px solid #FEE4E2"}
           rounded={"full"}
-          onClick={handleRemoveLang}
+          onClick={handleDelete}
         >
           <Image src="/img/icons/trash-icon.svg" alt="" />
         </Box>

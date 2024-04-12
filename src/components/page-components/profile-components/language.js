@@ -16,62 +16,38 @@ import { Field } from "formik";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
 import { listLanguages, proficiencyLevels } from "./lib";
 import { useState } from "react";
+import { FormSavedBox } from "@/components/generic-components/FormSavedBox";
+import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
 
-export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
+export const LanguageForm = ({ formik, remove, index }) => {
   const [isSaved, setIsSaved] = useState(false);
-  language.lang = index < 1 ? "English" : language.lang;
-
-  const toast = useToast()
+  const toast = useToast();
+  const isValid = !(formik.errors.languages && formik.errors.languages[index]);
   const handleRemoveLang = () => {
-    if (index > 1) {
-      remove(index)
+    if (index >= 1) {
+      remove(index);
     } else {
       toast({
-        status: 'error',
-        position: 'top-right',
+        status: "error",
+        position: "top-right",
         duration: 3000,
-        description: 'You must have at least one language'
-      })
+        description: "You must have at least one language",
+      });
     }
-  }
+  };
 
   return (
     <>
       {isSaved ? (
-        <HStack
-          bg={"#F6F7F7"}
-          rounded={"12px"}
-          border={"1px solid #edeeef"}
-          w={"full"}
-          justify={"space-between"}
-          p={2}
-        >
-          <VStack align={"start"} gap={1}>
-            <Text fontWeight={500}>{language.lang}</Text>
-            <Text fontSize={14}>{language.proficiency.label}</Text>
-            <Text fontSize={12}>{language.proficiency.description}</Text>
-          </VStack>
-          <HStack justify={"end"}>
-            <Box
-              padding={"12px"}
-              cursor={"pointer"}
-              border={"1px solid #EDEEEF"}
-              rounded={"full"}
-              onClick={() => setIsSaved(false)}
-            >
-              <Image src="/img/icons/edit-icon.svg" alt="" />
-            </Box>
-            <Box
-              padding={"12px"}
-              cursor={"pointer"}
-              border={"1px solid #FEE4E2"}
-              rounded={"full"}
-              onClick={handleRemoveLang}
-            >
-              <Image src="/img/icons/trash-icon.svg" alt="" />
-            </Box>
-          </HStack>
-        </HStack>
+        <FormSavedBox
+          heading={formik.values.languages[index]?.fieldOfStudy}
+          description={formik.values.languages[index]?.schoolName}
+          tagline={`${START_DATE.format("MMM, YYYY")} - ${
+            isChecked ? "Present" : END_DATE.format("MMM, YYYY")
+          }`}
+          handleDelete={handleRemoveLang}
+          handleEdit={() => setIsSaved(false)}
+        />
       ) : (
         <VStack
           bg={"#FFF"}
@@ -111,23 +87,16 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
                 <Text color="#4C5361" textShadow={"sm"}>
                   Language {index < 1 ? "(English is required)" : ""}
                 </Text>
-                <Select
-                  icon={<HiOutlineChevronDown color="#4C5361" size={25} />}
-                  value={language.lang}
-                  w={"292px"}
-                  placeholder="Select language"
-                  h={"44px"}
-                  fontSize={14}
-                  onChange={(e) =>
-                    setFieldValue(`languages.${index}.lang`, e.target.value)
-                  }
-                  bg={index < 1 ? "#F2F4F7" : ""}
-                  isDisabled={index < 1}
-                >
-                  {listLanguages.map((lang, index) => {
-                    return <option key={index}>{lang}</option>;
-                  })}
-                </Select>
+                <FieldSelect
+                  name={`languages.${index}.name`}
+                  options={listLanguages}
+                  placeholder={"English"}
+                  formik={formik}
+                  value={index < 1 && "English"}
+                  bg={index < 1 ? '#F2F4F7' : ''}
+                  disabled={index < 1}
+                  w={'292px'}
+                />
               </VStack>
               <VStack align={"start"} w={"full"}>
                 <Text color="#4C5361" textShadow={"sm"}>
@@ -151,8 +120,8 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
                     }
                     value={`languages.${index}.proficiency`}
                   >
-                    {language.proficiency
-                      ? language.proficiency.label
+                    {formik.values.languages?.[index].proficiency
+                      ? formik.values.languages?.[index].proficiency
                       : "Select proficiency level"}
                   </MenuButton>
                   <MenuList w={"full"}>
@@ -161,7 +130,7 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
                         <Field
                           as={MenuItem}
                           onClick={() =>
-                            setFieldValue(
+                            formik.setFieldValue(
                               `languages.${index}.proficiency`,
                               level
                             )
@@ -192,7 +161,7 @@ export const LanguageForm = ({ setFieldValue, language, remove, index }) => {
               fontSize={14}
               h={"max-content"}
               onClick={() => setIsSaved(true)}
-              isDisabled={language.proficiency === "" || language.lang === ""}
+              isDisabled={!isValid}
             >
               Save
             </Button>

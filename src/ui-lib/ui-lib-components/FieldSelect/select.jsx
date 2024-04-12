@@ -3,9 +3,9 @@ import { VStack, Select } from "@chakra-ui/react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 
-export const FieldSelect = ({ name, placeholder, options }) => {
+export const FieldSelect = ({ formik, name, placeholder, options, ...rest }) => {
   return (
-    <VStack align={"start"} w={"full"}>
+    <VStack align={"start"} w={rest.w || "full"}>
       <Field
         as={Select}
         w={"full"}
@@ -18,6 +18,8 @@ export const FieldSelect = ({ name, placeholder, options }) => {
         onChange={(e) => formik.setFieldValue(name, e.target.value)}
         name={name}
         fontSize={14}
+        value={rest.value}
+        {...rest}
       >
         {options.map((value, index) => {
           return (

@@ -10,7 +10,7 @@ import {
 import { ProfileCreation } from "@/components/page-components/Talents/steps/profileCreation";
 
 export const AccountOnboarding = () => {
-  const [screenNumber, setScreenNumber] = useState(0);
+  const [screenNumber, setScreenNumber] = useState(3);
   // eslint-disable-next-line react/display-name
   const withSetScreenNumber = (Component) => (props) =>
     <Component {...props} setScreenNumber={setScreenNumber} />;
