@@ -104,6 +104,21 @@ const languageValidation = Yup.object().shape({
   proficiency: Yup.string().required("Required"),
 });
 
+export const skillSchema = Yup.object().shape({
+  skills: Yup.array()
+    .of(stringValidation)
+    .max(15, 'Max skills reached')
+    .min(1, 'At least one skill is required')
+    .required,
+})
+
+export const serviceSchema = Yup.object().shape({
+  services: Yup.array()
+    .of(stringValidation)
+    .max(15, 'Max services reached')
+    .min(1, "At least one service is required").required,
+})
+
 export const languageSchema = Yup.object().shape({
   languages: Yup.array()
     .of(languageValidation)
@@ -128,7 +143,7 @@ export const feeSchema = Yup.object().shape({
 
 export const profileValues = {
   phoneNumber: "",
-  dateOfBirth: "",
+  dateOfBirth: null,
   country: "",
   address: "",
   city: "",
@@ -141,10 +156,10 @@ export const profileSchema = Yup.object().shape({
     /^\+?(\d{10,13})$/,
     "Phone number is not valid"
   ),
-  dateOfBirth: Yup.string().required("Required"),
+  dateOfBirth: Yup.date().required("Required"),
   country: Yup.string().required("Required"),
   address: Yup.string(),
   city: Yup.string().required("Required"),
   state: Yup.string(),
-  zipCode: Yup.string(),
+  zipCode: Yup.string().max(10, 'Zip code is not valid'),
 });

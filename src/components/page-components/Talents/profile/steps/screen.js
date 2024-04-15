@@ -14,15 +14,40 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Field, FormikProvider, useFormik } from "formik";
+import { forwardRef, useCallback, useState } from "react";
+import DatePicker from "react-datepicker";
+import { useDropzone } from "react-dropzone";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi2";
+import { getBase64FromUrl } from "../../../../../utils/getBase64FromUrl";
 
-export const ProfileScreenStep = () => {
+export const ProfileScreenStep = ({ setStep }) => {
   const formik = useFormik({
     initialValues: profileValues,
     validationSchema: profileSchema,
     validateOnMount: true,
   });
+
+  const [file, setFile] = useState(null);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      "image/*": [],
+    },
+    maxFiles: 1,
+    onDrop: useCallback((acceptedFiles) => {
+      const file = acceptedFiles[0];
+      const objectUrl = URL.createObjectURL(file);
+      getBase64FromUrl(objectUrl).then((res) => {
+        const newFile = Object.assign({ image: res }, file);
+        setFile(newFile);
+        URL.revokeObjectURL(objectUrl);
+      });
+    }, []),
+  });
+
+  const regex = /^[0-9]*$/;
+  const alphaRegex = /^[a-zA-Z]*$/
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -72,8 +97,12 @@ export const ProfileScreenStep = () => {
         </HStack>
         <FormikProvider value={formik}>
           <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-            <HStack w={"full"} gap={6}>
-              <Image src="/img/profilePicture.png" alt="" />
+            <HStack {...getRootProps()} w={"full"} gap={6}>
+              {isDragActive ? (
+                <Text maxW={'100px'} textAlign={'center'}>Drop files here</Text>
+              ) : (
+                <Image src={file?.image ?? "/img/profilePicture.png"} alt="" boxSize={'120px'} objectFit={'cover'} rounded={'full'} />
+              )}
               <Box
                 border={"1px solid #edeeef"}
                 p={2}
@@ -81,6 +110,7 @@ export const ProfileScreenStep = () => {
                 maxW={"220px"}
                 rounded={"12px"}
               >
+                <input {...getInputProps()} />
                 <HStack
                   justify={"space-between"}
                   bg={"#F6F5F5"}
@@ -88,6 +118,7 @@ export const ProfileScreenStep = () => {
                   px={2}
                   py={1}
                   rounded={"8px"}
+                  cursor={"pointer"}
                 >
                   <Text fontSize={12} color={"#4C5361"}>
                     Upload Photo
@@ -109,20 +140,8 @@ export const ProfileScreenStep = () => {
                 <Text color="#4C5361" textShadow={"sm"}>
                   Date-Of-Birth*
                 </Text>
-                <Button
-                  justifyContent={"space-between"}
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  borderRadius={"8px"}
-                  p={"10px 15px"}
-                  h={"44px"}
-                  fontWeight={400}
-                >
-                  <Text color="#878C95" whiteSpace={"nowrap"}>
-                    dd-mm-yyyy
-                  </Text>
-                  <HiOutlineChevronDown color="#4C5361" size={20} />
-                </Button>
+                {dobPicker(formik)}
+                <FormErrorMessage name={"dateOfBirth"} />
               </VStack>
               <VStack align={"start"} w={"full"}>
                 <Text color="#4C5361" textShadow={"sm"}>
@@ -158,8 +177,15 @@ export const ProfileScreenStep = () => {
                     borderRadius={"8px"}
                     fontWeight={400}
                     name={`phoneNumber`}
+                    onChange={(e) => {
+                      if (regex.test(e.target.value)) {
+                        formik.setFieldValue("phoneNumber", e.target.value);
+                      }
+                    }}
+                    maxLength={11}
                   />
                 </HStack>
+                <FormErrorMessage name={"phoneNumber"} />
               </VStack>
             </VStack>
             <VStack align={"start"} w={"full"} maxW={"260px"}>
@@ -206,6 +232,11 @@ export const ProfileScreenStep = () => {
                   borderRadius={"8px"}
                   fontWeight={400}
                   name={`city`}
+                  onChange={(e) => {
+                    if (alphaRegex.test(e.target.value)) {
+                      formik.setFieldValue("city", e.target.value);
+                    }
+                  }}
                 />
                 <FormErrorMessage name={"city"} />
               </VStack>
@@ -223,6 +254,11 @@ export const ProfileScreenStep = () => {
                   borderRadius={"8px"}
                   fontWeight={400}
                   name={`state`}
+                  onChange={(e) => {
+                    if (alphaRegex.test(e.target.value)) {
+                      formik.setFieldValue("state", e.target.value);
+                    }
+                  }}
                 />
               </VStack>
               <VStack align={"start"} w={"full"}>
@@ -239,6 +275,12 @@ export const ProfileScreenStep = () => {
                   borderRadius={"8px"}
                   fontWeight={400}
                   name={`zipCode`}
+                  onChange={(e) => {
+                    if (regex.test(e.target.value)) {
+                      formik.setFieldValue("zipCode", e.target.value);
+                    }
+                  }}
+                  maxLength={10}
                 />
               </VStack>
             </Stack>
@@ -255,11 +297,48 @@ export const ProfileScreenStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          isDisabled={!formik.isValid}
+          isDisabled={!formik.isValid || !file}
+          onClick={(prev) => setStep(prev + 1)}
         >
           Save profile and continue
         </Button>
       </HStack>
     </VStack>
+  );
+};
+
+const dobPicker = (formik) => {
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    <Button
+      ref={ref}
+      onClick={() => {
+        onClick();
+        formik.setFieldTouched("dateOfBirth", true);
+      }}
+      bg={"#fff"}
+      justifyContent={"space-between"}
+      w={"full"}
+      border={"1px solid #edeeef"}
+      borderRadius={"8px"}
+      p={"10px 15px"}
+      h={"44px"}
+      fontWeight={400}
+    >
+      <Text color="#878C95" whiteSpace={"nowrap"}>
+        {value || "dd-mm-yyyy"}
+      </Text>
+      <HiOutlineChevronDown color="#4C5361" size={20} />
+    </Button>
+  ));
+
+  return (
+    <DatePicker
+      selected={formik.values?.dateOfBirth}
+      onChange={(date) => formik.setFieldValue("dateOfBirth", date)}
+      customInput={<ExampleCustomInput />}
+      maxDate={new Date()}
+      value={formik.values?.dateOfBirth}
+      dateFormat={"dd-MM-yyyy"}
+    />
   );
 };

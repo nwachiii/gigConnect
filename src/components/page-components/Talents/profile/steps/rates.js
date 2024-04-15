@@ -18,9 +18,6 @@ export const ProfileRateStep = ({ setStep }) => {
     initialValues: feeValues,
     validationSchema: feeSchema,
     validateOnMount: true,
-    onSubmit: (values) => {
-      console.log(values);
-    },
   });
   const toast = useToast()
   const handleInputChange = (event) => {

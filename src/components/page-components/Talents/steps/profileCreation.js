@@ -15,9 +15,10 @@ import {
   ProfileServicesStep,
   ProfileSkillsStep,
 } from "../profile/profile-skills-steps";
+import { ProfileCompleteScreen } from "../profile/steps/complete";
 
 export const ProfileCreation = ({ setScreenNumber }) => {
-  const [step, setStep] = useState(9);
+  const [step, setStep] = useState(5);
   // eslint-disable-next-line react/display-name
   const withSetProfileStep = (Component) => (props) =>
     <Component {...props} setStep={setStep} />;
@@ -32,7 +33,7 @@ export const ProfileCreation = ({ setScreenNumber }) => {
       border={"1px solid #ebebeb"}
       mb={16}
     >
-      <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
+      {step < 10 && <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
         <HStack
           gap={3}
           cursor={"pointer"}
@@ -45,7 +46,7 @@ export const ProfileCreation = ({ setScreenNumber }) => {
             Create your profile
           </Text>
         </HStack>
-      </HStack>
+      </HStack>}
       <ProfileSteps />
     </VStack>
   );
@@ -62,4 +63,5 @@ const profileSteps = [
   ProfileServicesStep,
   ProfileRateStep,
   ProfileScreenStep,
+  ProfileCompleteScreen
 ];

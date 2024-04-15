@@ -142,7 +142,7 @@ export const ProfileServicesStep = ({ setStep }) => {
                 >
                   {service}
                 </Text>
-                <IoIosAdd size={25} color="#4C5361" />
+                <IoIosAdd size={20} color="#4C5361" />
               </Button>
             );
           })}
