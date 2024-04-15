@@ -1,4 +1,5 @@
 import { listServices } from "@/components/page-components/profile-components/lib";
+import { serviceSchema } from "@/lib/schema";
 import {
   Box,
   Button,
@@ -13,37 +14,48 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { FormikProvider, useFormik } from "formik";
+import { useMemo, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosAdd } from "react-icons/io";
 import { RiSearchLine } from "react-icons/ri";
 
 export const ProfileServicesStep = ({ setStep }) => {
+  const formik = useFormik({
+    initialValues: { services: [] },
+    validationSchema: serviceSchema,
+    validateOnMount: true,
+  });
   const [searchTerm, setSearchTerm] = useState("");
-  const [services, setServices] = useState([]);
-  const [suggestedServices, setSuggestedServices] = useState(listServices);
-  const toast = useToast()
+  const toast = useToast();
   const addService = (service) => {
-    if (services.length < 15) {
-      setServices([...services, service]);
-      setSuggestedServices(listServices.filter((item) => item !== service));
+    if (formik.values.services.length < 15) {
+      formik.setFieldValue("services", [...formik.values.services, service]);
     } else {
       toast({
-        status: 'error',
-        description: 'You cannot add more services',
+        status: "error",
+        description: "You cannot add more than 15 services",
         duration: 3000,
-        position: 'top-right'
-      })
+        position: "top-right",
+      });
     }
   };
 
-  const removeService = (service) => {
-    setServices(services.filter((item) => item !== service));
-    setSuggestedServices([...listServices, service]);
+  const removeService = (serviceToRemove) => {
+    formik.setFieldValue(
+      "services",
+      formik.values.services.filter((service) => service !== serviceToRemove)
+    );
   };
 
-  const filteredServices = suggestedServices.filter((service) =>
-    service.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredServices = useMemo(
+    () =>
+      listServices.filter(
+        (service) =>
+          service.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          !formik.values.services.includes(service)
+      ),
+    [listServices, searchTerm, formik.values.services]
   );
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
@@ -71,16 +83,16 @@ export const ProfileServicesStep = ({ setStep }) => {
         <Text fontWeight={600}>Your services</Text>
         <Stack
           flexWrap={"wrap"}
-          h={services.length > 0 ? "auto" : "48px"}
+          h={formik.values.services.length > 0 ? "auto" : "48px"}
           border={"1px solid #EDEEEF"}
           rounded={"8px"}
           p={"8px"}
           w={"full"}
-          align={services.length > 0 ? "start" : "center"}
+          align={formik.values.services.length > 0 ? "start" : "center"}
           flexDirection={"row"}
         >
-          {services.length > 0 ? (
-            services.map((service, index) => {
+          {formik.values.services.length > 0 ? (
+            formik.values.services.map((service, index) => {
               return (
                 <Button
                   key={index}
@@ -89,7 +101,7 @@ export const ProfileServicesStep = ({ setStep }) => {
                   padding={"5px 11px"}
                   rounded={"full"}
                   w={"max-content"}
-                  gap={'10px'}
+                  gap={"10px"}
                   color={"white"}
                   h={"28px"}
                   fontWeight={500}
@@ -97,7 +109,10 @@ export const ProfileServicesStep = ({ setStep }) => {
                   <Text whiteSpace={"nowrap"} fontSize={14} fontWeight={500}>
                     {service}
                   </Text>
-                  <HiMiniXMark size={25} onClick={() => removeService(service)} />
+                  <HiMiniXMark
+                    size={20}
+                    onClick={() => removeService(service)}
+                  />
                 </Button>
               );
             })
@@ -114,40 +129,47 @@ export const ProfileServicesStep = ({ setStep }) => {
           <InputLeftElement p={2} left={"3px"} top={"5px"}>
             <RiSearchLine size={25} />
           </InputLeftElement>
-          <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" py={6} w={"full"} />
+          <Input
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search"
+            py={6}
+            w={"full"}
+          />
         </InputGroup>
         <Text>For the best results, add 10-15 services max</Text>
       </VStack>
-      <VStack w={"full"} align={"start"}>
-        <Text fontWeight={600}>Suggested services</Text>
-        <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
-          {filteredServices.map((service, index) => {
-            return (
-              <Button
-                key={index}
-                bg={"#F6F7F7"}
-                border={"1px solid #EDEEEF"}
-                padding={"5px 11px"}
-                rounded={"full"}
-                w={"max-content"}
-                h={"28px"}
-                onClick={() => addService(service)}
-                gap={"10px"}
-              >
-                <Text
-                  whiteSpace={"nowrap"}
-                  fontSize={14}
-                  fontWeight={500}
-                  color={"#4C5361"}
+      <FormikProvider value={formik}>
+        <VStack w={"full"} align={"start"}>
+          <Text fontWeight={600}>Suggested services</Text>
+          <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
+            {filteredServices.map((service, index) => {
+              return (
+                <Button
+                  key={index}
+                  bg={"#F6F7F7"}
+                  border={"1px solid #EDEEEF"}
+                  padding={"5px 11px"}
+                  rounded={"full"}
+                  w={"max-content"}
+                  h={"28px"}
+                  onClick={() => addService(service)}
+                  gap={"10px"}
                 >
-                  {service}
-                </Text>
-                <IoIosAdd size={20} color="#4C5361" />
-              </Button>
-            );
-          })}
-        </Flex>
-      </VStack>
+                  <Text
+                    whiteSpace={"nowrap"}
+                    fontSize={14}
+                    fontWeight={500}
+                    color={"#4C5361"}
+                  >
+                    {service}
+                  </Text>
+                  <IoIosAdd size={20} color="#4C5361" />
+                </Button>
+              );
+            })}
+          </Flex>
+        </VStack>
+      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -173,7 +195,7 @@ export const ProfileServicesStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={services.length < 1}
+          isDisabled={!formik.isValid}
         >
           Next, set your rate
         </Button>

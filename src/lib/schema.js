@@ -106,18 +106,17 @@ const languageValidation = Yup.object().shape({
 
 export const skillSchema = Yup.object().shape({
   skills: Yup.array()
-    .of(stringValidation)
-    .max(15, 'Max skills reached')
-    .min(1, 'At least one skill is required')
-    .required,
-})
+    .max(15, "Max skills reached")
+    .min(1, "At least one skill is required")
+    .required(),
+});
 
 export const serviceSchema = Yup.object().shape({
   services: Yup.array()
-    .of(stringValidation)
-    .max(15, 'Max services reached')
-    .min(1, "At least one service is required").required,
-})
+    .max(15, "Max services reached")
+    .min(1, "At least one service is required")
+    .required(),
+});
 
 export const languageSchema = Yup.object().shape({
   languages: Yup.array()
@@ -132,14 +131,14 @@ export const overviewSchema = Yup.object().shape({
 });
 
 export const feeValues = {
-  hourlyFee: '',
-  serviceFee: '',
-  finalFee: '',
-}
+  hourlyFee: "",
+  serviceFee: "",
+  finalFee: "",
+};
 
 export const feeSchema = Yup.object().shape({
-  hourlyFee: Yup.string().required('Hourly rate is required')
-})
+  hourlyFee: Yup.string().required("Hourly rate is required"),
+});
 
 export const profileValues = {
   phoneNumber: "",
@@ -161,5 +160,5 @@ export const profileSchema = Yup.object().shape({
   address: Yup.string(),
   city: Yup.string().required("Required"),
   state: Yup.string(),
-  zipCode: Yup.string().max(10, 'Zip code is not valid'),
+  zipCode: Yup.string().max(10, "Zip code is not valid"),
 });
