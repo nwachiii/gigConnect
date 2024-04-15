@@ -1,5 +1,13 @@
 import * as Yup from "yup";
 
+const stringValidation = Yup.string()
+  .matches(/^[a-zA-Z\s]*$/, "This field should not contain numbers")
+  .required("Required");
+
+export const professionSchema = Yup.object({
+  profession: stringValidation,
+});
+
 export const experienceValues = {
   title: "",
   companyName: "",
@@ -97,9 +105,25 @@ const languageValidation = Yup.object().shape({
 });
 
 export const languageSchema = Yup.object().shape({
-    languages: Yup.array()
-     .of(languageValidation)
-     .required("At least one language is required"),
+  languages: Yup.array()
+    .of(languageValidation)
+    .required("At least one language is required"),
+});
+
+export const overviewSchema = Yup.object().shape({
+  userOverview: Yup.string()
+    .min(100, "The overview cannot be less than 100 characters")
+    .required("This field is required"),
+});
+
+export const feeValues = {
+  hourlyFee: '',
+  serviceFee: '',
+  finalFee: '',
+}
+
+export const feeSchema = Yup.object().shape({
+  hourlyFee: Yup.string().required('Hourly rate is required')
 })
 
 export const profileValues = {

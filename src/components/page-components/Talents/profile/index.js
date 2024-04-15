@@ -5,15 +5,30 @@ import {
   Heading,
   Input,
   Text,
-  VStack} from "@chakra-ui/react";
+  VStack,
+} from "@chakra-ui/react";
 import { GoPlus } from "react-icons/go";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useState } from "react";
-import { FieldArray, Form, Formik, FormikProvider, useFormik } from "formik";
+import {
+  Field,
+  FieldArray,
+  Form,
+  FormikProvider,
+  useFormik,
+} from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
 import { EducationForm } from "../../profile-components/education";
 import { LanguageForm } from "../../profile-components/language";
-import { educationSchema, educationValues, experienceSchema, experienceValues, languageSchema, languageValues } from "@/lib/schema";
+import {
+  educationSchema,
+  educationValues,
+  experienceSchema,
+  experienceValues,
+  languageSchema,
+  languageValues,
+  professionSchema,
+} from "@/lib/schema";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 
 export const ProfileStep = ({ setStep }) => {
   return (
@@ -100,13 +115,12 @@ export const ProfileStep = ({ setStep }) => {
 };
 
 export const ProfileInfoStep = ({ setStep }) => {
-  const [profession, setProfession] = useState("");
+  const formik = useFormik({
+    initialValues: { profession: "" },
+    validationSchema: professionSchema,
+    validateOnMount: true,
+  });
 
-  const handleChange = (event) => {
-    const text = event.target.value;
-    const newText = text.replace(/[^a-zA-Z\s]/g, "");
-    setProfession(newText);
-  };
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -133,18 +147,22 @@ export const ProfileInfoStep = ({ setStep }) => {
         <Text fontSize={14} color={"#454C58"}>
           Your professional role
         </Text>
-        <Input
-          placeholder="Software Developer | Javascript | iOS"
-          border={"1px solid #edeeef"}
-          w={"full"}
-          maxW={"365px"}
-          p={"10px 16px"}
-          rounded={"8px"}
-          h={"44px"}
-          type="text"
-          value={profession}
-          onChange={handleChange}
-        />
+        <FormikProvider value={formik}>
+          <Field
+            as={Input}
+            placeholder="Software Developer | Javascript | iOS"
+            border={"1px solid #edeeef"}
+            w={"full"}
+            maxW={"365px"}
+            p={"10px 16px"}
+            rounded={"8px"}
+            h={"44px"}
+            type="text"
+            name="profession"
+            value={formik.values.profession}
+          />
+          <FormErrorMessage name={'profession'} />
+        </FormikProvider>
       </VStack>
       <HStack gap={4} mb={4}>
         <Button
@@ -155,8 +173,8 @@ export const ProfileInfoStep = ({ setStep }) => {
           p={"6px 16px"}
           fontSize={14}
           h={"34px"}
-          onClick={(prev) => setStep(prev + 1)}
-          isDisabled={profession === ""}
+          onClick={() => setStep(2)}
+          isDisabled={!formik.isValid}
         >
           Next, add your experience
         </Button>
@@ -170,7 +188,7 @@ export const ProfileExpStep = ({ setStep }) => {
     initialValues: { experiences: [experienceValues] },
     validationSchema: experienceSchema,
     validateOnMount: true,
-  })
+  });
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -196,7 +214,7 @@ export const ProfileExpStep = ({ setStep }) => {
         Just head on to the next page.
       </Text>
       <FormikProvider value={formik}>
-        <Form style={{ width: '100%' }}>
+        <Form style={{ width: "100%" }}>
           <FieldArray
             name="experiences"
             render={(arrayHelpers) => (
@@ -233,10 +251,9 @@ export const ProfileExpStep = ({ setStep }) => {
                 </Button>
                 <VStack align={"start"} gap={8} w={"full"} mt={10}>
                   {formik.values.experiences.length > 0
-                    ? formik.values.experiences.map((experience, index) => (
+                    ? formik.values.experiences.map((_exp, index) => (
                         <ExperienceForm
                           key={index}
-                          // experience={experience}
                           index={index}
                           remove={arrayHelpers.remove}
                           formik={formik}
@@ -273,7 +290,7 @@ export const ProfileExpStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={() => setStep(3)}
           isDisabled={!formik.isValid}
         >
           Next, add your education
@@ -288,7 +305,7 @@ export const ProfileEduStep = ({ setStep }) => {
     initialValues: { education: [educationValues] },
     validationSchema: educationSchema,
     validateOnMount: true,
-  })
+  });
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -317,7 +334,7 @@ export const ProfileEduStep = ({ setStep }) => {
         make your profile more visible.
       </Text>
       <FormikProvider value={formik}>
-        <Form style={{ width: '100%' }}>
+        <Form style={{ width: "100%" }}>
           <FieldArray
             name="education"
             render={(arrayHelpers) => (
@@ -354,10 +371,9 @@ export const ProfileEduStep = ({ setStep }) => {
                 </Button>
                 <VStack align={"start"} gap={8} w={"full"} mt={10}>
                   {formik.values.education.length > 0
-                    ? formik.values.education.map((experience, index) => (
+                    ? formik.values.education.map((_e, index) => (
                         <EducationForm
                           key={index}
-                          // experience={experience}
                           index={index}
                           remove={arrayHelpers.remove}
                           formik={formik}
@@ -381,7 +397,7 @@ export const ProfileEduStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={() => setStep(4)}
         >
           Skip for now
         </Button>
@@ -394,7 +410,7 @@ export const ProfileEduStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={() => setStep(5)}
           isDisabled={!formik.isValid}
         >
           Next, add your languages
@@ -409,7 +425,7 @@ export const ProfileLangStep = ({ setStep }) => {
     initialValues: { languages: [languageValues] },
     validationSchema: languageSchema,
     validateOnMount: true,
-  })
+  });
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -434,7 +450,7 @@ export const ProfileLangStep = ({ setStep }) => {
         languages?
       </Text>
       <FormikProvider value={formik}>
-        <Form style={{ width: '100%' }}>
+        <Form style={{ width: "100%" }}>
           <FieldArray
             name="languages"
             render={(arrayHelpers) => (
@@ -471,10 +487,9 @@ export const ProfileLangStep = ({ setStep }) => {
                 </Button>
                 <VStack align={"start"} gap={8} w={"full"} mt={10}>
                   {formik.values.languages.length > 0
-                    ? formik.values.languages.map((experience, index) => (
+                    ? formik.values.languages.map((_lang, index) => (
                         <LanguageForm
                           key={index}
-                          // experience={experience}
                           index={index}
                           remove={arrayHelpers.remove}
                           formik={formik}
@@ -498,7 +513,7 @@ export const ProfileLangStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={() => setStep(6)}
         >
           Skip for now
         </Button>
@@ -511,7 +526,7 @@ export const ProfileLangStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={() => setStep(7)}
           isDisabled={!formik.isValid}
         >
           Next, add your skills

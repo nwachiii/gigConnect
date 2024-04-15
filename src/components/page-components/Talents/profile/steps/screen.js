@@ -1,8 +1,29 @@
-import { Box, Button, HStack, Heading, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
+import { countries } from "@/components/page-components/profile-components/lib";
+import { profileSchema, profileValues } from "@/lib/schema";
+import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
+import {
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Image,
+  Input,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { Field, FormikProvider, useFormik } from "formik";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 
 export const ProfileScreenStep = () => {
+  const formik = useFormik({
+    initialValues: profileValues,
+    validationSchema: profileSchema,
+    validateOnMount: true,
+  });
+
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -49,175 +70,180 @@ export const ProfileScreenStep = () => {
             Profile setup
           </Text>
         </HStack>
-        <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-          <HStack w={"full"} gap={6}>
-            <Image src="/img/profilePicture.png" alt="" />
-            <Box
-              border={"1px solid #edeeef"}
-              p={2}
-              w={"full"}
-              maxW={"220px"}
-              rounded={"12px"}
-            >
-              <HStack
-                justify={"space-between"}
-                bg={"#F6F5F5"}
-                border={"1px solid #EDEAEC"}
-                px={2}
-                py={1}
-                rounded={"8px"}
-              >
-                <Text fontSize={12} color={"#4C5361"}>
-                  Upload Photo
-                </Text>
-                <Box
-                  bg={"#F6F7F7"}
-                  border={"1px solid #edeeef"}
-                  cursor={"pointer"}
-                  p={1}
-                  rounded={"full"}
-                >
-                  <GoPlus color="#4C5361" size={15} />
-                </Box>
-              </HStack>
-            </Box>
-          </HStack>
-          <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
-            <VStack align={"start"} w={"full"} maxW={"265px"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Date-Of-Birth*
-              </Text>
-              <Button
-                bg={"#fff"}
-                justifyContent={"space-between"}
-                w={"full"}
+        <FormikProvider value={formik}>
+          <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
+            <HStack w={"full"} gap={6}>
+              <Image src="/img/profilePicture.png" alt="" />
+              <Box
                 border={"1px solid #edeeef"}
-                borderRadius={"8px"}
-                py={6}
-                fontWeight={400}
+                p={2}
+                w={"full"}
+                maxW={"220px"}
+                rounded={"12px"}
               >
-                <Text color="#878C95" whiteSpace={"nowrap"}>
-                  dd-mm-yyyy
+                <HStack
+                  justify={"space-between"}
+                  bg={"#F6F5F5"}
+                  border={"1px solid #EDEAEC"}
+                  px={2}
+                  py={1}
+                  rounded={"8px"}
+                >
+                  <Text fontSize={12} color={"#4C5361"}>
+                    Upload Photo
+                  </Text>
+                  <Box
+                    bg={"#F6F7F7"}
+                    border={"1px solid #edeeef"}
+                    cursor={"pointer"}
+                    p={1}
+                    rounded={"full"}
+                  >
+                    <GoPlus color="#4C5361" size={15} />
+                  </Box>
+                </HStack>
+              </Box>
+            </HStack>
+            <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
+              <VStack align={"start"} w={"full"} maxW={"265px"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  Date-Of-Birth*
                 </Text>
-                <HiOutlineChevronDown color="#4C5361" size={20} />
-              </Button>
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Phone Number
-              </Text>
-              <HStack w={"full"}>
                 <Button
-                  bg={"#fff"}
                   justifyContent={"space-between"}
                   w={"full"}
                   border={"1px solid #edeeef"}
                   borderRadius={"8px"}
-                  py={6}
+                  p={"10px 15px"}
+                  h={"44px"}
                   fontWeight={400}
-                  maxW={"100px"}
-                  gap={1}
                 >
-                  <HStack gap={0.5}>
-                    <Image src="/img/icons/country flag.svg" alt="" />
-                    <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                      +1
-                    </Text>
-                  </HStack>
+                  <Text color="#878C95" whiteSpace={"nowrap"}>
+                    dd-mm-yyyy
+                  </Text>
                   <HiOutlineChevronDown color="#4C5361" size={20} />
                 </Button>
-                <Input
-                  bg={"#fff"}
-                  placeholder="00000000"
+              </VStack>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  Phone Number
+                </Text>
+                <HStack w={"full"}>
+                  <Button
+                    justifyContent={"space-between"}
+                    w={"full"}
+                    border={"1px solid #edeeef"}
+                    borderRadius={"8px"}
+                    p={"10px 15px"}
+                    h={"44px"}
+                    fontWeight={400}
+                    maxW={"100px"}
+                    gap={1}
+                  >
+                    <HStack gap={0.5}>
+                      <Image src="/img/icons/country flag.svg" alt="" />
+                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                        +1
+                      </Text>
+                    </HStack>
+                    <HiOutlineChevronDown color="#4C5361" size={20} />
+                  </Button>
+                  <Field
+                    as={Input}
+                    placeholder="0000000000"
+                    w={"full"}
+                    border={"1px solid #edeeef"}
+                    p={"10px 15px"}
+                    h={"44px"}
+                    borderRadius={"8px"}
+                    fontWeight={400}
+                    name={`phoneNumber`}
+                  />
+                </HStack>
+              </VStack>
+            </VStack>
+            <VStack align={"start"} w={"full"} maxW={"260px"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                Country*
+              </Text>
+              <FieldSelect
+                name={`country`}
+                options={countries}
+                placeholder={"Lekki, Lagos"}
+                formik={formik}
+              />
+            </VStack>
+            <VStack align={"start"} w={"full"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                Street Address
+              </Text>
+              <Field
+                as={Input}
+                placeholder="Enter street address"
+                py={8}
+                w={"full"}
+                rounded={"8px"}
+                name={`address`}
+              />
+            </VStack>
+            <Stack
+              direction={{ base: "column", md: "row" }}
+              w={"full"}
+              maxW={"650px"}
+              mb={4}
+            >
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  City*
+                </Text>
+                <Field
+                  as={Input}
+                  placeholder="Enter City"
                   w={"full"}
                   border={"1px solid #edeeef"}
-                  py={6}
+                  p={"10px 15px"}
+                  h={"44px"}
                   borderRadius={"8px"}
                   fontWeight={400}
+                  name={`city`}
                 />
-              </HStack>
-            </VStack>
+                <FormErrorMessage name={"city"} />
+              </VStack>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  State/Province
+                </Text>
+                <Field
+                  as={Input}
+                  placeholder="Enter State/Province"
+                  w={"full"}
+                  border={"1px solid #edeeef"}
+                  p={"10px 15px"}
+                  h={"44px"}
+                  borderRadius={"8px"}
+                  fontWeight={400}
+                  name={`state`}
+                />
+              </VStack>
+              <VStack align={"start"} w={"full"}>
+                <Text color="#4C5361" textShadow={"sm"}>
+                  ZIP/Postal code
+                </Text>
+                <Field
+                  as={Input}
+                  placeholder="Enter ZIP/Postal code"
+                  w={"full"}
+                  border={"1px solid #edeeef"}
+                  p={"10px 15px"}
+                  h={"44px"}
+                  borderRadius={"8px"}
+                  fontWeight={400}
+                  name={`zipCode`}
+                />
+              </VStack>
+            </Stack>
           </VStack>
-          <VStack align={"start"} w={"full"} maxW={"260px"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Country*
-            </Text>
-            <Button
-              bg={"#fff"}
-              justifyContent={"space-between"}
-              w={"full"}
-              border={"1px solid #edeeef"}
-              py={6}
-              borderRadius={"8px"}
-              fontWeight={400}
-            >
-              <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                Lekki, Lagos
-              </Text>
-              <HiOutlineChevronDown color="#4C5361" size={25} />
-            </Button>
-          </VStack>
-          <VStack align={"start"} w={"full"}>
-            <Text color="#4C5361" textShadow={"sm"}>
-              Street Address
-            </Text>
-            <Input
-              placeholder="Enter street address"
-              py={8}
-              w={"full"}
-              rounded={"8px"}
-            />
-          </VStack>
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            w={"full"}
-            maxW={"650px"}
-            mb={4}
-          >
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Start Date*
-              </Text>
-              <Input
-                bg={"#fff"}
-                placeholder="Enter City"
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              />
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                State/Province
-              </Text>
-              <Input
-                bg={"#fff"}
-                placeholder="Enter State/Province"
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              />
-            </VStack>
-            <VStack align={"start"} w={"full"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                ZIP/Postal code
-              </Text>
-              <Input
-                bg={"#fff"}
-                placeholder="Enter ZIP/Postal code"
-                w={"full"}
-                border={"1px solid #edeeef"}
-                py={6}
-                borderRadius={"8px"}
-                fontWeight={400}
-              />
-            </VStack>
-          </Stack>
-        </VStack>
+        </FormikProvider>
       </VStack>
       <HStack gap={2} mb={4}>
         <Button
@@ -229,6 +255,7 @@ export const ProfileScreenStep = () => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
+          isDisabled={!formik.isValid}
         >
           Save profile and continue
         </Button>
