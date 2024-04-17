@@ -18,7 +18,7 @@ import {
 import { ProfileCompleteScreen } from "../profile/steps/complete";
 
 export const ProfileCreation = ({ setScreenNumber }) => {
-  const [step, setStep] = useState(7);
+  const [step, setStep] = useState(0);
   // eslint-disable-next-line react/display-name
   const withSetProfileStep = (Component) => (props) =>
     <Component {...props} setStep={setStep} />;
