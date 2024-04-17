@@ -1,7 +1,7 @@
 "use client";
 import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import { HeaderEmpty } from "@/components/generic-components/Headers";
+import { HeaderEmpty, HeaderWithNav } from "@/components/generic-components/Headers";
 import { GettingStarted } from "@/components/page-components/Talents/steps/gettingStarted";
 import {
   FreelanceGoal,
@@ -10,7 +10,7 @@ import {
 import { ProfileCreation } from "@/components/page-components/Talents/steps/profileCreation";
 
 export const AccountOnboarding = () => {
-  const [screenNumber, setScreenNumber] = useState(3);
+  const [screenNumber, setScreenNumber] = useState(0);
   // eslint-disable-next-line react/display-name
   const withSetScreenNumber = (Component) => (props) =>
     <Component {...props} setScreenNumber={setScreenNumber} />;
@@ -18,8 +18,8 @@ export const AccountOnboarding = () => {
 
   return (
     <Box bg={"#F5F5F5"} minH={"100vh"}>
-      <HeaderEmpty />
-      <Flex justify={"center"}>
+      <HeaderWithNav isLogin />
+      <Flex pt={10} justify={"center"}>
         <OnboardingScreen />
       </Flex>
     </Box>

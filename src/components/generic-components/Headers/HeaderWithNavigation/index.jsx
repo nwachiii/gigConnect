@@ -33,7 +33,7 @@ import { NotifIcon } from "@/assets/icons/Navbar/notification-icon";
 import { sharedGCButtonProps } from "@/ui-lib/ui-lib-components/Button/Button";
 import UserProfileMenu from "../UserProfileMenu";
 
-export const HeaderWithNav = () => {
+export const HeaderWithNav = ({ isLogin }) => {
   const getPath = usePathname();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -65,7 +65,7 @@ export const HeaderWithNav = () => {
       borderBottom="1px solid #EFEFEF"
       background="#FFF"
       display="flex"
-      maxW="1440px"
+      // maxW="1440px"
       w="full"
       padding="13px 44px"
       alignItems="center"
@@ -86,7 +86,7 @@ export const HeaderWithNav = () => {
         <RxHamburgerMenu fontSize={24} onClick={onOpen} />
       </Box>
 
-      <HStack
+     {isLogin ? null : <HStack
         as={"nav"}
         spacing={"16px"}
         display={{ base: "none", md: "flex" }}
@@ -120,15 +120,15 @@ export const HeaderWithNav = () => {
             </GCButton>
           );
         })}
-      </HStack>
+      </HStack>}
 
       <Flex
         alignItems={"center"}
         flex={"0.3"}
-        justify={"space-between"}
+        justify={!isLogin ? "space-between" : 'end'}
         gap="8px"
       >
-        <NotifIcon />
+        {!isLogin && <NotifIcon />}
         <UserProfileMenu />
       </Flex>
 
