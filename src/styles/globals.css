@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "react-datepicker/dist/react-datepicker.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -77,4 +78,8 @@ input[type='checkbox']:checked::before {
 input[type='checkbox']:focus {
   outline: max(2px, 0.15em) solid transparent;
   outline-offset: max(2px, 0.15em);
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
 }

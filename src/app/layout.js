@@ -2,11 +2,9 @@
 'use client';
 import '../styles/globals.css';
 import {Providers} from './providers';
-import {usePathname, useRouter} from 'next/navigation';
-import React, {useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
+import React, {useState} from 'react';
 import NProgress from 'nprogress';
-import {HeaderEmpty, HeaderWithNav} from '@/components/generic-components/Headers';
-import {getActivePage} from '@/utils/getActivePage';
 import {Progress} from '@chakra-ui/react';
 import {PAGE_URLS_EXCLUDED_FROM_PROGRESS_LOADER} from '../../constants/routes';
 

@@ -1,5 +1,6 @@
 import { HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import { BsChevronLeft } from "react-icons/bs";
+import { useState } from "react";
 import {
   ProfileEduStep,
   ProfileExpStep,
@@ -7,7 +8,6 @@ import {
   ProfileLangStep,
   ProfileStep,
 } from "../profile";
-import { useState } from "react";
 import {
   ProfileBioStep,
   ProfileRateStep,
@@ -15,12 +15,14 @@ import {
   ProfileServicesStep,
   ProfileSkillsStep,
 } from "../profile/profile-skills-steps";
+import { ProfileCompleteScreen } from "../profile/steps/complete";
 
 export const ProfileCreation = ({ setScreenNumber }) => {
   const [step, setStep] = useState(0);
   // eslint-disable-next-line react/display-name
-  const withSetProfileStep = Component => props => <Component {...props} setStep={setStep} />
-  const ProfileSteps = withSetProfileStep(profileSteps[step])
+  const withSetProfileStep = (Component) => (props) =>
+    <Component {...props} setStep={setStep} />;
+  const ProfileSteps = withSetProfileStep(profileSteps[step]);
 
   return (
     <VStack
@@ -31,7 +33,7 @@ export const ProfileCreation = ({ setScreenNumber }) => {
       border={"1px solid #ebebeb"}
       mb={16}
     >
-      <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
+      {step < 10 && <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
         <HStack
           gap={3}
           cursor={"pointer"}
@@ -44,8 +46,8 @@ export const ProfileCreation = ({ setScreenNumber }) => {
             Create your profile
           </Text>
         </HStack>
-      </HStack>
-      <ProfileSteps/>
+      </HStack>}
+      <ProfileSteps />
     </VStack>
   );
 };
@@ -61,4 +63,5 @@ const profileSteps = [
   ProfileServicesStep,
   ProfileRateStep,
   ProfileScreenStep,
+  ProfileCompleteScreen
 ];

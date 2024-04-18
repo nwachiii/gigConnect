@@ -13,37 +13,43 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { RiSearchLine } from "react-icons/ri";
 import { IoIosAdd } from "react-icons/io";
+import { FormikProvider, useFormik } from "formik";
+import { skillSchema } from "@/lib/schema";
 
 export const ProfileSkillsStep = ({ setStep }) => {
+  const formik = useFormik({
+    initialValues: { skills: [] },
+    validationSchema: skillSchema,
+    validateOnMount: true,
+  });
   const [searchTerm, setSearchTerm] = useState("");
-  const [skills, setSkills] = useState([]);
-  const [suggestedSkills, setSuggestedSkills] = useState(listSkills);
   const toast = useToast()
   const addSkill = (skill) => {
-    if (skills.length < 15) {
-      setSkills([...skills, skill]);
-      setSuggestedSkills(listSkills.filter((item) => item !== skill));
+    if (formik.values.skills.length < 15) {
+      formik.setFieldValue('skills', [...formik.values.skills, skill]);
     } else {
       toast({
         status: 'error',
-        description: 'You cannot add more skills',
+        description: 'You cannot add more than 15 skills',
         duration: 3000,
         position: 'top-right'
       })
     }
   };
-  const removeSkill = (skill) => {
-    setSkills(skills.filter((item) => item !== skill));
-    setSuggestedSkills([...listSkills, skill]);
+  
+  const removeSkill = (skillToRemove) => {
+    formik.setFieldValue('skills', formik.values.skills.filter(skill => skill !== skillToRemove));
   };
 
-  const filteredSkills = suggestedSkills.filter((skill) =>
-    skill.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredSkills = useMemo(() => (
+    listSkills.filter((skill) =>
+      skill.toLowerCase().includes(searchTerm.toLowerCase()) && !formik.values.skills.includes(skill)
+    )
+  ), [listSkills, searchTerm, formik.values.skills]);
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
@@ -72,16 +78,16 @@ export const ProfileSkillsStep = ({ setStep }) => {
         <Text fontWeight={600}>Your skills</Text>
         <Stack
           flexWrap={"wrap"}
-          h={skills.length > 0 ? "auto" : "48px"}
+          h={formik.values.skills.length > 0 ? "auto" : "48px"}
           border={"1px solid #EDEEEF"}
           rounded={"8px"}
           p={"8px"}
           w={"full"}
-          align={skills.length > 0 ? "start" : "center"}
+          align={formik.values.skills.length > 0 ? "start" : "center"}
           flexDirection={"row"}
         >
-          {skills.length > 0 ? (
-            skills.map((skill, index) => {
+          {formik.values.skills.length > 0 ? (
+            formik.values.skills.map((skill, index) => {
               return (
                 <Button
                   key={index}
@@ -90,7 +96,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
                   padding={"5px 11px"}
                   rounded={"full"}
                   w={"max-content"}
-                  gap={'10px'}
+                  gap={'4px'}
                   color={"white"}
                   h={"28px"}
                   fontWeight={500}
@@ -98,7 +104,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
                   <Text whiteSpace={"nowrap"} fontSize={14} fontWeight={500}>
                     {skill}
                   </Text>
-                  <HiMiniXMark size={25} onClick={() => removeSkill(skill)} />
+                  <HiMiniXMark size={20} onClick={() => removeSkill(skill)} />
                 </Button>
               );
             })
@@ -124,36 +130,38 @@ export const ProfileSkillsStep = ({ setStep }) => {
         </InputGroup>
         <Text>For the best results, add 10-15 skills max</Text>
       </VStack>
-      <VStack w={"full"} align={"start"}>
-        <Text fontWeight={600}>Suggested skills</Text>
-        <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
-          {filteredSkills.map((skill, index) => {
-            return (
-              <Button
-                key={index}
-                bg={"#F6F7F7"}
-                border={"1px solid #EDEEEF"}
-                padding={"5px 11px"}
-                rounded={"full"}
-                w={"max-content"}
-                h={"28px"}
-                onClick={() => addSkill(skill)}
-                gap={"10px"}
-              >
-                <Text
-                  whiteSpace={"nowrap"}
-                  fontSize={14}
-                  fontWeight={500}
-                  color={"#4C5361"}
+      <FormikProvider value={formik}>
+        <VStack w={"full"} align={"start"}>
+          <Text fontWeight={600}>Suggested skills</Text>
+          <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
+            {filteredSkills.map((skill, index) => {
+              return (
+                <Button
+                  key={index}
+                  bg={"#F6F7F7"}
+                  border={"1px solid #EDEEEF"}
+                  padding={"5px 11px"}
+                  rounded={"14px"}
+                  w={"max-content"}
+                  h={"28px"}
+                  onClick={() => addSkill(skill)}
+                  gap={"4px"}
                 >
-                  {skill}
-                </Text>
-                <IoIosAdd size={25} color="#4C5361" />
-              </Button>
-            );
-          })}
-        </Flex>
-      </VStack>
+                  <Text
+                    whiteSpace={"nowrap"}
+                    fontSize={14}
+                    fontWeight={500}
+                    color={"#4C5361"}
+                  >
+                    {skill}
+                  </Text>
+                  <IoIosAdd size={20} color="#4C5361" />
+                </Button>
+              );
+            })}
+          </Flex>
+        </VStack>
+      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -179,7 +187,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={skills.length < 1}
+          isDisabled={!formik.isValid}
         >
           Next, write an overview
         </Button>
