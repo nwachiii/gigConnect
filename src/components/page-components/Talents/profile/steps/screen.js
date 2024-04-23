@@ -1,5 +1,5 @@
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
-import { countries } from "@/components/page-components/profile-components/lib";
+import { countries } from "@/lib";
 import { profileSchema, profileValues } from "@/lib/schema";
 import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
 import {

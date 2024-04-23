@@ -32,12 +32,15 @@ import { TransactionHistoryIcon } from "@/assets/icons/Navbar/transaction-histor
 import { NotifIcon } from "@/assets/icons/Navbar/notification-icon";
 import { sharedGCButtonProps } from "@/ui-lib/ui-lib-components/Button/Button";
 import UserProfileMenu from "../UserProfileMenu";
+import { ProjectIcon } from "@/assets/icons/Navbar/project-icon";
+import { WorkIcon } from "@/assets/icons/Navbar/work-icon";
+import { FileIcon } from "@/assets/icons/Navbar/file-icon";
 
-export const HeaderWithNav = ({ isLogin }) => {
+export const HeaderWithNav = ({ isLogin, isTalent }) => {
   const getPath = usePathname();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const navLinks = isTalent ? navTalentLinks : navClientLinks;
   const handleRouter = (url) => {
     router?.push(url);
   };
@@ -86,46 +89,48 @@ export const HeaderWithNav = ({ isLogin }) => {
         <RxHamburgerMenu fontSize={24} onClick={onOpen} />
       </Box>
 
-     {isLogin ? null : <HStack
-        as={"nav"}
-        spacing={"16px"}
-        display={{ base: "none", md: "flex" }}
-      >
-        {navLinks.map((item, idx) => {
-          return item.menuList ? (
-            <GCMenuComponent
-              isActive={getActivePage(item)}
-              key={idx}
-              item={item}
-              handleRouter={handleRouter}
-            />
-          ) : (
-            <GCButton
-              {...getActiveButtonStyle(item)}
-              key={idx}
-              leftIcon={
-                <Box
-                  filter={
-                    getIconVariant(item) == "normal"
-                      ? ""
-                      : "brightness(0) invert(1)"
-                  }
-                >
-                  {item.icon}
-                </Box>
-              }
-              onClick={() => handleRouter(item.pageUrl)}
-            >
-              {item.text}
-            </GCButton>
-          );
-        })}
-      </HStack>}
+      {isLogin ? null : (
+        <HStack
+          as={"nav"}
+          spacing={"16px"}
+          display={{ base: "none", md: "flex" }}
+        >
+          {navLinks.map((item, idx) => {
+            return item.menuList ? (
+              <GCMenuComponent
+                isActive={getActivePage(item)}
+                key={idx}
+                item={item}
+                handleRouter={handleRouter}
+              />
+            ) : (
+              <GCButton
+                {...getActiveButtonStyle(item)}
+                key={idx}
+                leftIcon={
+                  <Box
+                    filter={
+                      getIconVariant(item) == "normal"
+                        ? ""
+                        : "brightness(0) invert(1)"
+                    }
+                  >
+                    {item.icon}
+                  </Box>
+                }
+                onClick={() => handleRouter(item.pageUrl)}
+              >
+                {item.text}
+              </GCButton>
+            );
+          })}
+        </HStack>
+      )}
 
       <Flex
         alignItems={"center"}
         flex={"0.3"}
-        justify={!isLogin ? "space-between" : 'end'}
+        justify={!isLogin ? "space-between" : "end"}
         gap="8px"
       >
         {!isLogin && <NotifIcon />}
@@ -185,7 +190,7 @@ export const GCMenuComponent = ({ item, handleRouter }) => {
   );
 };
 
-const navLinks = [
+const navClientLinks = [
   {
     text: "Workspace",
     icon: <RiHomeLine />,
@@ -222,5 +227,56 @@ const navLinks = [
     text: "Transaction History",
     icon: <TransactionHistoryIcon />,
     pageUrl: "/transaction-history",
+  },
+];
+
+const navTalentLinks = [
+  {
+    text: "Find Work",
+    icon: <ProjectIcon />,
+    menuList: [
+      {
+        listItem: "Find Work",
+        pageUrl: "/projects",
+      },
+      { listItem: "Saved Jobs", pageUrl: "/projects?saved" },
+      { listItem: "My Stats", pageUrl: "/my-jobs?completed=true" },
+      { listItem: "My Proposals", pageUrl: "/my-jobs?completed=true" },
+    ],
+  },
+  {
+    text: "My Jobs",
+    icon: <WorkIcon />,
+    menuList: [
+      {
+        listItem: "My Jobs",
+        pageUrl: "/my-jobs",
+      },
+      { listItem: "Active Jobs", pageUrl: "/my-jobs?active=true" },
+      { listItem: "Completed Jobs", pageUrl: "/my-jobs?completed=true" },
+    ],
+  },
+  {
+    text: "Reports",
+    icon: <FileIcon />,
+    menuList: [
+      {
+        listItem: "Reports",
+        pageUrl: "/reports",
+      },
+      {
+        listItem: "Billings & Earnings",
+        pageUrl: "/billings",
+      },
+      {
+        listItem: "Transaction History",
+        pageUrl: "/transaction-history",
+      },
+    ],
+  },
+  {
+    text: "Messages",
+    icon: <MessagesIcon />,
+    pageUrl: "/messages",
   },
 ];
