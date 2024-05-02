@@ -34,7 +34,7 @@ export const JobListing = ({ job, handleJob, isSaved }) => {
         align={"center"}
         justifyContent={"space-between"}
       >
-        <HStack gap={"16px"} w={"full"} maxW={"720px"}>
+        <HStack gap={"10px"} w={"full"} maxW={"720px"}>
           <CiHeart
             color={isSaved ? "red" : "black"}
             size={35}

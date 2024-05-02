@@ -10,7 +10,7 @@ import {
 import { JobPostings } from "./WorkPostings";
 import { ProfileSidebar } from "./profileSidebar";
 
-export const ProjectList = () => {
+export const StatList = () => {
   return (
     <Stack
       maxW="1440px"
@@ -21,19 +21,6 @@ export const ProjectList = () => {
       spacing="36px"
       mx="auto"
     >
-      {/* Subnav */}
-      <VStack w="full" align="self-start" justifyContent={"space-between"}>
-        <Flex gap={2}>
-          <Heading fontSize="24px" fontWeight="600">
-            Discovery Space
-          </Heading>
-          <Image src="/img/waving-hand.svg" alt="waving hand" />
-        </Flex>
-        <Text color="#2E2E2E" fontSize="14px" fontWeight="400">
-          Welcome to your workspace Ola
-        </Text>
-      </VStack>
-
       {/* Banner */}
       <Flex
         h="58px"

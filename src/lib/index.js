@@ -506,3 +506,31 @@ export const techJobs = [
     ],
   },
 ];
+
+export const profileSteps = [
+  {
+    title: "Employment history",
+    isComplete: true,
+    description: "Past job experience and positions (+20%)",
+  },
+  {
+    title: "Portfolio",
+    isComplete: false,
+    description: "Work samples, case studies, e.t.c (+20%)",
+  },
+  {
+    title: "Education",
+    isComplete: true,
+    description: "Include some college, degree or diplomas (+10%)",
+  },
+  {
+    title: "Certifications",
+    isComplete: false,
+    description: "Recognized skills and knowledge (+10%)",
+  },
+  {
+    title: "Other experience",
+    isComplete: false,
+    description: "Bootcamps, conferences, awards e.t.c (+5%)",
+  },
+];

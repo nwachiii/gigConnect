@@ -2,7 +2,6 @@ import { JobListing } from "@/components/generic-components/JobListing";
 import { Image, Stack, Text, VStack } from "@chakra-ui/react";
 
 export const SavedPostings = ({ savedJobs, handleSaveJob }) => {
-    console.log(savedJobs);
   return (
     <Stack>
       {savedJobs.length > 0 && savedJobs ? (

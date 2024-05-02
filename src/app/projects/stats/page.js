@@ -2,15 +2,15 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import { HeaderWithNav } from "@/components/generic-components/Headers";
-import { ProjectList } from "@/components/page-components/Projects/ProjectList";
+import { StatList } from "@/components/page-components/Projects/StatList";
 
-export const WorkPosts = () => {
+export const MyStats = () => {
   return (
     <Box minH="100vh" bg="#F5F5F5">
       <HeaderWithNav isTalent />
-      <ProjectList/>
+      <StatList/>
     </Box>
   );
 };
 
-export default WorkPosts;
+export default MyStats;

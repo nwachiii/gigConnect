@@ -1,4 +1,13 @@
-import { Button, HStack, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import { profileSteps } from "@/lib";
+import {
+  Button,
+  HStack,
+  Image,
+  Progress,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 export const ProfileSidebar = () => {
   return (
@@ -9,6 +18,8 @@ export const ProfileSidebar = () => {
       //   maxW="256px"
       w="full"
       bg="#FFFFFF"
+      maxH={"max-content"}
+      h={"max-content"}
     >
       <VStack borderRadius="12px" border="1px solid #EDEEEF" w="full" p={4}>
         <Image src="/img/icons/userIcon.svg" />
@@ -24,6 +35,17 @@ export const ProfileSidebar = () => {
           Complete Profile
         </Button>
       </VStack>
+      <HStack borderRadius="12px" bg="#F6F7F7" w="full" p={4}>
+        <Progress
+          bg={"#C8CACE"}
+          color={"#053AF9"}
+          rounded={"full"}
+          size={"sm"}
+          width={"full"}
+          value={50}
+        />
+        <Text>50%</Text>
+      </HStack>
       {profileSteps.map((step, index) => {
         return (
           <HStack
@@ -33,6 +55,7 @@ export const ProfileSidebar = () => {
             p={4}
             key={index}
             align={"start"}
+            gap={4}
           >
             <Image
               src={
@@ -40,6 +63,7 @@ export const ProfileSidebar = () => {
                   ? "img/icons/radio-tick.svg"
                   : "/img/icons/radio.svg"
               }
+              mt={1}
             />
             <Stack gap={2}>
               <Text fontWeight={500}>{step.title}</Text>
@@ -51,31 +75,3 @@ export const ProfileSidebar = () => {
     </VStack>
   );
 };
-
-const profileSteps = [
-  {
-    title: "Employment history",
-    isComplete: true,
-    description: "Past job experience and positions (+20%)",
-  },
-  {
-    title: "Portfolio",
-    isComplete: false,
-    description: "Work samples, case studies, e.t.c (+20%)",
-  },
-  {
-    title: "Education",
-    isComplete: true,
-    description: "Include some college, degree or diplomas (+10%)",
-  },
-  {
-    title: "Certifications",
-    isComplete: false,
-    description: "Recognized skills and knowledge (+10%)",
-  },
-  {
-    title: "Other experience",
-    isComplete: false,
-    description: "Bootcamps, conferences, awards e.t.c (+5%)",
-  },
-];

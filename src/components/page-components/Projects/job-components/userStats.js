@@ -1,60 +1,6 @@
-import {
-  Flex,
-  HStack,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-  Tab,
-  TabIndicator,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { CiSearch } from "react-icons/ci";
-import { SavedPostings } from "./job-components/savedPostings";
-import { AllPostings } from "./job-components/allPostings";
-import { useSearchParams } from "next/navigation";
-
-export const JobPostings = () => {
-  const [savedJobs, setSavedJobs] = useState([]);
-  const [tabIndex, setTabIndex] = useState(0);
-  const searchParams = useSearchParams();
-
-  const saved = searchParams.get("saved");
-
-  useEffect(() => {
-    setTabIndex(2);
-  }, [saved]);
-  const handleTabsChange = (index) => {
-    setTabIndex(index);
-  };
-
-  const handleSaveJob = (job) => {
-    if (savedJobs.find((savedJob) => savedJob.id === job.id)) {
-      setSavedJobs(savedJobs.filter((savedJob) => savedJob.id !== job.id));
-    } else {
-      setSavedJobs([...savedJobs, job]);
-    }
-  };
-
-  const withTabs = (Component) => (props) =>
-    (
-      <Component
-        {...props}
-        savedJobs={savedJobs}
-        handleSaveJob={handleSaveJob}
-        tabIndex={tabIndex}
-      />
-    );
-  const JobScreens = tabs.map((tab) => withTabs(tab.component));
-
-  return (
-    <Stack
+export const UserStats = () => {
+    return (
+        <Stack
       borderRadius={"16px"}
       p={4}
       gap={4}
@@ -141,20 +87,5 @@ export const JobPostings = () => {
         </TabPanels>
       </Tabs>
     </Stack>
-  );
-};
-
-const tabs = [
-  {
-    tablist: "Best Matches",
-    component: AllPostings,
-  },
-  {
-    tablist: "Most Recent",
-    component: AllPostings,
-  },
-  {
-    tablist: "Saved Jobs",
-    component: SavedPostings,
-  },
-];
+    )
+}

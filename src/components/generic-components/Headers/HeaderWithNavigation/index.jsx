@@ -239,9 +239,9 @@ const navTalentLinks = [
         listItem: "Find Work",
         pageUrl: "/projects",
       },
-      { listItem: "Saved Jobs", pageUrl: "/projects?saved" },
-      { listItem: "My Stats", pageUrl: "/my-jobs?completed=true" },
-      { listItem: "My Proposals", pageUrl: "/my-jobs?completed=true" },
+      { listItem: "Saved Jobs", pageUrl: "/projects?saved=true" },
+      { listItem: "My Stats", pageUrl: "/projects/stats" },
+      { listItem: "My Proposals", pageUrl: "/projects/proposals" },
     ],
   },
   {
