@@ -1,14 +1,11 @@
 import {
   Button,
   Flex,
-  Heading,
-  Image,
   Stack,
   Text,
-  VStack,
 } from "@chakra-ui/react";
-import { JobPostings } from "./WorkPostings";
 import { ProfileSidebar } from "./profileSidebar";
+import { UserStats } from "./job-components/userStats";
 
 export const StatList = () => {
   return (
@@ -50,7 +47,7 @@ export const StatList = () => {
 
       {/* Main Content */}
       <Flex w="full" columnGap="20px">
-        <JobPostings />
+        <UserStats />
         <ProfileSidebar />
       </Flex>
     </Stack>

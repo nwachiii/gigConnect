@@ -1,6 +1,17 @@
+import { profileSteps } from "@/lib";
+import {
+  Flex,
+  HStack,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+
 export const UserStats = () => {
-    return (
-        <Stack
+  return (
+    <Stack
       borderRadius={"16px"}
       p={4}
       gap={4}
@@ -8,84 +19,85 @@ export const UserStats = () => {
       w="full"
       bg="#FFFFFF"
     >
-      <InputGroup maxW={'410px'} alignItems={"center"}>
-        <InputRightElement p={2} right={"4px"} top={"5px"}>
-          <CiSearch size={25} />
-        </InputRightElement>
-        <Input placeholder="Search for jobs" py={6} w={"full"} />
-      </InputGroup>
-      <Heading fontSize={24}>Jobs you might like</Heading>
+      <Heading fontSize={24}>My Stats</Heading>
       <Flex
-        h="56px"
         borderRadius="12px"
         border="1px solid #EDEEEF"
         w="full"
-        align="center"
-        px="12px"
+        align="start"
         justifyContent={"space-between"}
+        flexDir={"column"}
+        p={2}
       >
-        <HStack spacing="13px">
-          <Text color="#2e2e2e" fontWeight={"600"} fontSize={"18px"}>
-            Posting
-          </Text>
-          <HStack
-            spacing="10px"
-            h="42px"
-            px="5px"
-            justify={"center"}
-            align="center"
-            bg="#F5F5F5"
-            borderRadius={"16px"}
-          >
-            <Text
-              fontSize={"14px"}
-              borderRadius={"16px"}
-              p="5px 9px"
-              bg="#FFFFFF"
-            >{`Active (0)`}</Text>
-            <Text
-              fontSize={"14px"}
-              borderRadius={"16px"}
-              p="5px 9px"
-              bg="#FFFFFF"
-            >{`Archived (0)`}</Text>
-          </HStack>
-        </HStack>
+        <Text fontWeight={500}>Complete your profile</Text>
+        <Text fontSize={14}>
+          Having a complete profile improves your odds of getting hired. Add
+          relevant work to set up your profile for success.
+        </Text>
       </Flex>
-      <Tabs index={tabIndex} onChange={handleTabsChange}>
-        <Flex
-          borderRadius="12px"
-          border="1px solid #EDEEEF"
-          w="full"
-          px="8px"
-          pt="8px"
-          h={"56px"}
-          align={"center"}
-        >
-          <TabList width={"full"} justifyContent={"center"} borderBottom={"0"}>
-            {tabs.map((tab, index) => (
-              <Tab
-                _selected={{
-                  color: "black",
-                }}
-                color="#ADB0B6"
+      <HStack
+        borderRadius="12px"
+        border="1px solid #EDEEEF"
+        w="full"
+        p={4}
+        justify={'space-between'}
+        gap={4}
+      >
+        <HStack align={'start'}>
+            <Image src="img/icons/radio-tick.svg" mt={1} />
+            <Stack gap={2}>
+              <Text fontWeight={500}>Linked account</Text>
+              <Text fontSize={14} maxW={"150px"}>
+                Connect a social media profile +(10%)
+              </Text>
+            </Stack>
+        </HStack>
+        <Image src='/img/icons/rightArrow.svg' />
+      </HStack>
+      <Flex
+        direction={"column"}
+        p={3}
+        gap={6}
+        borderRadius="12px"
+        border="1px solid #EDEEEF"
+        w="full"
+      >
+        <Text>
+          Talents with complete, quality profiles are 4.5 times more likely to
+          get hired by clients.
+        </Text>
+        <VStack>
+          {profileSteps.map((step, index) => {
+            return (
+              <HStack
+                borderRadius="12px"
+                border="1px solid #EDEEEF"
+                w="full"
+                p={4}
                 key={index}
-                index={index}
+                gap={4}
+                justify={'space-between'}
               >
-                {tab.tablist}
-              </Tab>
-            ))}
-          </TabList>
-          <TabIndicator mt={12} h="2.5px" bg="#053AF9" />
-        </Flex>
-        <TabPanels>
-          {JobScreens.map((JobScreen, index) => (
-            <TabPanel p={0} mt={4} key={index}>
-              <JobScreen />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </Tabs>
+                <HStack align={'start'}>
+                    <Image
+                      src={
+                        step.isComplete
+                          ? "img/icons/radio-tick.svg"
+                          : "/img/icons/radio.svg"
+                      }
+                      mt={1}
+                    />
+                    <Stack gap={2}>
+                      <Text fontWeight={500}>{step.title}</Text>
+                      <Text fontSize={14}>{step.description}</Text>
+                    </Stack>
+                </HStack>
+                <Image src='/img/icons/rightArrow.svg' />
+              </HStack>
+            );
+          })}
+        </VStack>
+      </Flex>
     </Stack>
-    )
-}
+  );
+};
