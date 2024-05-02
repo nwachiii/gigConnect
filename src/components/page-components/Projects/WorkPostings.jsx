@@ -1,7 +1,4 @@
-import { JobListing } from "@/components/generic-components/JobListing";
-import { techJobs } from "@/lib";
 import {
-    Box,
   Flex,
   HStack,
   Heading,
@@ -9,15 +6,58 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { SavedPostings } from "./job-components/savedPostings";
+import { AllPostings } from "./job-components/allPostings";
 
 export const JobPostings = () => {
+  const [savedJobs, setSavedJobs] = useState([]);
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleTabsChange = (index) => {
+    setTabIndex(index);
+  };
+
+
+  const handleSaveJob = (job) => {
+    if(savedJobs.find(savedJob => savedJob.id === job.id)) {
+      setSavedJobs(savedJobs.filter(savedJob => savedJob.id!== job.id));
+    } else {
+      setSavedJobs([...savedJobs, job]);
+    }
+  };
+
+  const withTabs = (Component) => (props) =>
+    (
+      <Component
+        {...props}
+        savedJobs={savedJobs}
+        handleSaveJob={handleSaveJob}
+        tabIndex={tabIndex}
+      />
+    );
+  const JobScreens = tabs.map((tab) => withTabs(tab.component));
+
   return (
-    <Stack borderRadius={"16px"} p={4} gap={4} maxW="981px" w="full" bg="#FFFFFF">
+    <Stack
+      borderRadius={"16px"}
+      p={4}
+      gap={4}
+      maxW="981px"
+      w="full"
+      bg="#FFFFFF"
+    >
       <InputGroup alignItems={"center"}>
-        <InputRightElement p={2} right={'4px'} top={"5px"}>
+        <InputRightElement p={2} right={"4px"} top={"5px"}>
           <CiSearch size={25} />
         </InputRightElement>
         <Input placeholder="Search for jobs" py={6} w={"full"} />
@@ -60,21 +100,55 @@ export const JobPostings = () => {
           </HStack>
         </HStack>
       </Flex>
-      <Flex
-        borderRadius="12px"
-        border="1px solid #EDEEEF"
-        w="full"
-        px="12px"
-        h={'55px'}
-        align={'center'}
-      >
-        <Text>Browse jobs that match your experience to a client's hiring preferences. Ordered by most relevant.</Text>
-      </Flex>
-      <Stack>
-        {techJobs.map((job, index) => {
-          return <JobListing job={job} key={index} />
-        })}
-      </Stack>
+      <Tabs index={tabIndex} onChange={handleTabsChange}>
+        <Flex
+          borderRadius="12px"
+          border="1px solid #EDEEEF"
+          w="full"
+          px="8px"
+          pt="8px"
+          h={"56px"}
+          align={"center"}
+        >
+          <TabList width={"full"} justifyContent={"center"} borderBottom={"0"}>
+            {tabs.map((tab, index) => (
+              <Tab
+                _selected={{
+                  color: "black",
+                }}
+                color="#ADB0B6"
+                key={index}
+                index={index}
+              >
+                {tab.tablist}
+              </Tab>
+            ))}
+          </TabList>
+          <TabIndicator mt={12} h="2.5px" bg="#053AF9" />
+        </Flex>
+        <TabPanels>
+          {JobScreens.map((JobScreen, index) => (
+            <TabPanel key={index}>
+              <JobScreen />
+            </TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
     </Stack>
   );
 };
+
+const tabs = [
+  {
+    tablist: "Best Matches",
+    component: AllPostings,
+  },
+  {
+    tablist: "Most Recent",
+    component: AllPostings,
+  },
+  {
+    tablist: "Saved Jobs",
+    component: SavedPostings,
+  },
+];

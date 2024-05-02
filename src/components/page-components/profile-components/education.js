@@ -47,7 +47,6 @@ export const EducationForm = ({ remove, index, formik }) => {
     `${formik.values.education[index]?.endDate?.year}-${formik.values.education[index]?.endDate?.month}-01`
   );
 
-  console.log(IS_CHECKED)
   const saveEducation = () => {
     setIsSaved(true);
     toast({

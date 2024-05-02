@@ -51,8 +51,8 @@ export const listServices = [
   "Interior Design Consultation",
   "Music Lessons",
   "Landscaping Services",
-  "Pet Sitting/Dog Walking"
-]
+  "Pet Sitting/Dog Walking",
+];
 
 export const listLanguages = [
   "English",
@@ -79,8 +79,8 @@ export const listLanguages = [
   "Thai",
   "Yoruba",
   "Dutch",
-  "Polish"
-]
+  "Polish",
+];
 
 export const proficiencyLevels = [
   {
@@ -294,33 +294,48 @@ export const countries = [
   "Viet Nam",
   "Yemen",
   "Zambia",
-  "Zimbabwe"
-]
+  "Zimbabwe",
+];
 
 export const techJobs = [
   {
+    clientName: "Tech Support Ltd.",
+    projectTitle: "IT Support Specialist for Helpdesk Services",
+    location: "Onsite",
+    verified: true,
+    difficulty: "Easy",
+    budget: "$2000 - $3000",
+    postedDate: "2024-03-31",
+    ratings: 3,
+    jobDescription:
+      "We are looking for an IT support specialist to provide helpdesk services to our internal team. The role involves troubleshooting hardware and software issues, installing software, and assisting users with technical problems.",
+    skillsRequired: [
+      "Technical Support",
+      "Troubleshooting",
+      "Helpdesk Support",
+      "Hardware",
+      "Software",
+    ],
+  },
+  {
     clientName: "TechCo Solutions",
-    projectTitle: "Senior Full-Stack Developer for E-commerce Platform Enhancement",
+    projectTitle:
+      "Senior Full-Stack Developer for E-commerce Platform Enhancement",
     location: "Remote",
     verified: true,
     difficulty: "Intermediate",
     budget: "$3000 - $5000",
-    postedDate: "2024-04-10",
+    postedDate: "2024-05-01",
     ratings: 4,
-    jobDescription: "We are looking for an experienced full-stack developer to join our team and help enhance our e-commerce platform. The ideal candidate should have strong skills in both front-end and back-end development, as well as experience with payment gateway integrations.",
-    skillsRequired: ["JavaScript", "React", "Node.js", "MongoDB", "Payment Gateway Integration"]
-  },
-  {
-    clientName: "Data Insights Inc.",
-    projectTitle: "Data Scientist for Predictive Analytics Project",
-    location: "Remote",
-    verified: true,
-    difficulty: "Experience",
-    budget: "$5000 - $8000",
-    postedDate: "2024-04-09",
-    ratings: 5,
-    jobDescription: "We are seeking a talented data scientist to join our team and work on a predictive analytics project. The role involves analyzing large datasets, building predictive models, and communicating insights to stakeholders.",
-    skillsRequired: ["Python", "Machine Learning", "Statistical Analysis", "Data Visualization", "Predictive Modeling"]
+    jobDescription:
+      "We are looking for an experienced full-stack developer to join our team and help enhance our e-commerce platform. The ideal candidate should have strong skills in both front-end and back-end development, as well as experience with payment gateway integrations.",
+    skillsRequired: [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Payment Gateway Integration",
+    ],
   },
   {
     clientName: "WebTech Inc.",
@@ -331,9 +346,30 @@ export const techJobs = [
     budget: "$2000 - $4000",
     postedDate: "2024-04-08",
     ratings: 4,
-    jobDescription: "We are looking for a skilled front-end developer to redesign our corporate website. The ideal candidate should have expertise in HTML, CSS, JavaScript, and modern front-end frameworks.",
-    skillsRequired: ["HTML", "CSS", "JavaScript", "React", "Responsive Design"]
+    jobDescription:
+      "We are looking for a skilled front-end developer to redesign our corporate website. The ideal candidate should have expertise in HTML, CSS, JavaScript, and modern front-end frameworks.",
+    skillsRequired: ["HTML", "CSS", "JavaScript", "React", "Responsive Design"],
   },
+  {
+    clientName: "Data Insights Inc.",
+    projectTitle: "Data Scientist for Predictive Analytics Project",
+    location: "Remote",
+    verified: true,
+    difficulty: "Experience",
+    budget: "$5000 - $8000",
+    postedDate: "2024-04-09",
+    ratings: 5,
+    jobDescription:
+      "We are seeking a talented data scientist to join our team and work on a predictive analytics project. The role involves analyzing large datasets, building predictive models, and communicating insights to stakeholders.",
+    skillsRequired: [
+      "Python",
+      "Machine Learning",
+      "Statistical Analysis",
+      "Data Visualization",
+      "Predictive Modeling",
+    ],
+  },
+
   {
     clientName: "CloudTech Solutions",
     projectTitle: "Cloud Architect for Infrastructure Optimization Project",
@@ -343,8 +379,35 @@ export const techJobs = [
     budget: "$6000 - $10000",
     postedDate: "2024-04-07",
     ratings: 5,
-    jobDescription: "We are seeking an experienced cloud architect to optimize our infrastructure for scalability, reliability, and cost-efficiency. The role involves designing and implementing cloud solutions using AWS or Azure.",
-    skillsRequired: ["AWS", "Azure", "Cloud Architecture", "Infrastructure Optimization", "DevOps"]
+    jobDescription:
+      "We are seeking an experienced cloud architect to optimize our infrastructure for scalability, reliability, and cost-efficiency. The role involves designing and implementing cloud solutions using AWS or Azure.",
+    skillsRequired: [
+      "AWS",
+      "Azure",
+      "Cloud Architecture",
+      "Infrastructure Optimization",
+      "DevOps",
+    ],
+  },
+  {
+    clientName: "AI Solutions Ltd.",
+    projectTitle:
+      "Machine Learning Engineer for Natural Language Processing Project",
+    location: "Remote",
+    verified: true,
+    difficulty: "Experience",
+    budget: "$7000 - $12000",
+    postedDate: "2024-04-15",
+    ratings: 5,
+    jobDescription:
+      "We are seeking a talented machine learning engineer to work on a natural language processing project. The role involves developing algorithms, training models, and deploying solutions for text analysis.",
+    skillsRequired: [
+      "Python",
+      "Machine Learning",
+      "Natural Language Processing",
+      "Deep Learning",
+      "TensorFlow",
+    ],
   },
   {
     clientName: "MobileApp Innovations",
@@ -355,21 +418,17 @@ export const techJobs = [
     budget: "$4000 - $6000",
     postedDate: "2024-04-06",
     ratings: 4,
-    jobDescription: "We are looking for an iOS developer to join our team and work on a mobile app development project. The ideal candidate should have experience in Swift programming and building iOS apps.",
-    skillsRequired: ["Swift", "iOS Development", "UIKit", "RESTful APIs", "Git"]
+    jobDescription:
+      "We are looking for an iOS developer to join our team and work on a mobile app development project. The ideal candidate should have experience in Swift programming and building iOS apps.",
+    skillsRequired: [
+      "Swift",
+      "iOS Development",
+      "UIKit",
+      "RESTful APIs",
+      "Git",
+    ],
   },
-  {
-    clientName: "AI Solutions Ltd.",
-    projectTitle: "Machine Learning Engineer for Natural Language Processing Project",
-    location: "Remote",
-    verified: true,
-    difficulty: "Experience",
-    budget: "$7000 - $12000",
-    postedDate: "2024-04-05",
-    ratings: 5,
-    jobDescription: "We are seeking a talented machine learning engineer to work on a natural language processing project. The role involves developing algorithms, training models, and deploying solutions for text analysis.",
-    skillsRequired: ["Python", "Machine Learning", "Natural Language Processing", "Deep Learning", "TensorFlow"]
-  },
+
   {
     clientName: "SecurityTech Solutions",
     projectTitle: "Cybersecurity Analyst for Threat Detection Project",
@@ -377,10 +436,17 @@ export const techJobs = [
     verified: true,
     difficulty: "Intermediate",
     budget: "$5000 - $8000",
-    postedDate: "2024-04-04",
+    postedDate: "2024-04-24",
     ratings: 4,
-    jobDescription: "We are looking for a cybersecurity analyst to join our team and work on a threat detection project. The role involves analyzing security data, identifying threats, and implementing detection mechanisms.",
-    skillsRequired: ["Cybersecurity", "Security Operations", "Threat Analysis", "SIEM", "Intrusion Detection"]
+    jobDescription:
+      "We are looking for a cybersecurity analyst to join our team and work on a threat detection project. The role involves analyzing security data, identifying threats, and implementing detection mechanisms.",
+    skillsRequired: [
+      "Cybersecurity",
+      "Security Operations",
+      "Threat Analysis",
+      "SIEM",
+      "Intrusion Detection",
+    ],
   },
   {
     clientName: "Blockchain Innovations",
@@ -391,8 +457,15 @@ export const techJobs = [
     budget: "$6000 - $10000",
     postedDate: "2024-04-03",
     ratings: 5,
-    jobDescription: "We are seeking a skilled blockchain developer to work on smart contract development. The role involves designing and implementing smart contracts for decentralized applications.",
-    skillsRequired: ["Blockchain", "Solidity", "Smart Contracts", "Ethereum", "Web3.js"]
+    jobDescription:
+      "We are seeking a skilled blockchain developer to work on smart contract development. The role involves designing and implementing smart contracts for decentralized applications.",
+    skillsRequired: [
+      "Blockchain",
+      "Solidity",
+      "Smart Contracts",
+      "Ethereum",
+      "Web3.js",
+    ],
   },
   {
     clientName: "HealthTech Solutions",
@@ -401,10 +474,17 @@ export const techJobs = [
     verified: true,
     difficulty: "Intermediate",
     budget: "$4000 - $7000",
-    postedDate: "2024-04-02",
+    postedDate: "2024-03-22",
     ratings: 4,
-    jobDescription: "We are looking for a telemedicine app developer to build a healthcare application. The ideal candidate should have experience in mobile app development and integrating video conferencing APIs.",
-    skillsRequired: ["Mobile App Development", "React Native", "Telemedicine", "Video Conferencing", "Healthcare IT"]
+    jobDescription:
+      "We are looking for a telemedicine app developer to build a healthcare application. The ideal candidate should have experience in mobile app development and integrating video conferencing APIs.",
+    skillsRequired: [
+      "Mobile App Development",
+      "React Native",
+      "Telemedicine",
+      "Video Conferencing",
+      "Healthcare IT",
+    ],
   },
   {
     clientName: "Fintech Innovations",
@@ -415,19 +495,14 @@ export const techJobs = [
     budget: "$3000 - $5000",
     postedDate: "2024-04-01",
     ratings: 4,
-    jobDescription: "We are seeking a financial analyst to conduct market research and analysis. The role involves gathering financial data, performing industry analysis, and preparing reports.",
-    skillsRequired: ["Financial Analysis", "Market Research", "Financial Modeling", "Data Analysis", "Excel"]
+    jobDescription:
+      "We are seeking a financial analyst to conduct market research and analysis. The role involves gathering financial data, performing industry analysis, and preparing reports.",
+    skillsRequired: [
+      "Financial Analysis",
+      "Market Research",
+      "Financial Modeling",
+      "Data Analysis",
+      "Excel",
+    ],
   },
-  {
-    clientName: "Tech Support Ltd.",
-    projectTitle: "IT Support Specialist for Helpdesk Services",
-    location: "Onsite",
-    verified: true,
-    difficulty: "Easy",
-    budget: "$2000 - $3000",
-    postedDate: "2024-03-31",
-    ratings: 3,
-    jobDescription: "We are looking for an IT support specialist to provide helpdesk services to our internal team. The role involves troubleshooting hardware and software issues, installing software, and assisting users with technical problems.",
-    skillsRequired: ["Technical Support", "Troubleshooting", "Helpdesk Support", "Hardware", "Software"]
-  }
-]
+];

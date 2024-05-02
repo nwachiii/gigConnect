@@ -83,3 +83,7 @@ input[type='checkbox']:focus {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+.w-full {
+  width: 100% !important;
+}
