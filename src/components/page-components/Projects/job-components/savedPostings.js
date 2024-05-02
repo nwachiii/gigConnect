@@ -11,7 +11,7 @@ export const SavedPostings = ({ savedJobs, handleSaveJob }) => {
           return <JobListing isSaved={isSaved} handleJob={handleSaveJob} job={job} key={index} />;
         })
       ) : (
-        <VStack minH={'550px'} align={'center'} justify={'center'}>
+        <VStack minH={'37.5vh'} align={'center'} justify={'center'}>
           <Image src="/img/icons/blueHeart.svg" />
           <Text fontWeight={600}>No Saved Jobs</Text>
           <Text color={"#7D7D7D"} textAlign={"center"} lineHeight={'18px'} maxW={'350px'}>

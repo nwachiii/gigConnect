@@ -1,7 +1,17 @@
 import { PlusIconWhite } from "@/assets/icons/PlusIcon";
 import { GCButton } from "@/ui-lib/ui-lib-components/Button";
-import { Box, Button, Flex, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { JobPostings } from "./WorkPostings";
+import { ProfileSidebar } from "./profileSidebar";
 
 export const ProjectList = () => {
   return (
@@ -47,7 +57,7 @@ export const ProjectList = () => {
           bg="#F6F7F7"
           w="106px"
           h="32px"
-          p='6px 14px'
+          p="6px 14px"
           borderRadius="12px"
         >
           Get Started
@@ -56,9 +66,8 @@ export const ProjectList = () => {
 
       {/* Main Content */}
       <Flex w="full" columnGap="20px">
-        <Stack w="full" spacing="20px">
-          <JobPostings />
-        </Stack>
+        <JobPostings />
+        <ProfileSidebar />
       </Flex>
     </Stack>
   );

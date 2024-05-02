@@ -27,7 +27,6 @@ export const JobPostings = () => {
     setTabIndex(index);
   };
 
-
   const handleSaveJob = (job) => {
     if(savedJobs.find(savedJob => savedJob.id === job.id)) {
       setSavedJobs(savedJobs.filter(savedJob => savedJob.id!== job.id));
@@ -52,7 +51,7 @@ export const JobPostings = () => {
       borderRadius={"16px"}
       p={4}
       gap={4}
-      maxW="981px"
+      minW="981px"
       w="full"
       bg="#FFFFFF"
     >
@@ -128,7 +127,7 @@ export const JobPostings = () => {
         </Flex>
         <TabPanels>
           {JobScreens.map((JobScreen, index) => (
-            <TabPanel key={index}>
+            <TabPanel p={0} mt={4} key={index}>
               <JobScreen />
             </TabPanel>
           ))}
