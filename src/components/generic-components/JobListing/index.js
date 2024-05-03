@@ -5,13 +5,14 @@ import {
   Flex,
   HStack,
   Image,
+  Link,
   Stack,
   StackDivider,
   Text,
 } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 
-export const JobListing = ({ job, handleJob, isSaved }) => {
+export const JobListing = ({ job, index, handleJob, isSaved }) => {
   return (
     <Stack borderRadius="12px" border="1px solid #EDEEEF" p={4} gap={2}>
       <HStack>
@@ -78,18 +79,20 @@ export const JobListing = ({ job, handleJob, isSaved }) => {
             <StarRating w={"full"} ratingNumber={job.ratings} />
           </HStack>
         </HStack>
-        <Button
-          bg={"#053AF9"}
-          color={"white"}
-          rounded={"12px"}
-          fontWeight={400}
-          p={"6px 16px"}
-          w={"max-content"}
-          fontSize={14}
-          h={"32px"}
-        >
-          Apply
-        </Button>
+        <Link href={`/apply/${index}?job=${encodeURIComponent(JSON.stringify(job))}`}>
+          <Button
+            bg={"#053AF9"}
+            color={"white"}
+            rounded={"12px"}
+            fontWeight={400}
+            p={"6px 16px"}
+            w={"max-content"}
+            fontSize={14}
+            h={"32px"}
+          >
+            Apply
+          </Button>
+        </Link>
       </Flex>
       <Text pb={4} borderBottom={"1px solid #EDEEEF"}>
         {job.jobDescription}

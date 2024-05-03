@@ -27,7 +27,7 @@ export const AllPostings = ({ tabIndex, handleSaveJob }) => {
         </Text>
       </Flex>
       {sortedJobs.map((job, index) => {
-        return <JobListing handleJob={handleSaveJob} job={job} key={index} />;
+        return <JobListing index={index} handleJob={handleSaveJob} job={job} key={index} />;
       })}
     </Stack>
   );

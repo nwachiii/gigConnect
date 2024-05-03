@@ -64,7 +64,7 @@ export const ProjectList = () => {
       {/* Main Content */}
       <Flex w="full" columnGap="20px">
         <JobPostings />
-        <ProfileSidebar />
+        <ProfileSidebar showSteps />
       </Flex>
     </Stack>
   );

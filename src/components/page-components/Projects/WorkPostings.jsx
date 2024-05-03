@@ -24,12 +24,14 @@ export const JobPostings = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const searchParams = useSearchParams();
-
   const saved = searchParams.get("saved");
 
   useEffect(() => {
-    setTabIndex(2);
+    if (saved) {
+      setTabIndex(2);
+    }
   }, [saved]);
+
   const handleTabsChange = (index) => {
     setTabIndex(index);
   };
@@ -121,6 +123,7 @@ export const JobPostings = () => {
               <Tab
                 _selected={{
                   color: "black",
+                  fontWeight: 500
                 }}
                 color="#ADB0B6"
                 key={index}
