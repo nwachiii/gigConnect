@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { ProfileSidebar } from "./profileSidebar";
 import { UserStats } from "./job-components/userStats";
+import { ProfileSetup } from "./job-components/modals/profileSetup";
 
 export const StatList = () => {
   const modalDisclosure = useDisclosure()
