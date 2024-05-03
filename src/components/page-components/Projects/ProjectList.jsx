@@ -6,11 +6,15 @@ import {
   Stack,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { JobPostings } from "./WorkPostings";
 import { ProfileSidebar } from "./profileSidebar";
+import { ProfileSetup } from "./job-components/modals/profileSetup";
 
 export const ProjectList = () => {
+  const modalDisclosure = useDisclosure()
+
   return (
     <Stack
       maxW="1440px"
@@ -56,6 +60,7 @@ export const ProjectList = () => {
           h="32px"
           p="6px 14px"
           borderRadius="12px"
+          onClick={modalDisclosure.onOpen}
         >
           Get Started
         </Button>
@@ -66,6 +71,7 @@ export const ProjectList = () => {
         <JobPostings />
         <ProfileSidebar showSteps />
       </Flex>
+      <ProfileSetup modalDisclosure={modalDisclosure} />
     </Stack>
   );
 };

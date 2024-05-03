@@ -3,11 +3,13 @@ import {
   Flex,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ProfileSidebar } from "./profileSidebar";
 import { UserStats } from "./job-components/userStats";
 
 export const StatList = () => {
+  const modalDisclosure = useDisclosure()
   return (
     <Stack
       maxW="1440px"
@@ -40,6 +42,7 @@ export const StatList = () => {
           h="32px"
           p="6px 14px"
           borderRadius="12px"
+          onClick={modalDisclosure.onOpen}
         >
           Get Started
         </Button>
@@ -50,6 +53,8 @@ export const StatList = () => {
         <UserStats />
         <ProfileSidebar />
       </Flex>
+      <ProfileSetup modalDisclosure={modalDisclosure} />
+
     </Stack>
   );
 };

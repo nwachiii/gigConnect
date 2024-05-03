@@ -11,12 +11,15 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ActiveProposals } from "./proposals-components/activeProps";
 import { ArchivedProposals } from "./proposals-components/archivedProps";
 import { Referrals } from "./proposals-components/referrals";
+import { ProfileSetup } from "./job-components/modals/profileSetup";
 
 export const Proposals = () => {
+  const modalDisclosure = useDisclosure()
   return (
     <Stack
       maxW="1440px"
@@ -49,6 +52,7 @@ export const Proposals = () => {
           h="32px"
           p="6px 14px"
           borderRadius="12px"
+          onClick={modalDisclosure.onOpen}
         >
           Get Started
         </Button>
@@ -104,6 +108,7 @@ export const Proposals = () => {
           </TabPanels>
         </Tabs>
       </Stack>
+      <ProfileSetup modalDisclosure={modalDisclosure} />
     </Stack>
   );
 };
