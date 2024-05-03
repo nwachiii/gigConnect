@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 
-export const JobListing = ({ job, index, handleJob, isSaved }) => {
+export const JobListing = ({ job, isApplying, handleJob, isSaved }) => {
   return (
     <Stack borderRadius="12px" border="1px solid #EDEEEF" p={4} gap={2}>
       <HStack>
@@ -35,7 +35,7 @@ export const JobListing = ({ job, index, handleJob, isSaved }) => {
         align={"center"}
         justifyContent={"space-between"}
       >
-        <HStack gap={"10px"} w={"full"} maxW={"720px"}>
+        <HStack gap={"10px"} w={"full"}>
           <CiHeart
             color={isSaved ? "red" : "black"}
             size={35}
@@ -79,7 +79,7 @@ export const JobListing = ({ job, index, handleJob, isSaved }) => {
             <StarRating w={"full"} ratingNumber={job.ratings} />
           </HStack>
         </HStack>
-        <Link href={`/apply/${index}?job=${encodeURIComponent(JSON.stringify(job))}`}>
+        <Link display={'contents'} href={`/projects/apply/${job.id}`}>
           <Button
             bg={"#053AF9"}
             color={"white"}
@@ -90,7 +90,7 @@ export const JobListing = ({ job, index, handleJob, isSaved }) => {
             fontSize={14}
             h={"32px"}
           >
-            Apply
+            {isApplying ? 'View Details': 'Apply'}
           </Button>
         </Link>
       </Flex>

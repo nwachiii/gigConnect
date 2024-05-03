@@ -2,16 +2,15 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import { HeaderWithNav } from "@/components/generic-components/Headers";
-import { Proposals } from "@/components/page-components/Projects/Proposal";
 import { JobApplication } from "@/components/page-components/Projects/job-components/jobApplication";
 
-export const ApplyForaJob = () => {
+export const ApplyForAJob = () => {
   return (
     <Box minH="100vh" bg="#F5F5F5">
       <HeaderWithNav isTalent />
-      <JobApplication />
+      <JobApplication/>
     </Box>
   );
 };
 
-export default ApplyForaJob;
+export default ApplyForAJob;

@@ -9,7 +9,6 @@ export const SavedPostings = ({ savedJobs, handleSaveJob }) => {
           const isSaved = savedJobs.find((savedJob) => savedJob.id === job.id);
           return (
             <JobListing
-              index={index}
               isSaved={isSaved}
               handleJob={handleSaveJob}
               job={job}
