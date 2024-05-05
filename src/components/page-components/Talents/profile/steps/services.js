@@ -1,4 +1,4 @@
-import { listServices } from "@/components/page-components/profile-components/lib";
+import { listServices } from "@/lib";
 import { serviceSchema } from "@/lib/schema";
 import {
   Box,

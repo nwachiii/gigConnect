@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import "react-datepicker/dist/react-datepicker.css";
+@import 'react-quill/dist/quill.snow.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -25,6 +27,11 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  
 }
 
 @layer utilities {
@@ -82,4 +89,21 @@ input[type='checkbox']:focus {
 
 .react-datepicker-wrapper {
   width: 100%;
+}
+
+.quill {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.ql-toolbar.ql-snow {
+  border-radius: 0 0 20px 20px;
+  border-top: 1px solid #EDEEEF !important;
+  border: 1px solid #EDEEEF !important;
+}
+
+.ql-container.ql-snow {
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #EDEEEF !important;
+  border-bottom: 0 !important;
 }

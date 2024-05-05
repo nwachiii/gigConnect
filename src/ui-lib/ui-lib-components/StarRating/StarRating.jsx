@@ -3,7 +3,7 @@ import ReactStars from 'react-rating-stars-component';
 
 import {Box} from '@chakra-ui/react';
 
-export const StarRating = ({ratingNumber, isFeedback}) => {
+export const StarRating = ({ratingNumber, isFeedback, ...rest}) => {
   const [stars, setStars] = useState(ratingNumber);
   var data = {
 		size: 20,
@@ -14,7 +14,7 @@ export const StarRating = ({ratingNumber, isFeedback}) => {
 		},
 	};
   return (
-    <Box>
+    <Box {...rest}>
       <ReactStars {...data} />
     </Box>
   );
