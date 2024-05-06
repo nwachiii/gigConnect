@@ -17,8 +17,8 @@ import {
 } from "../profile/profile-skills-steps";
 import { ProfileCompleteScreen } from "../profile/steps/complete";
 
-export const ProfileCreation = ({ setScreenNumber }) => {
-  const [step, setStep] = useState(3);
+export const ProfileCreation = () => {
+  const [step, setStep] = useState(0);
   const ProfileSteps = profileSteps[step];
 
   return (
@@ -35,7 +35,7 @@ export const ProfileCreation = ({ setScreenNumber }) => {
           <HStack
             gap={3}
             cursor={"pointer"}
-            onClick={() => setScreenNumber((prev) => prev - 1)}
+            onClick={() => setStep((prev) => prev - 1)}
           >
             <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
               <BsChevronLeft />

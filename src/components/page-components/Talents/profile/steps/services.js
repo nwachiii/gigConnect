@@ -14,18 +14,14 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik, useFormikContext } from "formik";
 import { useMemo, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosAdd } from "react-icons/io";
 import { RiSearchLine } from "react-icons/ri";
 
 export const ProfileServicesStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { services: [] },
-    validationSchema: serviceSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
   const [searchTerm, setSearchTerm] = useState("");
   const toast = useToast();
   const addService = (service) => {
@@ -138,8 +134,7 @@ export const ProfileServicesStep = ({ setStep }) => {
         </InputGroup>
         <Text>For the best results, add 10-15 services max</Text>
       </VStack>
-      <FormikProvider value={formik}>
-        <VStack w={"full"} align={"start"}>
+      <VStack w={"full"} align={"start"}>
           <Text fontWeight={600}>Suggested services</Text>
           <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
             {filteredServices.map((service, index) => {
@@ -169,7 +164,6 @@ export const ProfileServicesStep = ({ setStep }) => {
             })}
           </Flex>
         </VStack>
-      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -195,7 +189,7 @@ export const ProfileServicesStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.services}
         >
           Next, set your rate
         </Button>

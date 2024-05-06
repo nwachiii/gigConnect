@@ -14,18 +14,11 @@ import {
   FieldArray,
   Form,
   FormikProvider,
-  useFormik,
   useFormikContext,
 } from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
 import { EducationForm } from "../../profile-components/education";
 import { LanguageForm } from "../../profile-components/language";
-import {
-  educationSchema,
-  educationValues,
-  languageSchema,
-  languageValues,
-} from "@/lib/schema";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 
 export const ProfileStep = ({ setStep }) => {
@@ -402,11 +395,7 @@ export const ProfileEduStep = ({ setStep }) => {
 };
 
 export const ProfileLangStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { languages: [languageValues] },
-    validationSchema: languageSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -508,7 +497,7 @@ export const ProfileLangStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep(7)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.languages}
         >
           Next, add your skills
         </Button>

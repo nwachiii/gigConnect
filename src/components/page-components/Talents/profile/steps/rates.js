@@ -1,4 +1,4 @@
-import { feeSchema, feeValues } from "@/lib/schema";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 import {
   Box,
   Button,
@@ -10,15 +10,15 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { Field, FormikProvider, useFormik } from "formik";
-import { useEffect } from "react";
+import { Field, FormikProvider, useFormik, useFormikContext } from "formik";
+import { useEffect, useState } from "react";
 
 export const ProfileRateStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: feeValues,
-    validationSchema: feeSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
+  const [fees, setFees] = useState({
+    service: '',
+    final: ''
+  })
   const toast = useToast()
   const handleInputChange = (event) => {
     // Allow only numbers
@@ -32,21 +32,23 @@ export const ProfileRateStep = ({ setStep }) => {
           description: 'You cannot charge more than $100 for hourly rate'
         })
       } else {
-        formik.setFieldValue('hourlyFee', event.target.value)
+        formik.setFieldValue('hourlyRate', event.target.value)
       }
     }
   };
 
   useEffect(() => {
-    if (formik.values.hourlyFee) {
-      const hourFee = parseFloat(formik.values.hourlyFee);
+    if (formik.values.hourlyRate) {
+      const hourFee = parseFloat(formik.values.hourlyRate);
       const serviceFee = hourFee * 0.05; // 5% of hourly fee
       const finalFee = hourFee - serviceFee;
 
-      formik.setFieldValue('serviceFee', serviceFee.toFixed(2)),
-      formik.setFieldValue('finalFee', finalFee.toFixed(2))
+      setFees({
+        service: serviceFee.toFixed(2),
+        final: finalFee.toFixed(2)
+      })
     }
-  }, [formik.values.hourlyFee]);
+  }, [formik.values.hourlyRate]);
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -105,20 +107,23 @@ export const ProfileRateStep = ({ setStep }) => {
               >
                 /hr
               </Flex>
-              <Field
-                as={Input}
-                value={formik.values.hourlyFee}
-                placeholder="$0.00"
-                p={"10px 16px"}
-                w={"full"}
-                h={"44px"}
-                maxW={"90px"}
-                onChange={handleInputChange}
-                name="hourlyFee"
-                onBlur={(e) => {
-                  e.target.value = parseFloat(e.target.value).toFixed(2);
-                }}
-              />
+              <VStack>
+                <Field
+                  as={Input}
+                  value={formik.values.hourlyRate}
+                  placeholder="$0.00"
+                  p={"10px 16px"}
+                  w={"full"}
+                  h={"44px"}
+                  maxW={"90px"}
+                  onChange={handleInputChange}
+                  name="hourlyRate"
+                  onBlur={(e) => {
+                    e.target.value = parseFloat(e.target.value).toFixed(2);
+                  }}
+                />
+                <FormErrorMessage name={"hourlyRate"} />
+              </VStack>
             </HStack>
           </HStack>
           <HStack
@@ -148,7 +153,7 @@ export const ProfileRateStep = ({ setStep }) => {
                 /hr
               </Flex>
               <Input
-                value={formik.values.serviceFee}
+                value={fees.service}
                 isDisabled
                 placeholder="$0.00"
                 p={"10px 16px"}
@@ -185,7 +190,7 @@ export const ProfileRateStep = ({ setStep }) => {
                 /hr
               </Flex>
               <Input
-                value={formik.values.finalFee}
+                value={fees.final}
                 isDisabled
                 placeholder="$0.00"
                 p={"10px 16px"}
@@ -222,7 +227,7 @@ export const ProfileRateStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.hourlyRate}
         >
           Next, add your profile photo and location
         </Button>

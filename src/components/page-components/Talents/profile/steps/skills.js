@@ -17,15 +17,10 @@ import { useMemo, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { RiSearchLine } from "react-icons/ri";
 import { IoIosAdd } from "react-icons/io";
-import { FormikProvider, useFormik } from "formik";
-import { skillSchema } from "@/lib/schema";
+import { useFormikContext } from "formik";
 
 export const ProfileSkillsStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { skills: [] },
-    validationSchema: skillSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
   const [searchTerm, setSearchTerm] = useState("");
   const toast = useToast()
   const addSkill = (skill) => {
@@ -130,8 +125,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
         </InputGroup>
         <Text>For the best results, add 10-15 skills max</Text>
       </VStack>
-      <FormikProvider value={formik}>
-        <VStack w={"full"} align={"start"}>
+      <VStack w={"full"} align={"start"}>
           <Text fontWeight={600}>Suggested skills</Text>
           <Flex gap={2} pt={2} maxW={"485px"} flexWrap={"wrap"}>
             {filteredSkills.map((skill, index) => {
@@ -161,7 +155,6 @@ export const ProfileSkillsStep = ({ setStep }) => {
             })}
           </Flex>
         </VStack>
-      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -187,7 +180,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.skills}
         >
           Next, write an overview
         </Button>

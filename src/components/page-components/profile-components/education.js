@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { Field } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiOutlineMinus } from "react-icons/hi2";
 
 export const EducationForm = ({ remove, index, formik }) => {
@@ -39,7 +39,6 @@ export const EducationForm = ({ remove, index, formik }) => {
     `${formik.values.education[index]?.endYear}-${formik.values.education[index]?.endMonth}-01`
   );
 
-  console.log(IS_CHECKED)
   const saveEducation = () => {
     setIsSaved(true);
     toast({
@@ -175,11 +174,11 @@ export const EducationForm = ({ remove, index, formik }) => {
                   <HStack align={"start"} w={"full"}>
                     <MonthPicker
                       formik={formik}
-                      name={`education.${index}.startDate.month`}
+                      name={`education.${index}.startMonth`}
                     />
                     <YearPicker
                       formik={formik}
-                      name={`education.${index}.startDate.year`}
+                      name={`education.${index}.startYear`}
                     />
                   </HStack>
                 </VStack>
@@ -193,12 +192,12 @@ export const EducationForm = ({ remove, index, formik }) => {
                       endYear={formik.values.education[index]?.endYear}
                       formik={formik}
                       isDisabled={isDateFilled}
-                      name={`education.${index}.endDate.month`}
+                      name={`education.${index}.endMonth`}
                     />
                     <YearPicker
                       minDate={formik.values.education[index]?.startYear}
                       formik={formik}
-                      name={`education.${index}.endDate.year`}
+                      name={`education.${index}.endYear`}
                       isDisabled={isDateFilled}
                     />
                   </HStack>

@@ -1,4 +1,4 @@
-import { overviewSchema } from "@/lib/schema";
+import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 import {
   Box,
   Button,
@@ -8,14 +8,10 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { Field, FormikProvider, useFormik } from "formik";
+import { Field, useFormikContext } from "formik";
 
 export const ProfileBioStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { userOverview: '' },
-    validationSchema: overviewSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -58,8 +54,7 @@ export const ProfileBioStep = ({ setStep }) => {
         <VStack align={"start"} w={"full"} px={4} gap={8} mt={2} mb={8}>
           <VStack w={"full"} maxW={"605px"} align={"start"}>
             <Text color={"#4C5361"}>Description</Text>
-            <FormikProvider value={formik}>
-              <Field
+            <Field
                 as={Textarea}
                 placeholder="Enter your top skills, experience and interest. This is one of the first things clients
                     will see on your profile."
@@ -73,10 +68,9 @@ export const ProfileBioStep = ({ setStep }) => {
                 minH={"115px"}
                 fontWeight={400}
                 resize={"none"}
-                name="userOverview"
-                value={formik.values.userOverview}
+                name="bio"
               />
-            </FormikProvider>
+              <FormErrorMessage name={'bio'} />
             <Text>At least 100 characters</Text>
           </VStack>
         </VStack>
@@ -105,7 +99,7 @@ export const ProfileBioStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           onClick={() => setStep((prev) => prev + 1)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.bio}
           h={"max-content"}
         >
           Next, choose your categories

@@ -23,13 +23,13 @@ const experienceValidation = Yup.object().shape({
   startYear: Yup.string().required("Required"),
   endMonth: Yup.string().when('current', {
     is: false, 
-    then: Yup.string().required("Required"), 
-    otherwise: Yup.string() 
+    then: () => Yup.string().required("Required"), 
+    otherwise: () => Yup.string() 
   }),
   endYear: Yup.string().when('current', {
     is: false,
-    then: Yup.string().required("Required"),
-    otherwise: Yup.string()
+    then: () => Yup.string().required("Required"),
+    otherwise: () => Yup.string()
   }),
   current: Yup.boolean().required("Required"),
   city: Yup.string().required("Required"),
@@ -57,13 +57,13 @@ const educationValidation = Yup.object().shape({
   startYear: Yup.string().required("Required"),
   endMonth: Yup.string().when('current', {
     is: false, 
-    then: Yup.string().required("Required"), 
-    otherwise: Yup.string() 
+    then: () => Yup.string().required("Required"), 
+    otherwise: () => Yup.string() 
   }),
   endYear: Yup.string().when('current', {
     is: false,
-    then: Yup.string().required("Required"),
-    otherwise: Yup.string()
+    then: () => Yup.string().required("Required"),
+    otherwise: () => Yup.string()
   }),
   current: Yup.boolean().required("Required"),
   description: Yup.string(),
@@ -77,42 +77,6 @@ export const languageValues = {
 const languageValidation = Yup.object().shape({
   name: Yup.string().required("Required"),
   proficiency: Yup.string().required("Required"),
-});
-
-export const skillSchema = Yup.object().shape({
-  skills: Yup.array()
-    .max(15, "Max skills reached")
-    .min(1, "At least one skill is required")
-    .required(),
-});
-
-export const serviceSchema = Yup.object().shape({
-  services: Yup.array()
-    .max(15, "Max services reached")
-    .min(1, "At least one service is required")
-    .required(),
-});
-
-export const languageSchema = Yup.object().shape({
-  languages: Yup.array()
-    .of(languageValidation)
-    .required("At least one language is required"),
-});
-
-export const overviewSchema = Yup.object().shape({
-  userOverview: Yup.string()
-    .min(100, "The overview cannot be less than 100 characters")
-    .required("This field is required"),
-});
-
-export const feeValues = {
-  hourlyFee: "",
-  serviceFee: "",
-  finalFee: "",
-};
-
-export const feeSchema = Yup.object().shape({
-  hourlyFee: Yup.string().required("Hourly rate is required"),
 });
 
 export const profileValues = {
@@ -146,7 +110,7 @@ export const userProfileValues = {
   languages: [languageValues],
   services: [],
   bio: "",
-  photoUrl: "https://example.com/photo.jpg",
+  photoUrl: "",
   dob: null,
   city: "",
   country: "",
@@ -155,6 +119,8 @@ export const userProfileValues = {
   freelancingGoal: "",
   hourlyRate: "",
   zipCode: "",
+  state: '',
+  phoneNumber: "",
 };
 
 export const userProfileSchema = Yup.object().shape({
@@ -187,4 +153,9 @@ export const userProfileSchema = Yup.object().shape({
   city: Yup.string().required("Required"),
   country: Yup.string().required("Required"),
   zipCode: Yup.string().max(10, "Zip code is not valid"),
+  state: Yup.string(),
+  phoneNumber: Yup.string().matches(
+    /^\+?(\d{10,13})$/,
+    "Phone number is not valid"
+  ),
 });
