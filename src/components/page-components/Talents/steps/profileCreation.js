@@ -18,11 +18,8 @@ import {
 import { ProfileCompleteScreen } from "../profile/steps/complete";
 
 export const ProfileCreation = ({ setScreenNumber }) => {
-  const [step, setStep] = useState(0);
-  // eslint-disable-next-line react/display-name
-  const withSetProfileStep = (Component) => (props) =>
-    <Component {...props} setStep={setStep} />;
-  const ProfileSteps = withSetProfileStep(profileSteps[step]);
+  const [step, setStep] = useState(3);
+  const ProfileSteps = profileSteps[step];
 
   return (
     <VStack
@@ -33,21 +30,23 @@ export const ProfileCreation = ({ setScreenNumber }) => {
       border={"1px solid #ebebeb"}
       mb={16}
     >
-      {step < 10 && <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
-        <HStack
-          gap={3}
-          cursor={"pointer"}
-          onClick={() => setScreenNumber((prev) => prev - 1)}
-        >
-          <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
-            <BsChevronLeft />
-          </Stack>
-          <Text fontWeight={500} fontSize={18}>
-            Create your profile
-          </Text>
+      {step < 10 && (
+        <HStack p={4} borderBottom={"1px solid #ebebeb"} w={"full"}>
+          <HStack
+            gap={3}
+            cursor={"pointer"}
+            onClick={() => setScreenNumber((prev) => prev - 1)}
+          >
+            <Stack bg={"#F6F7F7"} justify={"center"} p={3} rounded={"full"}>
+              <BsChevronLeft />
+            </Stack>
+            <Text fontWeight={500} fontSize={18}>
+              Create your profile
+            </Text>
+          </HStack>
         </HStack>
-      </HStack>}
-      <ProfileSteps />
+      )}
+      <ProfileSteps setStep={setStep} />
     </VStack>
   );
 };
@@ -63,5 +62,5 @@ const profileSteps = [
   ProfileServicesStep,
   ProfileRateStep,
   ProfileScreenStep,
-  ProfileCompleteScreen
+  ProfileCompleteScreen,
 ];

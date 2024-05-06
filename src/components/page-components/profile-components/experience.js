@@ -27,26 +27,21 @@ import dayjs from "dayjs";
 export const ExperienceForm = ({ remove, index, formik }) => {
   const [isSaved, setIsSaved] = useState(false);
   const toast = useToast();
-  const IS_CHECKED = formik.values.experiences[index]?.endDate === "Present";
-  const [isChecked, setIsChecked] = useState(IS_CHECKED);
   const isValid = !(
-    formik.errors.experiences && formik.errors.experiences[index]
+    formik.errors.experience && formik.errors.experience[index]
   );
+
   const isDateFilled =
     !(
-      formik.values.experiences[index]?.startDate?.month &&
-      formik.values.experiences[index]?.startDate?.year
-    ) || isChecked;
-  useEffect(() => {
-    if (isChecked) {
-      formik.setFieldValue(`experiences.${index}.endDate`, "Present");
-    }
-  }, [isChecked]);
+      formik.values.experience[index]?.startMonth &&
+      formik.values.experience[index]?.startYear
+    ) || formik.values.experience[index].current;
+
   const START_DATE = dayjs(
-    `${formik.values.experiences[index]?.startDate?.year}-${formik.values.experiences[index]?.startDate?.month}-01`
+    `${formik.values.experience[index]?.startYear}-${formik.values.experience[index]?.startMonth}-01`
   );
   const END_DATE = dayjs(
-    `${formik.values.experiences[index]?.endDate?.year}-${formik.values.experiences[index]?.endDate?.month}-01`
+    `${formik.values.experience[index]?.endYear}-${formik.values.experience[index]?.endMonth}-01`
   );
 
   const saveExperience = () => {
@@ -77,10 +72,10 @@ export const ExperienceForm = ({ remove, index, formik }) => {
     <div style={{ width: "100%" }}>
       {isSaved ? (
         <FormSavedBox
-          heading={formik.values.experiences[index]?.title}
-          description={formik.values.experiences[index]?.companyName}
+          heading={formik.values.experience[index]?.title}
+          description={formik.values.experience[index]?.company}
           tagline={`${START_DATE.format("MMM, YYYY")} - ${
-            isChecked ? "Present" : END_DATE.format("MMM, YYYY")
+            formik.values.experience[index].current ? "Present" : END_DATE.format("MMM, YYYY")
           }`}
           handleDelete={handleDelete}
           handleEdit={() => setIsSaved(false)}
@@ -124,20 +119,20 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                   Title*
                 </Text>
                 <Field
-                  name={`experiences.${index}.title`}
+                  name={`experience.${index}.title`}
                   as={Input}
                   placeholder="Ex Software Developer"
                   py={6}
                   w={"full"}
                 />
-                <FormErrorMessage name={`experiences.${index}.title`} />
+                <FormErrorMessage name={`experience.${index}.title`} />
               </VStack>
               <VStack align={"start"} w={"full"}>
                 <Text color="#4C5361" textShadow={"sm"}>
                   Company*
                 </Text>
                 <Field
-                  name={`experiences.${index}.companyName`}
+                  name={`experience.${index}.company`}
                   as={Input}
                   placeholder="Enter company name"
                   py={6}
@@ -157,11 +152,11 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                 <HStack align={"start"} w={"full"}>
                   <MonthPicker
                     formik={formik}
-                    name={`experiences.${index}.startDate.month`}
+                    name={`experience.${index}.startMonth`}
                   />
                   <YearPicker
                     formik={formik}
-                    name={`experiences.${index}.startDate.year`}
+                    name={`experience.${index}.startYear`}
                   />
                 </HStack>
               </VStack>
@@ -171,16 +166,16 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                 </Text>
                 <HStack align={"start"} w={"full"}>
                   <MonthPicker
-                    minDate={formik.values.experiences[index]?.startDate}
-                    endYear={formik.values.experiences[index]?.endDate?.year}
+                    minDate={formik.values.experience[index]?.startDate}
+                    endYear={formik.values.experience[index]?.endYear}
                     formik={formik}
                     isDisabled={isDateFilled}
-                    name={`experiences.${index}.endDate.month`}
+                    name={`experience.${index}.endMonth`}
                   />
                   <YearPicker
-                    minDate={formik.values.experiences[index]?.startDate?.year}
+                    minDate={formik.values.experience[index]?.startYear}
                     formik={formik}
-                    name={`experiences.${index}.endDate.year`}
+                    name={`experience.${index}.endYear`}
                     isDisabled={isDateFilled}
                   />
                 </HStack>
@@ -188,8 +183,13 @@ export const ExperienceForm = ({ remove, index, formik }) => {
             </Stack>
             <HStack>
               <Checkbox
-                isChecked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
+                isChecked={formik.values.experience[index].current}
+                onChange={(e) =>
+                  formik.setFieldValue(
+                    `experience.${index}.current`,
+                    e.target.checked
+                  )
+                }
               />
               <Text>I am currently working in this role</Text>
             </HStack>
@@ -210,11 +210,11 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                     color: "#4C5361",
                   }}
                   h={"44px"}
-                  name={`experiences.${index}.location.state`}
+                  name={`experience.${index}.city`}
                   fontSize="14px"
                 />
                 <FieldSelect
-                  name={`experiences.${index}.location.country`}
+                  name={`experience.${index}.country`}
                   options={countries}
                   placeholder={"Nigeria"}
                   formik={formik}
@@ -236,7 +236,7 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                 minH={"115px"}
                 fontWeight={400}
                 resize={"none"}
-                name={`experiences.${index}.description`}
+                name={`experience.${index}.description`}
               />
             </VStack>
           </VStack>
@@ -252,7 +252,7 @@ export const ExperienceForm = ({ remove, index, formik }) => {
               h={"max-content"}
               border={"1px solid #EDEEEF"}
               onClick={() =>
-                formik.setFieldValue(`experiences.${index}`, experienceValues)
+                formik.setFieldValue(`experience.${index}`, experienceValues)
               }
             >
               Clear

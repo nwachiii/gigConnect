@@ -25,26 +25,18 @@ import { HiOutlineMinus } from "react-icons/hi2";
 export const EducationForm = ({ remove, index, formik }) => {
   const [isSaved, setIsSaved] = useState(false);
   const toast = useToast();
-  const IS_CHECKED = formik.values?.education?.[index]?.endDate === "Present";
-  const [isChecked, setIsChecked] = useState(IS_CHECKED);
   const isValid = !(formik.errors.education && formik.errors.education[index]);
   const isDateFilled =
     !(
-      formik.values.education[index]?.startDate?.month &&
-      formik.values.education[index]?.startDate?.year
-    ) || isChecked;
-
-  useEffect(() => {
-    if (isChecked) {
-      formik.setFieldValue(`education.${index}.endDate`, "Present");
-    }
-  }, [isChecked]);
+      formik.values.education[index]?.startMonth &&
+      formik.values.education[index]?.startYear
+    ) || formik.values.education[index].current;
 
   const START_DATE = dayjs(
-    `${formik.values.education[index]?.startDate?.year}-${formik.values.education[index]?.startDate?.month}-01`
+    `${formik.values.education[index]?.startYear}-${formik.values.education[index]?.startMonth}-01`
   );
   const END_DATE = dayjs(
-    `${formik.values.education[index]?.endDate?.year}-${formik.values.education[index]?.endDate?.month}-01`
+    `${formik.values.education[index]?.endYear}-${formik.values.education[index]?.endMonth}-01`
   );
 
   console.log(IS_CHECKED)
@@ -77,9 +69,9 @@ export const EducationForm = ({ remove, index, formik }) => {
       {isSaved ? (
         <FormSavedBox
           heading={formik.values.education[index]?.fieldOfStudy}
-          description={formik.values.education[index]?.schoolName}
+          description={formik.values.education[index]?.school}
           tagline={`${START_DATE.format("MMM, YYYY")} - ${
-            isChecked ? "Present" : END_DATE.format("MMM, YYYY")
+            formik.values.education[index].current ? "Present" : END_DATE.format("MMM, YYYY")
           }`}
           handleDelete={handleDelete}
           handleEdit={() => setIsSaved(false)}
@@ -123,12 +115,12 @@ export const EducationForm = ({ remove, index, formik }) => {
                 </Text>
                 <Field
                   as={Input}
-                  name={`education.${index}.schoolName`}
+                  name={`education.${index}.school`}
                   placeholder="Ex Northpole University"
                   py={6}
                   w={"full"}
                 />
-                <FormErrorMessage name={`education.${index}.schoolName`} />
+                <FormErrorMessage name={`education.${index}.school`} />
               </VStack>
               <VStack align={"start"} w={"full"}>
                 <Text color="#4C5361" textShadow={"sm"}>
@@ -156,7 +148,15 @@ export const EducationForm = ({ remove, index, formik }) => {
               </VStack>
             </VStack>
             <HStack>
-              <Checkbox isChecked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+            <Checkbox
+                isChecked={formik.values.education[index].current}
+                onChange={(e) =>
+                  formik.setFieldValue(
+                    `education.${index}.current`,
+                    e.target.checked
+                  )
+                }
+              />
               <Text>I am currently studying here</Text>
             </HStack>
             <VStack align={"start"} w={"full"}>
@@ -190,13 +190,13 @@ export const EducationForm = ({ remove, index, formik }) => {
                   <HStack align={"start"} w={"full"}>
                     <MonthPicker
                       minDate={formik.values.education[index]?.startDate}
-                      endYear={formik.values.education[index]?.endDate?.year}
+                      endYear={formik.values.education[index]?.endYear}
                       formik={formik}
                       isDisabled={isDateFilled}
                       name={`education.${index}.endDate.month`}
                     />
                     <YearPicker
-                      minDate={formik.values.education[index]?.startDate?.year}
+                      minDate={formik.values.education[index]?.startYear}
                       formik={formik}
                       name={`education.${index}.endDate.year`}
                       isDisabled={isDateFilled}

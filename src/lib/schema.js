@@ -4,94 +4,69 @@ const stringValidation = Yup.string()
   .matches(/^[a-zA-Z\s]*$/, "This field should not contain numbers")
   .required("Required");
 
-export const professionSchema = Yup.object({
-  profession: stringValidation,
-});
-
 export const experienceValues = {
   title: "",
-  companyName: "",
-  startDate: {
-    month: "",
-    year: "",
-  },
-  endDate: {
-    month: "",
-    year: "",
-  },
-  location: {
-    state: "",
-    country: "",
-  },
+  company: "",
+  startMonth: "",
+  startYear: "",
+  endMonth: "",
+  current: false,
+  city: "",
+  country: "",
   description: "",
 };
 
 const experienceValidation = Yup.object().shape({
   title: Yup.string().required("Required"),
-  companyName: Yup.string().required("Required"),
-  startDate: Yup.object().shape({
-    month: Yup.string().required("Required"),
-    year: Yup.string().required("Required"),
+  company: Yup.string().required("Required"),
+  startMonth: Yup.string().required("Required"),
+  startYear: Yup.string().required("Required"),
+  endMonth: Yup.string().when('current', {
+    is: false, 
+    then: Yup.string().required("Required"), 
+    otherwise: Yup.string() 
   }),
-  endDate: Yup.lazy((value) =>
-    typeof value === "string"
-      ? Yup.string().required("Required")
-      : Yup.object().shape({
-          month: Yup.string().required("Required"),
-          year: Yup.string().required("Required"),
-        })
-  ),
-  location: Yup.object().shape({
-    state: Yup.string().required("Required"),
-    country: Yup.string().required("Required"),
+  endYear: Yup.string().when('current', {
+    is: false,
+    then: Yup.string().required("Required"),
+    otherwise: Yup.string()
   }),
+  current: Yup.boolean().required("Required"),
+  city: Yup.string().required("Required"),
+  country: Yup.string().required("Required"),
   description: Yup.string(),
 });
 
-export const experienceSchema = Yup.object().shape({
-  experiences: Yup.array()
-    .of(experienceValidation)
-    .required("At least one experience is required"),
-});
-
 export const educationValues = {
-  schoolName: "",
+  school: "",
   degree: "",
   fieldOfStudy: "",
-  startDate: {
-    month: "",
-    year: "",
-  },
-  endDate: {
-    month: "",
-    year: "",
-  },
+  startMonth: "",
+  startYear: "",
+  endMonth: "",
+  current: false,
+  endYear: "",
   description: "",
 };
 
 const educationValidation = Yup.object().shape({
-  schoolName: Yup.string().required("Required"),
+  school: Yup.string().required("Required"),
   degree: Yup.string(),
   fieldOfStudy: Yup.string().required("Required"),
-  startDate: Yup.object().shape({
-    month: Yup.string().required("Required"),
-    year: Yup.string().required("Required"),
+  startMonth: Yup.string().required("Required"),
+  startYear: Yup.string().required("Required"),
+  endMonth: Yup.string().when('current', {
+    is: false, 
+    then: Yup.string().required("Required"), 
+    otherwise: Yup.string() 
   }),
-  endDate: Yup.lazy((value) =>
-    typeof value === "string"
-      ? Yup.string().required("Required")
-      : Yup.object().shape({
-          month: Yup.string().required("Required"),
-          year: Yup.string().required("Required"),
-        })
-  ),
+  endYear: Yup.string().when('current', {
+    is: false,
+    then: Yup.string().required("Required"),
+    otherwise: Yup.string()
+  }),
+  current: Yup.boolean().required("Required"),
   description: Yup.string(),
-});
-
-export const educationSchema = Yup.object().shape({
-  education: Yup.array()
-    .of(educationValidation)
-    .required("At least one education is required"),
 });
 
 export const languageValues = {
@@ -160,5 +135,56 @@ export const profileSchema = Yup.object().shape({
   address: Yup.string(),
   city: Yup.string().required("Required"),
   state: Yup.string(),
+  zipCode: Yup.string().max(10, "Zip code is not valid"),
+});
+
+export const userProfileValues = {
+  title: "",
+  experience: [experienceValues],
+  skills: [],
+  education: [educationValues],
+  languages: [languageValues],
+  services: [],
+  bio: "",
+  photoUrl: "https://example.com/photo.jpg",
+  dob: null,
+  city: "",
+  country: "",
+  address: "",
+  freelancedBefore: "",
+  freelancingGoal: "",
+  hourlyRate: "",
+  zipCode: "",
+};
+
+export const userProfileSchema = Yup.object().shape({
+  title: stringValidation,
+  experience: Yup.array()
+    .of(experienceValidation)
+    .required("At least one experience is required"),
+  skills: Yup.array()
+    .max(15, "Max skills reached")
+    .min(1, "At least one skill is required")
+    .required(),
+  education: Yup.array()
+    .of(educationValidation)
+    .required("At least one education is required"),
+  languages: Yup.array()
+    .of(languageValidation)
+    .required("At least one language is required"),
+  services: Yup.array()
+    .max(15, "Max services reached")
+    .min(1, "At least one service is required")
+    .required(),
+  bio: Yup.string()
+    .min(100, "The overview cannot be less than 100 characters")
+    .required("This field is required"),
+  hourlyRate: Yup.string().required("Hourly rate is required"),
+  freelancedBefore: Yup.string().required("Required"),
+  freelancingGoal: Yup.string().required("Required"),
+  photoUrl: Yup.string().required("Required"),
+  dob: Yup.date().required("Required"),
+  city: Yup.string().required("Required"),
+  country: Yup.string().required("Required"),
   zipCode: Yup.string().max(10, "Zip code is not valid"),
 });

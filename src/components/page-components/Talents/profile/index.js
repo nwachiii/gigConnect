@@ -15,6 +15,7 @@ import {
   Form,
   FormikProvider,
   useFormik,
+  useFormikContext,
 } from "formik";
 import { ExperienceForm } from "../../profile-components/experience";
 import { EducationForm } from "../../profile-components/education";
@@ -22,11 +23,8 @@ import { LanguageForm } from "../../profile-components/language";
 import {
   educationSchema,
   educationValues,
-  experienceSchema,
-  experienceValues,
   languageSchema,
   languageValues,
-  professionSchema,
 } from "@/lib/schema";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 
@@ -115,12 +113,8 @@ export const ProfileStep = ({ setStep }) => {
 };
 
 export const ProfileInfoStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { profession: "" },
-    validationSchema: professionSchema,
-    validateOnMount: true,
-  });
-
+  const formik = useFormikContext()
+  
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -147,8 +141,7 @@ export const ProfileInfoStep = ({ setStep }) => {
         <Text fontSize={14} color={"#454C58"}>
           Your professional role
         </Text>
-        <FormikProvider value={formik}>
-          <Field
+        <Field
             as={Input}
             placeholder="Software Developer | Javascript | iOS"
             border={"1px solid #edeeef"}
@@ -158,11 +151,10 @@ export const ProfileInfoStep = ({ setStep }) => {
             rounded={"8px"}
             h={"44px"}
             type="text"
-            name="profession"
-            value={formik.values.profession}
+            name="title"
+            id='title'
           />
-          <FormErrorMessage name={'profession'} />
-        </FormikProvider>
+          <FormErrorMessage name={'title'} />
       </VStack>
       <HStack gap={4} mb={4}>
         <Button
@@ -174,7 +166,7 @@ export const ProfileInfoStep = ({ setStep }) => {
           fontSize={14}
           h={"34px"}
           onClick={() => setStep(2)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.title}
         >
           Next, add your experience
         </Button>
@@ -184,11 +176,7 @@ export const ProfileInfoStep = ({ setStep }) => {
 };
 
 export const ProfileExpStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { experiences: [experienceValues] },
-    validationSchema: experienceSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext()
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -213,10 +201,9 @@ export const ProfileExpStep = ({ setStep }) => {
         But if you’re just starting out, you can still create a great profile.
         Just head on to the next page.
       </Text>
-      <FormikProvider value={formik}>
-        <Form style={{ width: "100%" }}>
+      <Form style={{ width: "100%" }}>
           <FieldArray
-            name="experiences"
+            name="experience"
             render={(arrayHelpers) => (
               <div>
                 <Button
@@ -242,7 +229,7 @@ export const ProfileExpStep = ({ setStep }) => {
                       size={30}
                       cursor={"pointer"}
                       onClick={
-                        formik.values.experiences.length > 4
+                        formik.values.experience.length > 4
                           ? null
                           : () => arrayHelpers.push("")
                       }
@@ -250,8 +237,8 @@ export const ProfileExpStep = ({ setStep }) => {
                   </Box>
                 </Button>
                 <VStack align={"start"} gap={8} w={"full"} mt={10}>
-                  {formik.values.experiences.length > 0
-                    ? formik.values.experiences.map((_exp, index) => (
+                  {formik.values.experience.length > 0
+                    ? formik.values.experience.map((_exp, index) => (
                         <ExperienceForm
                           key={index}
                           index={index}
@@ -265,7 +252,6 @@ export const ProfileExpStep = ({ setStep }) => {
             )}
           />
         </Form>
-      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -291,7 +277,7 @@ export const ProfileExpStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep(3)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.experience}
         >
           Next, add your education
         </Button>
@@ -301,11 +287,8 @@ export const ProfileExpStep = ({ setStep }) => {
 };
 
 export const ProfileEduStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: { education: [educationValues] },
-    validationSchema: educationSchema,
-    validateOnMount: true,
-  });
+  const formik = useFormikContext();
+
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -333,8 +316,7 @@ export const ProfileEduStep = ({ setStep }) => {
         You don’t have to have a degree. Adding any relevant education helps
         make your profile more visible.
       </Text>
-      <FormikProvider value={formik}>
-        <Form style={{ width: "100%" }}>
+      <Form style={{ width: "100%" }}>
           <FieldArray
             name="education"
             render={(arrayHelpers) => (
@@ -385,7 +367,6 @@ export const ProfileEduStep = ({ setStep }) => {
             )}
           />
         </Form>
-      </FormikProvider>
       <HStack gap={2} mb={4}>
         <Button
           bg={"#F6F7F7"}
@@ -411,7 +392,7 @@ export const ProfileEduStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           onClick={() => setStep(5)}
-          isDisabled={!formik.isValid}
+          isDisabled={formik.errors.education}
         >
           Next, add your languages
         </Button>
