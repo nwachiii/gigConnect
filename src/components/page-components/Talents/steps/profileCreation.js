@@ -21,6 +21,10 @@ export const ProfileCreation = () => {
   const [step, setStep] = useState(0);
   const ProfileSteps = profileSteps[step];
 
+  const handleProgress = () => {
+    setStep((prev) => prev + 1)
+  }
+
   return (
     <VStack
       w={"full"}
@@ -46,7 +50,7 @@ export const ProfileCreation = () => {
           </HStack>
         </HStack>
       )}
-      <ProfileSteps setStep={setStep} />
+      <ProfileSteps handleProgress={handleProgress} />
     </VStack>
   );
 };

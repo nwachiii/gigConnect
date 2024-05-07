@@ -23,7 +23,7 @@ export const MonthPicker = ({ name, minDate, endYear, formik, isDisabled }) => {
       >
         {months.slice(MIN_MONTH).map((value, index) => {
           return (
-            <option key={index} value={index + 1}>
+            <option key={index} value={value}>
               {value}
             </option>
           );

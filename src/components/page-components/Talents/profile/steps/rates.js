@@ -13,7 +13,7 @@ import {
 import { Field, FormikProvider, useFormik, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
-export const ProfileRateStep = ({ setStep }) => {
+export const ProfileRateStep = ({ handleProgress }) => {
   const formik = useFormikContext();
   const [fees, setFees] = useState({
     service: '',
@@ -212,7 +212,7 @@ export const ProfileRateStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -226,7 +226,7 @@ export const ProfileRateStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           isDisabled={formik.errors.hourlyRate}
         >
           Next, add your profile photo and location

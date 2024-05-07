@@ -54,8 +54,9 @@ export const ProfileScreenStep = ({ setStep }) => {
     }
   }, [file]);
 
-  const mutation = useMutation(formData => createUserProfile(formData), {
-    onSuccess: async (res) => {
+  const mutation = useMutation({
+    mutationFn: (formData) => createUserProfile(formData),
+    onSuccess: (res) => {
       toast({
         title: "User profile created successfully",
         status: "success",
@@ -74,9 +75,10 @@ export const ProfileScreenStep = ({ setStep }) => {
         isClosable: true,
         position: "top-right",
       });
-    },
-  });
+    }
+  })
 
+ 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>

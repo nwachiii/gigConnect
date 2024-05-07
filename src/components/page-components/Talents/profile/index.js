@@ -21,7 +21,7 @@ import { EducationForm } from "../../profile-components/education";
 import { LanguageForm } from "../../profile-components/language";
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
 
-export const ProfileStep = ({ setStep }) => {
+export const ProfileStep = ({ handleProgress }) => {
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -93,7 +93,7 @@ export const ProfileStep = ({ setStep }) => {
           px={4}
           py={2}
           rounded={"12px"}
-          onClick={() => setStep(1)}
+          onClick={handleProgress}
           fontWeight={400}
         >
           <Text fontSize={14} color={"#454C58"}>
@@ -105,7 +105,7 @@ export const ProfileStep = ({ setStep }) => {
   );
 };
 
-export const ProfileInfoStep = ({ setStep }) => {
+export const ProfileInfoStep = ({ handleProgress }) => {
   const formik = useFormikContext()
   
   return (
@@ -158,7 +158,7 @@ export const ProfileInfoStep = ({ setStep }) => {
           p={"6px 16px"}
           fontSize={14}
           h={"34px"}
-          onClick={() => setStep(2)}
+          onClick={handleProgress}
           isDisabled={formik.errors.title}
         >
           Next, add your experience
@@ -168,7 +168,7 @@ export const ProfileInfoStep = ({ setStep }) => {
   );
 };
 
-export const ProfileExpStep = ({ setStep }) => {
+export const ProfileExpStep = ({ handleProgress }) => {
   const formik = useFormikContext()
 
   return (
@@ -255,7 +255,7 @@ export const ProfileExpStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -269,7 +269,7 @@ export const ProfileExpStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep(3)}
+          onClick={handleProgress}
           isDisabled={formik.errors.experience}
         >
           Next, add your education
@@ -279,7 +279,7 @@ export const ProfileExpStep = ({ setStep }) => {
   );
 };
 
-export const ProfileEduStep = ({ setStep }) => {
+export const ProfileEduStep = ({ handleProgress }) => {
   const formik = useFormikContext();
 
   return (
@@ -371,7 +371,7 @@ export const ProfileEduStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => setStep(4)}
+          onClick={handleProgress}
         >
           Skip for now
         </Button>
@@ -384,7 +384,7 @@ export const ProfileEduStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep(5)}
+          onClick={handleProgress}
           isDisabled={formik.errors.education}
         >
           Next, add your languages
@@ -394,7 +394,7 @@ export const ProfileEduStep = ({ setStep }) => {
   );
 };
 
-export const ProfileLangStep = ({ setStep }) => {
+export const ProfileLangStep = ({ handleProgress }) => {
   const formik = useFormikContext();
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6}>
@@ -483,7 +483,7 @@ export const ProfileLangStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => setStep(6)}
+          onClick={handleProgress}
         >
           Skip for now
         </Button>
@@ -496,7 +496,7 @@ export const ProfileLangStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep(7)}
+          onClick={handleProgress}
           isDisabled={formik.errors.languages}
         >
           Next, add your skills

@@ -25,6 +25,8 @@ export const AccountOnboarding = () => {
     validateOnMount: true,
   });
 
+  console.log(formik.values)
+
   return (
     <Box bg={"#F5F5F5"} minH={"100vh"}>
       <HeaderWithNav isLogin />

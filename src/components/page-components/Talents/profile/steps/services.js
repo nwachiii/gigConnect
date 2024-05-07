@@ -20,7 +20,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosAdd } from "react-icons/io";
 import { RiSearchLine } from "react-icons/ri";
 
-export const ProfileServicesStep = ({ setStep }) => {
+export const ProfileServicesStep = ({ handleProgress }) => {
   const formik = useFormikContext();
   const [searchTerm, setSearchTerm] = useState("");
   const toast = useToast();
@@ -175,7 +175,7 @@ export const ProfileServicesStep = ({ setStep }) => {
           fontSize={14}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
         >
           Skip for now
         </Button>
@@ -188,7 +188,7 @@ export const ProfileServicesStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           isDisabled={formik.errors.services}
         >
           Next, set your rate

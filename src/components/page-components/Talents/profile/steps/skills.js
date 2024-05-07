@@ -19,7 +19,7 @@ import { RiSearchLine } from "react-icons/ri";
 import { IoIosAdd } from "react-icons/io";
 import { useFormikContext } from "formik";
 
-export const ProfileSkillsStep = ({ setStep }) => {
+export const ProfileSkillsStep = ({ handleProgress }) => {
   const formik = useFormikContext();
   const [searchTerm, setSearchTerm] = useState("");
   const toast = useToast()
@@ -165,7 +165,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           border={"1px solid #EDEEEF"}
         >
           Skip for now
@@ -179,7 +179,7 @@ export const ProfileSkillsStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           isDisabled={formik.errors.skills}
         >
           Next, write an overview

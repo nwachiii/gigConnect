@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, useFormikContext } from "formik";
 
-export const ProfileBioStep = ({ setStep }) => {
+export const ProfileBioStep = ({ handleProgress }) => {
   const formik = useFormikContext();
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -84,7 +84,7 @@ export const ProfileBioStep = ({ setStep }) => {
           px={4}
           py={"6px"}
           fontSize={14}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           h={"max-content"}
           border={"1px solid #EDEEEF"}
         >
@@ -98,7 +98,7 @@ export const ProfileBioStep = ({ setStep }) => {
           px={4}
           py={"6px"}
           fontSize={14}
-          onClick={() => setStep((prev) => prev + 1)}
+          onClick={handleProgress}
           isDisabled={formik.errors.bio}
           h={"max-content"}
         >

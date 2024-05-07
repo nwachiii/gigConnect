@@ -116,7 +116,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
 
 export const FreelanceGoal = ({ setScreenNumber }) => {
   const formik = useFormikContext()
-
+  
   return (
     <VStack
       w={"full"}
