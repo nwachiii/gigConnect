@@ -1,5 +1,4 @@
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
-import { countries } from "@/components/page-components/profile-components/lib";
 import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
 import {
   Box,
@@ -23,6 +22,7 @@ import dayjs from "dayjs";
 import { encodeFileToBase64 } from "@/utils/convertBase64";
 import { useMutation } from "@tanstack/react-query";
 import { createUserProfile } from "@/api/talent";
+import { countries } from "@/lib";
 
 export const ProfileScreenStep = ({ setStep }) => {
   const formik = useFormikContext();
@@ -380,6 +380,10 @@ const dobPicker = (formik) => {
       maxDate={new Date()}
       value={formik.values?.dob}
       dateFormat={"dd-MM-yyyy"}
+      dropdownMode="select"
+  showMonthDropdown
+  showYearDropdown
+  adjustDateOnChange
     />
   );
 };

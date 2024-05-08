@@ -2,9 +2,8 @@ import { Select, VStack } from "@chakra-ui/react";
 import { Field } from "formik";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { FormErrorMessage } from "../FormErrorMessage";
+import { months } from "@/lib";
 export const MonthPicker = ({ name, minDate, endYear, formik, isDisabled }) => {
-  const sameYear = minDate?.year === endYear
-  const MIN_MONTH = sameYear ? minDate?.month : 0;
   return (
     <VStack align={"start"} w={"full"}>
       <Field
@@ -21,7 +20,7 @@ export const MonthPicker = ({ name, minDate, endYear, formik, isDisabled }) => {
         fontSize={14}
         disabled={isDisabled}
       >
-        {months.slice(MIN_MONTH).map((value, index) => {
+        {months.map((value, index) => {
           return (
             <option key={index} value={value}>
               {value}
@@ -33,21 +32,6 @@ export const MonthPicker = ({ name, minDate, endYear, formik, isDisabled }) => {
     </VStack>
   );
 };
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 export const YearPicker = ({ name, minDate, formik, isDisabled }) => {
   let years = [];

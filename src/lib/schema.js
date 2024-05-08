@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { months } from ".";
 
 const stringValidation = Yup.string()
   .matches(/^[a-zA-Z\s]*$/, "This field should not contain numbers")
@@ -35,7 +36,15 @@ const experienceValidation = Yup.object().shape({
   city: Yup.string().required("Required"),
   country: Yup.string().required("Required"),
   description: Yup.string(),
-});
+}).test('date-test', function(value) {
+  const { startMonth, startYear, endMonth, endYear } = value;
+  const startDate = new Date(startYear, months.indexOf(startMonth));
+  const endDate = new Date(endYear, months.indexOf(endMonth));
+  if (endDate < startDate) {
+    return this.createError({ path: `${this.path}.endMonth`, message: 'End date should not be earlier than start date' })
+  }
+  return true;
+});;
 
 export const educationValues = {
   school: "",
@@ -56,9 +65,9 @@ const educationValidation = Yup.object().shape({
   startMonth: Yup.string().required("Required"),
   startYear: Yup.string().required("Required"),
   endMonth: Yup.string().when('current', {
-    is: false, 
-    then: () => Yup.string().required("Required"), 
-    otherwise: () => Yup.string() 
+    is: false,
+    then: () => Yup.string().required("Required"),
+    otherwise: () => Yup.string()
   }),
   endYear: Yup.string().when('current', {
     is: false,
@@ -67,6 +76,14 @@ const educationValidation = Yup.object().shape({
   }),
   current: Yup.boolean().required("Required"),
   description: Yup.string(),
+}).test('date-test', function(value) {
+  const { startMonth, startYear, endMonth, endYear } = value;
+  const startDate = new Date(startYear, months.indexOf(startMonth));
+  const endDate = new Date(endYear, months.indexOf(endMonth));
+  if (endDate < startDate) {
+    return this.createError({ path: `${this.path}.endMonth`, message: 'End date should not be earlier than start date' })
+  }
+  return true;
 });
 
 export const languageValues = {

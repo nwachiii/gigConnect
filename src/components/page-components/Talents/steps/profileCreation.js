@@ -18,7 +18,7 @@ import {
 import { ProfileCompleteScreen } from "../profile/steps/complete";
 
 export const ProfileCreation = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(9);
   const ProfileSteps = profileSteps[step];
 
   const handleProgress = () => {

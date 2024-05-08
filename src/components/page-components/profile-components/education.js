@@ -188,8 +188,6 @@ export const EducationForm = ({ remove, index, formik }) => {
                   </Text>
                   <HStack align={"start"} w={"full"}>
                     <MonthPicker
-                      minDate={formik.values.education[index]?.startDate}
-                      endYear={formik.values.education[index]?.endYear}
                       formik={formik}
                       isDisabled={isDateFilled}
                       name={`education.${index}.endMonth`}

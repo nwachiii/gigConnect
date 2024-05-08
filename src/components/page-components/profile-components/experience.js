@@ -166,8 +166,6 @@ export const ExperienceForm = ({ remove, index, formik }) => {
                 </Text>
                 <HStack align={"start"} w={"full"}>
                   <MonthPicker
-                    minDate={formik.values.experience[index]?.startDate}
-                    endYear={formik.values.experience[index]?.endYear}
                     formik={formik}
                     isDisabled={isDateFilled}
                     name={`experience.${index}.endMonth`}
