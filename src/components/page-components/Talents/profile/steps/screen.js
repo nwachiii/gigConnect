@@ -75,10 +75,9 @@ export const ProfileScreenStep = ({ setStep }) => {
         isClosable: true,
         position: "top-right",
       });
-    }
-  })
+    },
+  });
 
- 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
       <Box bg={"#efefef"} borderRadius={"24px"} px={"6px"} py={"5px"}>
@@ -126,7 +125,7 @@ export const ProfileScreenStep = ({ setStep }) => {
           </Text>
         </HStack>
         <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-          <HStack {...getRootProps()} w={"full"} gap={6}>
+          <HStack {...getRootProps()} w={"full"} gap={6} cursor={'pointer'}>
             {isDragActive ? (
               <Text maxW={"100px"} textAlign={"center"}>
                 Drop files here
@@ -381,9 +380,9 @@ const dobPicker = (formik) => {
       value={formik.values?.dob}
       dateFormat={"dd-MM-yyyy"}
       dropdownMode="select"
-  showMonthDropdown
-  showYearDropdown
-  adjustDateOnChange
+      showMonthDropdown
+      showYearDropdown
+      adjustDateOnChange
     />
   );
 };
