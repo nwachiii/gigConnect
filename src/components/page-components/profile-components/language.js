@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { Field } from "formik";
 import { HiOutlineChevronDown, HiOutlineMinus } from "react-icons/hi2";
-import { listLanguages, proficiencyLevels } from "./lib";
+import { listLanguages, proficiencyLevels } from "../../../lib";
 import { useState } from "react";
 import { FormSavedBox } from "@/components/generic-components/FormSavedBox";
 import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";

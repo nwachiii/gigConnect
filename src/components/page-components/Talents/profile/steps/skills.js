@@ -1,4 +1,4 @@
-import { listSkills } from "@/components/page-components/profile-components/lib";
+import { listSkills } from "@/lib";
 import {
   Box,
   Button,

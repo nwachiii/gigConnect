@@ -19,7 +19,7 @@ import {
   YearPicker,
 } from "@/components/generic-components/DatePicker";
 import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
-import { countries } from "./lib";
+import { countries } from "../../../lib";
 import { useEffect, useState } from "react";
 import { FormSavedBox } from "@/components/generic-components/FormSavedBox";
 import dayjs from "dayjs";
