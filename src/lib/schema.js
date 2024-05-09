@@ -42,6 +42,8 @@ const experienceValidation = Yup.object().shape({
   const endDate = new Date(endYear, months.indexOf(endMonth));
   if (endDate < startDate) {
     return this.createError({ path: `${this.path}.endMonth`, message: 'End date should not be earlier than start date' })
+  } else if (startDate > endDate) {
+    return this.createError({ path: `${this.path}.startMonth`, message: 'Start date should not be later than end date' })
   }
   return true;
 });;
@@ -82,6 +84,8 @@ const educationValidation = Yup.object().shape({
   const endDate = new Date(endYear, months.indexOf(endMonth));
   if (endDate < startDate) {
     return this.createError({ path: `${this.path}.endMonth`, message: 'End date should not be earlier than start date' })
+  } else if (startDate > endDate) {
+    return this.createError({ path: `${this.path}.startMonth`, message: 'Start date should not be later than end date' })
   }
   return true;
 });
