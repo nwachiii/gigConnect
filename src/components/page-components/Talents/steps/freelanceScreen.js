@@ -12,9 +12,10 @@ import { useState } from "react";
 import { BsChevronLeft } from "react-icons/bs";
 import { freelanceGoals, freelanceOptions } from "./options";
 import { RadioButton } from "./radio";
+import { useFormikContext } from "formik";
 
 export const FreelanceScreen = ({ setScreenNumber }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const formik = useFormikContext()
   return (
     <VStack
       w={"full"}
@@ -75,8 +76,8 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
             <RadioButton
               key={index}
               label={option.label}
-              isChecked={selectedOption === option.value}
-              onChange={() => setSelectedOption(option.value)}
+              isChecked={formik.values.freelancedBefore === option.value}
+              onChange={() => formik.setFieldValue('freelancedBefore', option.value)}
             />
           ))}
         </VStack>
@@ -102,7 +103,7 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
             fontSize={14}
             py={"6px"}
             h={"max-content"}
-            isDisabled={selectedOption === null}
+            isDisabled={formik.errors.freelancedBefore}
             onClick={() => setScreenNumber(2)}
           >
             Next
@@ -114,7 +115,8 @@ export const FreelanceScreen = ({ setScreenNumber }) => {
 };
 
 export const FreelanceGoal = ({ setScreenNumber }) => {
-  const [selectedOption, setSelectedOption] = useState(null)
+  const formik = useFormikContext()
+  
   return (
     <VStack
       w={"full"}
@@ -175,8 +177,8 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
             <RadioButton
               key={index}
               label={option.label}
-              isChecked={selectedOption === option.value}
-              onChange={() => setSelectedOption(option.value)}
+              isChecked={formik.values.freelancingGoal === option.value}
+              onChange={() => formik.setFieldValue('freelancingGoal', option.value)}
             />
           ))}
         </VStack>
@@ -202,7 +204,7 @@ export const FreelanceGoal = ({ setScreenNumber }) => {
             py={"6px"}
             fontSize={14}
             h={"max-content"}
-            isDisabled={selectedOption === null}
+            isDisabled={formik.errors.freelancingGoal}
             onClick={() => setScreenNumber(3)}
           >
             Create Profile

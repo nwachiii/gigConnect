@@ -37,7 +37,7 @@ export const LanguageForm = ({ formik, remove, index }) => {
   const saveLanguage = () => {
     setIsSaved(true);
     toast({
-      title: "Experience Saved",
+      title: "Language Saved",
       status: "success",
       duration: 3000,
       isClosable: true,

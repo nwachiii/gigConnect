@@ -639,3 +639,18 @@ export const profileSteps = [
     description: "Bootcamps, conferences, awards e.t.c (+5%)",
   },
 ];
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

@@ -1,6 +1,4 @@
 import { FormErrorMessage } from "@/components/generic-components/FormErrorMessage";
-import { countries } from "@/lib";
-import { profileSchema, profileValues } from "@/lib/schema";
 import { FieldSelect } from "@/ui-lib/ui-lib-components/FieldSelect";
 import {
   Box,
@@ -12,24 +10,24 @@ import {
   Stack,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
-import { Field, FormikProvider, useFormik } from "formik";
-import { forwardRef, useCallback, useState } from "react";
+import { Field, useFormikContext } from "formik";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi2";
-import { getBase64FromUrl } from "../../../../../utils/getBase64FromUrl";
+import dayjs from "dayjs";
+import { encodeFileToBase64 } from "@/utils/convertBase64";
+import { useMutation } from "@tanstack/react-query";
+import { createUserProfile } from "@/api/talent";
+import { countries } from "@/lib";
 
 export const ProfileScreenStep = ({ setStep }) => {
-  const formik = useFormik({
-    initialValues: profileValues,
-    validationSchema: profileSchema,
-    validateOnMount: true,
-  });
-
+  const formik = useFormikContext();
   const [file, setFile] = useState(null);
-
+  const toast = useToast();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       "image/*": [],
@@ -37,17 +35,48 @@ export const ProfileScreenStep = ({ setStep }) => {
     maxFiles: 1,
     onDrop: useCallback((acceptedFiles) => {
       const file = acceptedFiles[0];
-      const objectUrl = URL.createObjectURL(file);
-      getBase64FromUrl(objectUrl).then((res) => {
-        const newFile = Object.assign({ image: res }, file);
+      encodeFileToBase64(file).then((res) => {
+        const newFile = Object.assign({ image: res }, file, {
+          preview: URL.createObjectURL(file),
+        });
         setFile(newFile);
-        URL.revokeObjectURL(objectUrl);
+        URL.revokeObjectURL(file?.image);
       });
     }, []),
   });
 
   const regex = /^[0-9]*$/;
-  const alphaRegex = /^[a-zA-Z]*$/
+  const alphaRegex = /^[a-zA-Z]*$/;
+
+  useEffect(() => {
+    if (file) {
+      formik.setFieldValue("photoUrl", file?.image);
+    }
+  }, [file]);
+
+  const mutation = useMutation({
+    mutationFn: (formData) => createUserProfile(formData),
+    onSuccess: (res) => {
+      toast({
+        title: "User profile created successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setStep(10);
+      return onClose();
+    },
+    onError: (res) => {
+      toast({
+        title: "Error creating user profile",
+        status: "error",
+        duration: 8000,
+        isClosable: true,
+        position: "top-right",
+      });
+    },
+  });
 
   return (
     <VStack gap={4} align={"start"} w={"full"} px={6} mb={4}>
@@ -95,197 +124,203 @@ export const ProfileScreenStep = ({ setStep }) => {
             Profile setup
           </Text>
         </HStack>
-        <FormikProvider value={formik}>
-          <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
-            <HStack {...getRootProps()} w={"full"} gap={6}>
-              {isDragActive ? (
-                <Text maxW={'100px'} textAlign={'center'}>Drop files here</Text>
-              ) : (
-                <Image src={file?.image ?? "/img/profilePicture.png"} alt="" boxSize={'120px'} objectFit={'cover'} rounded={'full'} />
-              )}
-              <Box
-                border={"1px solid #edeeef"}
-                p={2}
-                w={"full"}
-                maxW={"220px"}
-                rounded={"12px"}
-              >
-                <input {...getInputProps()} />
-                <HStack
-                  justify={"space-between"}
-                  bg={"#F6F5F5"}
-                  border={"1px solid #EDEAEC"}
-                  px={2}
-                  py={1}
-                  rounded={"8px"}
-                  cursor={"pointer"}
-                >
-                  <Text fontSize={12} color={"#4C5361"}>
-                    Upload Photo
-                  </Text>
-                  <Box
-                    bg={"#F6F7F7"}
-                    border={"1px solid #edeeef"}
-                    cursor={"pointer"}
-                    p={1}
-                    rounded={"full"}
-                  >
-                    <GoPlus color="#4C5361" size={15} />
-                  </Box>
-                </HStack>
-              </Box>
-            </HStack>
-            <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
-              <VStack align={"start"} w={"full"} maxW={"265px"}>
-                <Text color="#4C5361" textShadow={"sm"}>
-                  Date-Of-Birth*
-                </Text>
-                {dobPicker(formik)}
-                <FormErrorMessage name={"dateOfBirth"} />
-              </VStack>
-              <VStack align={"start"} w={"full"}>
-                <Text color="#4C5361" textShadow={"sm"}>
-                  Phone Number
-                </Text>
-                <HStack w={"full"}>
-                  <Button
-                    justifyContent={"space-between"}
-                    w={"full"}
-                    border={"1px solid #edeeef"}
-                    borderRadius={"8px"}
-                    p={"10px 15px"}
-                    h={"44px"}
-                    fontWeight={400}
-                    maxW={"100px"}
-                    gap={1}
-                  >
-                    <HStack gap={0.5}>
-                      <Image src="/img/icons/country flag.svg" alt="" />
-                      <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
-                        +1
-                      </Text>
-                    </HStack>
-                    <HiOutlineChevronDown color="#4C5361" size={20} />
-                  </Button>
-                  <Field
-                    as={Input}
-                    placeholder="0000000000"
-                    w={"full"}
-                    border={"1px solid #edeeef"}
-                    p={"10px 15px"}
-                    h={"44px"}
-                    borderRadius={"8px"}
-                    fontWeight={400}
-                    name={`phoneNumber`}
-                    onChange={(e) => {
-                      if (regex.test(e.target.value)) {
-                        formik.setFieldValue("phoneNumber", e.target.value);
-                      }
-                    }}
-                    maxLength={11}
-                  />
-                </HStack>
-                <FormErrorMessage name={"phoneNumber"} />
-              </VStack>
-            </VStack>
-            <VStack align={"start"} w={"full"} maxW={"260px"}>
-              <Text color="#4C5361" textShadow={"sm"}>
-                Country*
+        <VStack align={"start"} w={"full"} px={4} gap={8} mt={2}>
+          <HStack {...getRootProps()} w={"full"} gap={6} cursor={'pointer'}>
+            {isDragActive ? (
+              <Text maxW={"100px"} textAlign={"center"}>
+                Drop files here
               </Text>
-              <FieldSelect
-                name={`country`}
-                options={countries}
-                placeholder={"Lekki, Lagos"}
-                formik={formik}
+            ) : (
+              <Image
+                src={file?.preview ?? "/img/profilePicture.png"}
+                alt=""
+                boxSize={"120px"}
+                objectFit={"cover"}
+                rounded={"full"}
+              />
+            )}
+            <Box
+              border={"1px solid #edeeef"}
+              p={2}
+              w={"full"}
+              maxW={"220px"}
+              rounded={"12px"}
+            >
+              <input {...getInputProps()} />
+              <HStack
+                justify={"space-between"}
+                bg={"#F6F5F5"}
+                border={"1px solid #EDEAEC"}
+                px={2}
+                py={1}
+                rounded={"8px"}
+                cursor={"pointer"}
+              >
+                <Text fontSize={12} color={"#4C5361"}>
+                  Upload Photo
+                </Text>
+                <Box
+                  bg={"#F6F7F7"}
+                  border={"1px solid #edeeef"}
+                  cursor={"pointer"}
+                  p={1}
+                  rounded={"full"}
+                >
+                  <GoPlus color="#4C5361" size={15} />
+                </Box>
+              </HStack>
+            </Box>
+          </HStack>
+          <VStack align={"start"} w={"full"} maxW={"370px"} gap={6}>
+            <VStack align={"start"} w={"full"} maxW={"265px"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                Date-Of-Birth*
+              </Text>
+              {dobPicker(formik)}
+              <FormErrorMessage name={"dob"} />
+            </VStack>
+            <VStack align={"start"} w={"full"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                Phone Number
+              </Text>
+              <HStack w={"full"}>
+                <Button
+                  justifyContent={"space-between"}
+                  w={"full"}
+                  border={"1px solid #edeeef"}
+                  borderRadius={"8px"}
+                  p={"10px 15px"}
+                  h={"44px"}
+                  fontWeight={400}
+                  maxW={"100px"}
+                  gap={1}
+                >
+                  <HStack gap={0.5}>
+                    <Image src="/img/icons/country flag.svg" alt="" />
+                    <Text color="#4C5361" whiteSpace={"nowrap"} fontSize={14}>
+                      +1
+                    </Text>
+                  </HStack>
+                  <HiOutlineChevronDown color="#4C5361" size={20} />
+                </Button>
+                <Field
+                  as={Input}
+                  placeholder="0000000000"
+                  w={"full"}
+                  border={"1px solid #edeeef"}
+                  p={"10px 15px"}
+                  h={"44px"}
+                  borderRadius={"8px"}
+                  fontWeight={400}
+                  name={`phoneNumber`}
+                  onChange={(e) => {
+                    if (regex.test(e.target.value)) {
+                      formik.setFieldValue("phoneNumber", e.target.value);
+                    }
+                  }}
+                  maxLength={11}
+                />
+              </HStack>
+              <FormErrorMessage name={"phoneNumber"} />
+            </VStack>
+          </VStack>
+          <VStack align={"start"} w={"full"} maxW={"260px"}>
+            <Text color="#4C5361" textShadow={"sm"}>
+              Country*
+            </Text>
+            <FieldSelect
+              name={`country`}
+              options={countries}
+              placeholder={"Lekki, Lagos"}
+              formik={formik}
+            />
+          </VStack>
+          <VStack align={"start"} w={"full"}>
+            <Text color="#4C5361" textShadow={"sm"}>
+              Street Address
+            </Text>
+            <Field
+              as={Input}
+              placeholder="Enter street address"
+              py={8}
+              w={"full"}
+              rounded={"8px"}
+              name={`address`}
+            />
+          </VStack>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            w={"full"}
+            maxW={"650px"}
+            mb={4}
+          >
+            <VStack align={"start"} w={"full"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                City*
+              </Text>
+              <Field
+                as={Input}
+                placeholder="Enter City"
+                w={"full"}
+                border={"1px solid #edeeef"}
+                p={"10px 15px"}
+                h={"44px"}
+                borderRadius={"8px"}
+                fontWeight={400}
+                name={`city`}
+                onChange={(e) => {
+                  if (alphaRegex.test(e.target.value)) {
+                    formik.setFieldValue("city", e.target.value);
+                  }
+                }}
+              />
+              <FormErrorMessage name={"city"} />
+            </VStack>
+            <VStack align={"start"} w={"full"}>
+              <Text color="#4C5361" textShadow={"sm"}>
+                State/Province
+              </Text>
+              <Field
+                as={Input}
+                placeholder="Enter State/Province"
+                w={"full"}
+                border={"1px solid #edeeef"}
+                p={"10px 15px"}
+                h={"44px"}
+                borderRadius={"8px"}
+                fontWeight={400}
+                name={`state`}
+                onChange={(e) => {
+                  if (alphaRegex.test(e.target.value)) {
+                    formik.setFieldValue("state", e.target.value);
+                  }
+                }}
               />
             </VStack>
             <VStack align={"start"} w={"full"}>
               <Text color="#4C5361" textShadow={"sm"}>
-                Street Address
+                ZIP/Postal code
               </Text>
               <Field
                 as={Input}
-                placeholder="Enter street address"
-                py={8}
+                placeholder="Enter ZIP/Postal code"
                 w={"full"}
-                rounded={"8px"}
-                name={`address`}
+                border={"1px solid #edeeef"}
+                p={"10px 15px"}
+                h={"44px"}
+                borderRadius={"8px"}
+                fontWeight={400}
+                name={`zipCode`}
+                onChange={(e) => {
+                  if (regex.test(e.target.value)) {
+                    formik.setFieldValue("zipCode", e.target.value);
+                  }
+                }}
+                maxLength={10}
               />
             </VStack>
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              w={"full"}
-              maxW={"650px"}
-              mb={4}
-            >
-              <VStack align={"start"} w={"full"}>
-                <Text color="#4C5361" textShadow={"sm"}>
-                  City*
-                </Text>
-                <Field
-                  as={Input}
-                  placeholder="Enter City"
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  p={"10px 15px"}
-                  h={"44px"}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                  name={`city`}
-                  onChange={(e) => {
-                    if (alphaRegex.test(e.target.value)) {
-                      formik.setFieldValue("city", e.target.value);
-                    }
-                  }}
-                />
-                <FormErrorMessage name={"city"} />
-              </VStack>
-              <VStack align={"start"} w={"full"}>
-                <Text color="#4C5361" textShadow={"sm"}>
-                  State/Province
-                </Text>
-                <Field
-                  as={Input}
-                  placeholder="Enter State/Province"
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  p={"10px 15px"}
-                  h={"44px"}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                  name={`state`}
-                  onChange={(e) => {
-                    if (alphaRegex.test(e.target.value)) {
-                      formik.setFieldValue("state", e.target.value);
-                    }
-                  }}
-                />
-              </VStack>
-              <VStack align={"start"} w={"full"}>
-                <Text color="#4C5361" textShadow={"sm"}>
-                  ZIP/Postal code
-                </Text>
-                <Field
-                  as={Input}
-                  placeholder="Enter ZIP/Postal code"
-                  w={"full"}
-                  border={"1px solid #edeeef"}
-                  p={"10px 15px"}
-                  h={"44px"}
-                  borderRadius={"8px"}
-                  fontWeight={400}
-                  name={`zipCode`}
-                  onChange={(e) => {
-                    if (regex.test(e.target.value)) {
-                      formik.setFieldValue("zipCode", e.target.value);
-                    }
-                  }}
-                  maxLength={10}
-                />
-              </VStack>
-            </Stack>
-          </VStack>
-        </FormikProvider>
+          </Stack>
+        </VStack>
       </VStack>
       <HStack gap={2} mb={4}>
         <Button
@@ -297,8 +332,11 @@ export const ProfileScreenStep = ({ setStep }) => {
           py={"6px"}
           fontSize={14}
           h={"max-content"}
-          isDisabled={!formik.isValid || !file}
-          onClick={(prev) => setStep(prev + 1)}
+          isDisabled={!formik.isValid}
+          isLoading={mutation.isLoading}
+          onClick={() => {
+            mutation.mutate(formik.values);
+          }}
         >
           Save profile and continue
         </Button>
@@ -313,7 +351,7 @@ const dobPicker = (formik) => {
       ref={ref}
       onClick={() => {
         onClick();
-        formik.setFieldTouched("dateOfBirth", true);
+        formik.setFieldTouched("dob", true);
       }}
       bg={"#fff"}
       justifyContent={"space-between"}
@@ -333,12 +371,18 @@ const dobPicker = (formik) => {
 
   return (
     <DatePicker
-      selected={formik.values?.dateOfBirth}
-      onChange={(date) => formik.setFieldValue("dateOfBirth", date)}
+      selected={formik.values?.dob}
+      onChange={(date) =>
+        formik.setFieldValue("dob", dayjs(date).format("YYYY-MM-DD"))
+      }
       customInput={<ExampleCustomInput />}
       maxDate={new Date()}
-      value={formik.values?.dateOfBirth}
+      value={formik.values?.dob}
       dateFormat={"dd-MM-yyyy"}
+      dropdownMode="select"
+      showMonthDropdown
+      showYearDropdown
+      adjustDateOnChange
     />
   );
 };
