@@ -1,11 +1,18 @@
 import { Flex, HStack, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
-import dynamic from "next/dynamic";
-const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
-import { LuSend } from "react-icons/lu";
 import TextEditor from "@/components/generic-components/TextEditor";
+import { useState } from "react";
 
 export const MessageScreen = ({ person }) => {
+  const [messages, setMessages] = useState([])
+
+  const addMessage = (message) => {
+    const now = new Date();
+    const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    setMessages([...messages, { message, time }]);
+  };
+
+  console.log(messages)
 
   return (
     <Stack gap={4} p={6} flex={1}>
@@ -32,8 +39,14 @@ export const MessageScreen = ({ person }) => {
         border={"1px solid #EDEEEF"}
         p={4}
       >
+        {messages.map((msg, index) => (
+        <div key={index}>
+          <p>{msg.message}</p>
+          <p>{msg.time}</p>
+        </div>
+      ))}
         <Stack w={"full"}>
-          <TextEditor placeholder={'Type Message'} />
+          <TextEditor addMessage={addMessage} placeholder={"Type Message"} />
         </Stack>
       </Stack>
     </Stack>
