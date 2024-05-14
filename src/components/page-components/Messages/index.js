@@ -1,6 +1,7 @@
 import { conversations } from "@/lib";
 import { truncateLongText } from "@/utils/formatText";
 import {
+  Box,
   Button,
   Divider,
   Flex,
@@ -15,8 +16,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { MessageScreen } from "./screen";
 
 export const AllMessagesScreen = () => {
+  const [conversation, setConversation] = useState();
   return (
     <Flex
       maxW="1440px"
@@ -80,6 +84,14 @@ export const AllMessagesScreen = () => {
                   border={"1px solid #EDEEEF"}
                   p={4}
                   rounded={"12px"}
+                  cursor={"pointer"}
+                  _hover={{
+                    background: "#053AF9",
+                    color: "#FFFFFF !important",
+                  }}
+                  onClick={() => {
+                    setConversation(person);
+                  }}
                 >
                   <Flex
                     border={"2px solid #FFF"}
@@ -95,11 +107,16 @@ export const AllMessagesScreen = () => {
                       <Text fontWeight={600}>
                         {person.firstName + " " + person.lastName}
                       </Text>
-                      <Text whiteSpace={"nowrap"} color={"#7D7D7D"}>
-                        {person.jobTitle}
-                      </Text>
+                      <Text whiteSpace={"nowrap"}>{person.jobTitle}</Text>
                       <Divider dir="horizontal" borderColor={"#EDEEEF"} />
-                      <Text whiteSpace={"nowrap"} color={"#7D7D7D"}>
+                      <Text
+                        fontSize={14}
+                        whiteSpace={"nowrap"}
+                        _hover={{
+                          color: "#FFFFFF",
+                        }}
+                        // color={"#7D7D7D"}
+                      >
                         {truncateLongText(person.lastMessage, 20).truncatedText}
                       </Text>
                     </VStack>
@@ -114,41 +131,51 @@ export const AllMessagesScreen = () => {
           )}
         </Stack>
       </VStack>
-      <VStack
+      <Stack
         bg={"#FFF"}
-        align={"center"}
-        justify={"center"}
-        gap={4}
         w={"full"}
         flexGrow={1}
         h={"100%"}
-        p={"12px 24px"}
         rounded={"16px"}
         border={"1px solid #ECECEC"}
       >
-        <Image src="/img/icons/chat-icon.svg" />
-        <Text fontWeight={600}>Welcome to Messages</Text>
-        <Text
-          color={"#7D7D7D"}
-          textAlign={"center"}
-          lineHeight={"18px"}
-          maxW={"350px"}
-          fontSize={14}
-        >
-          Once you connect with a talent you'll be able to chat and collaborate
-          here
-        </Text>
-        <Button
-          p={"6px 14px"}
-          rounded={"12px"}
-          border="1px solid #EDEEEF"
-          bg={"#053AF9"}
-          fontWeight={400}
-          color={"white"}
-        >
-          Discover Talent
-        </Button>
-      </VStack>
+        {conversation ? (
+          <MessageScreen person={conversation} />
+        ) : (
+          <VStack
+            align={"center"}
+            justify={"center"}
+            gap={4}
+            w={"full"}
+            flexGrow={1}
+            h={"100%"}
+            p={"12px 24px"}
+          >
+            <Image src="/img/icons/chat-icon.svg" />
+            <Text fontWeight={600}>Welcome to Messages</Text>
+            <Text
+              color={"#7D7D7D"}
+              textAlign={"center"}
+              lineHeight={"18px"}
+              maxW={"350px"}
+              fontSize={14}
+            >
+              Once you connect with a talent you'll be able to chat and
+              collaborate here
+            </Text>
+            <Button
+              p={"6px 14px"}
+              rounded={"12px"}
+              border="1px solid #EDEEEF"
+              bg={"#053AF9"}
+              fontWeight={400}
+              color={"white"}
+            >
+              Discover Talent
+            </Button>
+          </VStack>
+        )}
+      </Stack>
     </Flex>
   );
 };
