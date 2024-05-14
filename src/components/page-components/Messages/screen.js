@@ -33,7 +33,7 @@ export const MessageScreen = ({ person }) => {
         p={4}
       >
         <Stack w={"full"}>
-          <TextEditor placeholder={'Ty[e Messagged'} />
+          <TextEditor placeholder={'Type Message'} />
         </Stack>
       </Stack>
     </Stack>

@@ -21,23 +21,30 @@ const TextEditor = ({ placeholder }) => {
   return (
     <div className="text-editor">
       <div id="toolbar">
-      <button className="ql-bold"></button>
+        <button className="ql-bold"></button>
         <button className="ql-italic"></button>
         <button className="ql-underline"></button>
         <button className="ql-strike"></button>
-   
-
       </div>
       <QuillEditor
         placeholder={placeholder}
         ref={quillRef}
         modules={{ toolbar: "#toolbar" }}
       />
-           <LuSend style={{
-            padding: '.5rem',
-            background: '#053AF9',
-            borderRadius: '100%'
-        }} color="#FFF" className="ql-luSend" size={40} />
+      <LuSend
+        style={{
+          padding: ".25rem",
+          background: "#053AF9",
+          borderRadius: "100%",
+          alignSelf: "end",
+          marginRight: '1rem',
+          position: 'absolute',
+          marginBottom: '3rem'
+        }}
+        color="#FFF"
+        className="ql-luSend"
+        size={30}
+      />
     </div>
   );
 };
