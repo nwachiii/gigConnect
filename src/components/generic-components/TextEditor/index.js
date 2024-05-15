@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LuSend } from "react-icons/lu";
 const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
 
 const TextEditor = ({ placeholder, addMessage }) => {
+  const [content, setContent] = useState('')
   const quillRef = useRef();
   useEffect(() => {
     if (quillRef.current) {
@@ -17,6 +18,10 @@ const TextEditor = ({ placeholder, addMessage }) => {
     }
   }, []);
 
+  const sendMessage = () => {
+    addMessage(content);
+    setContent('')
+  };
 
   
 
@@ -32,7 +37,11 @@ const TextEditor = ({ placeholder, addMessage }) => {
         placeholder={placeholder}
         ref={quillRef}
         modules={{ toolbar: "#toolbar" }}
-        onChange={(e) => console.log(e)}
+        onChange={(content, delta, source, editor) => {
+          setContent(content);
+        }}
+        value={content}
+
       />
       <LuSend
         style={{
@@ -48,7 +57,7 @@ const TextEditor = ({ placeholder, addMessage }) => {
         className="ql-luSend"
         size={30}
         cursor={'pointer'}
-        // onClick={sendMessage}
+        onClick={sendMessage}
       />
     </div>
   );

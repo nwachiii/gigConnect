@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MessageScreen } from "./screen";
+import { PersonInfo } from "./personInfo";
 
 export const AllMessagesScreen = () => {
   const [conversation, setConversation] = useState();
@@ -31,7 +32,7 @@ export const AllMessagesScreen = () => {
       mx="auto"
       h={"90vh"}
     >
-      <VStack align={"start"} minW={"325px"} h={"100%"} flexGrow={1}>
+      <VStack align={"start"} minW={"300px"} h={"100%"} flexGrow={1}>
         <Heading>Messages</Heading>
         <InputGroup>
           <InputLeftElement top={"4px"} left={"4px"}>
@@ -92,6 +93,8 @@ export const AllMessagesScreen = () => {
                   onClick={() => {
                     setConversation(person);
                   }}
+                  background={conversation?.id === person.id ? "#053AF9" : ''}
+                  color={conversation?.id === person.id ? "#FFF" : ''}
                 >
                   <Flex
                     border={"2px solid #FFF"}
@@ -107,7 +110,7 @@ export const AllMessagesScreen = () => {
                       <Text fontWeight={600}>
                         {person.firstName + " " + person.lastName}
                       </Text>
-                      <Text whiteSpace={"nowrap"}>{person.jobTitle}</Text>
+                      <Text fontSize={14} pb={2} whiteSpace={"nowrap"}>{person.jobTitle}</Text>
                       <Divider dir="horizontal" borderColor={"#EDEEEF"} />
                       <Text
                         fontSize={14}
@@ -176,6 +179,9 @@ export const AllMessagesScreen = () => {
           </VStack>
         )}
       </Stack>
+      {conversation && (
+        <PersonInfo person={conversation} />
+      )}
     </Flex>
   );
 };
