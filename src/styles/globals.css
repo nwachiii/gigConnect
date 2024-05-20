@@ -91,7 +91,7 @@ input[type='checkbox']:focus {
   width: 100%;
 }
 
-.quill {
+.text-editor {
   display: flex;
   flex-direction: column-reverse;
 }

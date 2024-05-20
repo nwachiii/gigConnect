@@ -654,3 +654,34 @@ export const months = [
   "November",
   "December",
 ];
+
+export const conversations = [
+  {
+    id: "1",
+    avatar: "https://example.com/avatar1.jpg",
+    firstName: "John",
+    lastName: "Doe",
+    jobTitle: "Senior Software Engineer",
+    status: "unread",
+    lastMessage: "Hey, I wanted to discuss the project timeline."
+  },
+  {
+    id: "2",
+    avatar: "https://example.com/avatar2.jpg",
+    firstName: "Jane",
+    lastName: "Smith",
+    jobTitle: "UI/UX Designer",
+    status: "unread",
+    lastMessage: "Could you please share the wireframes for review?"
+  },
+  {
+    id: "3",
+    avatar: "https://example.com/avatar3.jpg",
+    firstName: "Mike",
+    lastName: "Johnson",
+    jobTitle: "Data Analyst",
+    status: "read",
+    lastMessage: "Thanks for the update. Let's schedule a meeting to discuss further."
+  },
+  // Add more conversations as needed
+];
