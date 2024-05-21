@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 
-export const JobListing = ({ job, isApplying, handleJob, isSaved }) => {
+export const JobListing = ({ job, component, link, handleJob, isSaved, buttonText }) => {
   return (
-    <Stack borderRadius="12px" border="1px solid #EDEEEF" p={4} gap={2}>
+    <Stack borderRadius="12px" border="1px solid #EDEEEF" p={4} gap={1}>
       <HStack>
         <Image src="/img/icons/userIcon.svg" />
         <Text>{job.clientName}</Text>
@@ -35,7 +35,7 @@ export const JobListing = ({ job, isApplying, handleJob, isSaved }) => {
         align={"center"}
         justifyContent={"space-between"}
       >
-        <HStack gap={"10px"} w={"full"}>
+        <HStack gap={"4px"} w={"full"}>
           <CiHeart
             color={isSaved ? "red" : "black"}
             size={35}
@@ -69,30 +69,33 @@ export const JobListing = ({ job, isApplying, handleJob, isSaved }) => {
             }
             w={"full"}
             justify={"space-evenly"}
-            fontSize={14}
+            fontSize={13}
             whiteSpace={"nowrap"}
           >
             <Text>Fixed-Price</Text>
             <Text>{job.difficulty}</Text>
             <Text>Est. Budget {job.budget}</Text>
             <Text>Posted 30 minutes ago</Text>
-            <StarRating w={"full"} ratingNumber={job.ratings} />
+            <StarRating size={15} w={"full"} ratingNumber={job.ratings} />
           </HStack>
         </HStack>
-        <Link display={'contents'} href={`/projects/apply/${job.id}`}>
-          <Button
-            bg={"#053AF9"}
-            color={"white"}
-            rounded={"12px"}
-            fontWeight={400}
-            p={"6px 16px"}
-            w={"max-content"}
-            fontSize={14}
-            h={"32px"}
-          >
-            {isApplying ? 'View Details': 'Apply'}
-          </Button>
-        </Link>
+        <HStack>
+          {component}
+          <Link display={'contents'} href={link}>
+            <Button
+              bg={"#053AF9"}
+              color={"white"}
+              rounded={"12px"}
+              fontWeight={400}
+              p={"6px 16px"}
+              w={"max-content"}
+              fontSize={14}
+              h={"32px"}
+            >
+              {buttonText}
+            </Button>
+          </Link>
+        </HStack>
       </Flex>
       <Text pb={4} borderBottom={"1px solid #EDEEEF"}>
         {job.jobDescription}

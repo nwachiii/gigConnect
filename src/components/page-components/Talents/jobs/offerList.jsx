@@ -11,20 +11,22 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AllPostings } from "./offer-components/allPostings";
-import { OfferEmptyState } from "./offer-components/offerEmpty";
+import { ActiveJobs, CompletedJobs, ReceivedOffers } from "./offer-components/jobs";
 
 export const OfferList = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const searchParams = useSearchParams();
-  const saved = searchParams.get("saved");
+  const active = searchParams.get("active");
+  const completed = searchParams.get("completed");
 
   useEffect(() => {
-    if (saved) {
+    if (active) {
+      setTabIndex(1);
+    } else if (completed) {
       setTabIndex(2);
     }
-  }, [saved]);
+  }, [active, completed]);
 
   const handleTabsChange = (index) => {
     setTabIndex(index);
@@ -101,14 +103,14 @@ export const OfferList = () => {
 const tabs = [
   {
     tablist: "Received Offers",
-    component: AllPostings,
+    component: ReceivedOffers,
   },
   {
     tablist: "Active Jobs",
-    component: OfferEmptyState,
+    component: ActiveJobs,
   },
   {
     tablist: "Completed Jobs",
-    component: OfferEmptyState,
+    component: CompletedJobs,
   },
 ];

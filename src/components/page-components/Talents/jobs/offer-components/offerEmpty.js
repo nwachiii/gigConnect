@@ -1,23 +1,20 @@
 import { Button, Image, Text, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 
-export const OfferEmptyState = ({ tabIndex }) => {
+export const OfferEmptyState = ({ headerText, desc, image }) => {
   return (
     <VStack minH={"50vh"} align={"center"} justify={"center"}>
-      <Image
-        src={
-          tabIndex === 1
-            ? `/img/icons/activeJobEmpty.svg`
-            : `/img/icons/compJobsEmpty.svg`
-        }
-      />
-      <Text textTransform={'capitalize'} fontWeight={600}>{tabIndex === 1 ? `active` : `completed`} Jobs</Text>
+      <Image src={image} />
+      <Text textTransform={"capitalize"} fontWeight={600}>
+        {headerText}
+      </Text>
       <Text
         color={"#7D7D7D"}
         textAlign={"center"}
         lineHeight={"18px"}
-        maxW={"350px"}
+        maxW={"300px"}
       >
-        Jobs/Contracts you've {tabIndex === 1 ? `actively` : `completed`}{" "}
+        Jobs/Contracts you've {desc}{' '}
         working on will appear here.
       </Text>
       <Button

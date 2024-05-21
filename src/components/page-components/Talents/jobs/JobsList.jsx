@@ -1,8 +1,14 @@
 import {
+  Box,
   Button,
   Flex,
+  HStack,
   Heading,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
   VStack,
@@ -10,9 +16,12 @@ import {
 } from "@chakra-ui/react";
 import { ProfileSetup } from "../../Projects/job-components/modals/profileSetup";
 import { OfferList } from "./offerList";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { useState } from "react";
 
 export const JobsList = () => {
   const modalDisclosure = useDisclosure();
+  const [showPrice, setShowPrice] = useState(true);
 
   return (
     <Stack
@@ -24,7 +33,6 @@ export const JobsList = () => {
       spacing="36px"
       mx="auto"
     >
-
       {/* Banner */}
       <Flex
         h="58px"
@@ -56,9 +64,75 @@ export const JobsList = () => {
       {/* Main Content */}
       <Flex w="full" columnGap="20px">
         <OfferList />
-          {/* <ProfileSidebar showSteps /> */}
+        <VStack
+          borderRadius={"16px"}
+          p={4}
+          gap={4}
+          w="full"
+          bg="#FFFFFF"
+          maxH={"max-content"}
+          h={"max-content"}
+        >
+          <VStack borderRadius="12px" border="1px solid #EDEEEF" w="full" p={4}>
+            <Image src="/img/icons/userIcon.svg" />
+            <Text>Ola Ahmed</Text>
+            <Text>CRM Developer | Fintech</Text>
+            <Button
+              p={"6px 14px"}
+              rounded={"12px"}
+              border="1px solid #EDEEEF"
+              bg={"#F6F7F7"}
+              fontWeight={400}
+            >
+              Complete Profile
+            </Button>
+          </VStack>
+          <Stack
+            borderRadius="12px"
+            border="1px solid #EDEEEF"
+            w="full"
+            p={4}
+            gap={2}
+            bg="#053AF9"
+            color="#FFFFFF"
+            align="center"
+          >
+            <Text fontSize={14}>Earnings available now:</Text>
+            <HStack gap={4}>
+              <Text fontWeight={700} fontSize={20}>
+                {showPrice ? "$ 0.00" : "******"}
+              </Text>
+              <Box cursor={"pointer"} onClick={() => setShowPrice(!showPrice)}>
+                {showPrice ? <IoEyeOutline /> : <IoEyeOffOutline />}
+              </Box>
+            </HStack>
+            <Menu>
+              <MenuButton>
+                <Image src="/img/icons/MenuIcon.svg" />
+              </MenuButton>
+              <MenuList
+                border={"1px solid #EDEEEF"}
+                rounded={"12px"}
+                color={"#000000"}
+                px={1}
+              >
+                <MenuItem {...menuItemStyles}>Withdraw funds</MenuItem>
+                <MenuItem {...menuItemStyles}>View Pending earnings</MenuItem>
+                <MenuItem {...menuItemStyles}>Go to reports</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
+        </VStack>
       </Flex>
       <ProfileSetup modalDisclosure={modalDisclosure} />
     </Stack>
   );
+};
+
+const menuItemStyles = {
+  _hover: {
+    background: "#F6F5F5",
+    border: "1px solid #EDEAEC",
+    borderRadius: "8px",
+  },
 };
