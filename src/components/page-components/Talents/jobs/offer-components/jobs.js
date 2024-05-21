@@ -56,6 +56,7 @@ export const ActiveJobs = () => {
                 </Button>
               }
               buttonText={"View Contract"}
+              link={`/my-jobs/contracts/view/${job.id}`}
             />
           );
         })
@@ -77,7 +78,7 @@ export const CompletedJobs = () => {
     <Stack>
       {completedJobs?.length > 0 && completedJobs ? (
         completedJobs.map((job, index) => {
-          return <JobListing job={job} key={index} buttonText={"View Offer"} />;
+          return <JobListing job={job} key={index} buttonText={"View Offer"}  />;
         })
       ) : (
         <OfferEmptyState
