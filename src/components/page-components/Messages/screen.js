@@ -13,7 +13,7 @@ import { useState } from "react";
 import parse from "html-react-parser";
 import dayjs from "dayjs";
 
-export const MessageScreen = ({ person }) => {
+export const MessageScreen = ({ person, hideUserInfo }) => {
   const [messages, setMessages] = useState([]);
 
   const addMessage = (message) => {
@@ -23,7 +23,7 @@ export const MessageScreen = ({ person }) => {
 
   return (
     <Stack gap={4} p={6} flex={1}>
-      <Flex justify={"space-between"}>
+      {!hideUserInfo && <Flex justify={"space-between"}>
         <VStack align={"start"} gap={1}>
           <Flex gap={4} align={"start"}>
             <Image src={"/img/profilePicture.png"} boxSize={"40px"} />
@@ -48,8 +48,7 @@ export const MessageScreen = ({ person }) => {
             <Image src="/img/icons/info-circle.svg" />
           </Box>
         </HStack>
-      </Flex>
-
+      </Flex>}
       <Stack
         justify={"end"}
         h={"100%"}
@@ -67,7 +66,7 @@ export const MessageScreen = ({ person }) => {
           >
             <Text>{person.lastMessage}</Text>
           </Box>
-          <Text fontSize={12}>Today, {dayjs().format("hh:mm a")}</Text>
+          <Text fontSize={12}>Today, {dayjs().format("hh:mma")}</Text>
         </Stack>
         {messages.map((msg, index) => (
           <Stack align={"end"} key={index} pb={4}>
