@@ -112,6 +112,7 @@ export const CreateAnAccount = () => {
 	const router = useRouter();
 
 	const handleScreen = (arg) => {
+		// console.log(arg, role);
 		setScreen(arg);
 	};
 	const mutation = useMutation({mutationFn: (formData) => CreateNewAccount(formData)});
