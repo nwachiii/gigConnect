@@ -39,9 +39,7 @@ const SelectionGroup = ({options, setRole}) => {
 	const {getRootProps, getRadioProps} = useRadioGroup({
 		name: 'accountType',
 		defaultValue: options[0].value,
-		onChange: (e) => {
-			return setRole(e);
-		},
+		onChange: (e) => setRole(e),
 	});
 
 	const group = getRootProps();
