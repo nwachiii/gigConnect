@@ -1,13 +1,9 @@
 import { conversations, techJobs } from "@/lib";
 import {
   Avatar,
-  Box,
-  Button,
-  Checkbox,
   Flex,
   HStack,
   Heading,
-  Image,
   Stack,
   Tab,
   TabList,
@@ -15,8 +11,6 @@ import {
   TabPanels,
   Tabs,
   Text,
-  VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,13 +26,12 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { ContractOverview } from "./contract-components/overview";
 import { ContractDetails } from "./contract-components/details";
 import { MessageScreen } from "../../Messages/screen";
+dayjs.extend(advancedFormat)
 
 export const ContractPage = () => {
   const router = useRouter();
   const query = useParams();
   const job = techJobs.find((job) => job.id === Number(query?.id));
-  const currentIndex = techJobs.indexOf(job);
-  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <Stack
@@ -76,43 +69,47 @@ export const ContractPage = () => {
           </Text>
           <StarRating ratingNumber={job.ratings} />
           <Tabs>
-          <Flex
-            borderRadius="12px"
-            border="1px solid #EDEEEF"
-            w="full"
-            px="8px"
-            pt="8px"
-            h={"56px"}
-            align={"center"}
-          >
-            <TabList
-              width={"full"}
-              justifyContent={"center"}
-              borderBottom={"0"}
+            <Flex
+              borderRadius="24px"
+              p="6px"
+              align={"center"}
+              bg="#EFEFEF"
+              maxW="280px"
             >
+              <TabList
+                width={"full"}
+                justifyContent={"space-between"}
+                borderBottom={"0"}
+                gap={"10px"}
+              >
+                {tabs.map((tab, index) => (
+                  <Tab
+                    _selected={{
+                      color: "black",
+                      fontWeight: 500,
+                    }}
+                    color="#ADB0B6"
+                    key={index}
+                    index={index}
+                    p="5px 11px"
+                    bg="#FFFFFF"
+                    border="1px solid #DFDFDF"
+                    rounded="14px"
+                    fontSize={14}
+                  >
+                    {tab.tablist}
+                  </Tab>
+                ))}
+              </TabList>
+            </Flex>
+            <TabPanels>
               {tabs.map((tab, index) => (
-                <Tab
-                  _selected={{
-                    color: "black",
-                    fontWeight: 500
-                  }}
-                  color="#ADB0B6"
-                  key={index}
-                  index={index}
-                >
-                  {tab.tablist}
-                </Tab>
+                <TabPanel p={0} mt={4} key={index}>
+                  {tab.component()}
+                </TabPanel>
               ))}
-            </TabList>
-          </Flex>
-          <TabPanels>
-            {tabs.map((tab, index) => (
-              <TabPanel p={0} mt={4} key={index}>
-                {tab.component()}
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Tabs>
+            </TabPanels>
+          </Tabs>
         </Stack>
       </Stack>
     </Stack>
@@ -120,21 +117,20 @@ export const ContractPage = () => {
 };
 
 const Message = () => {
-  return <MessageScreen hideUserInfo person={conversations[0]}/>
-}
+  return <MessageScreen hideUserInfo person={conversations[0]} />;
+};
 
 const tabs = [
   {
-      tablist: "Overview",
-      component: ContractOverview
+    tablist: "Overview",
+    component: ContractOverview,
   },
   {
-      tablist: "Messages",
-      component: Message
+    tablist: "Messages",
+    component: Message,
   },
   {
-      tablist: "Details",
-      component: ContractDetails
-  }
-]
-
+    tablist: "Details",
+    component: ContractDetails,
+  },
+];

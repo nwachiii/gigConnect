@@ -18,9 +18,11 @@ import { ProfileSetup } from "../../Projects/job-components/modals/profileSetup"
 import { OfferList } from "./offerList";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useState } from "react";
+import { WithdrawModal } from "./modals/withdrawModal";
 
 export const JobsList = () => {
   const modalDisclosure = useDisclosure();
+  const withdrawModal = useDisclosure()
   const [showPrice, setShowPrice] = useState(true);
 
   return (
@@ -116,7 +118,7 @@ export const JobsList = () => {
                 color={"#000000"}
                 px={1}
               >
-                <MenuItem {...menuItemStyles}>Withdraw funds</MenuItem>
+                <MenuItem onClick={withdrawModal.onOpen} {...menuItemStyles}>Withdraw funds</MenuItem>
                 <MenuItem {...menuItemStyles}>View Pending earnings</MenuItem>
                 <MenuItem {...menuItemStyles}>Go to reports</MenuItem>
               </MenuList>
@@ -125,6 +127,7 @@ export const JobsList = () => {
         </VStack>
       </Flex>
       <ProfileSetup modalDisclosure={modalDisclosure} />
+      <WithdrawModal withdrawModal={withdrawModal}/>
     </Stack>
   );
 };

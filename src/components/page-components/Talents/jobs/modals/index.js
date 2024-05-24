@@ -62,6 +62,8 @@ export const OfferAccepted = ({ offerModal }) => {
             bg={"#F6F7F7"}
             fontWeight={400}
             w={"max-content"}
+            h='32px'
+          color='#4C5361'
           >
             Message Client
           </Button>
@@ -125,6 +127,8 @@ export const OfferDeclined = ({ offerDeclineModal }) => {
             border="1px solid #EDEEEF"
             bg={"#F6F7F7"}
             fontWeight={400}
+            h='32px'
+          color='#4C5361'
             w={"max-content"}
           >
             Message Client

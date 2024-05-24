@@ -1,19 +1,17 @@
 import {
-  Box,
   Button,
-  Divider,
   Flex,
-  HStack,
   Heading,
   Image,
   Stack,
-  StackDivider,
-  Tag,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { PaymentRequestModal } from "../modals/paymentRequestModal";
 
 export const ContractOverview = () => {
+  const paymentRequestModal = useDisclosure()
   return (
     <Flex gap={6} w="full" justify={"space-between"}>
       <VStack
@@ -205,10 +203,16 @@ export const ContractOverview = () => {
           p={"6px 14px"}
           rounded={"16px"}
           w='full'
+          _hover={{
+            bg: "#053AF9",
+            color: "#FFF"
+          }}
+          onClick={paymentRequestModal.onOpen}
         >
           Request Payment
         </Button>
       </VStack>
+      <PaymentRequestModal paymentModal={paymentRequestModal}/>
     </Flex>
   );
 };

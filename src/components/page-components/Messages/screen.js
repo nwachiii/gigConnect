@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   HStack,
   Image,
@@ -56,6 +57,10 @@ export const MessageScreen = ({ person, hideUserInfo }) => {
         border={"1px solid #EDEEEF"}
         p={4}
       >
+        <Button alignSelf={'end'} w={'176px'} bg='#202329' gap={2} p='6px' rounded='12px' _hover={{ bg: '' }} mb={4}>
+          <Image boxSize={'24px'} src={"/img/icons/calendar.svg"} />
+          <Text fontSize={14} color='#fff' fontWeight={400}>Schedule a Meeting</Text>
+        </Button>
         <Stack align={"start"} pb={4}>
           <Box
             bg={"#F6F7F7"}
