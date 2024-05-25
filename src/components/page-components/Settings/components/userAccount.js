@@ -162,7 +162,7 @@ const EditAccount = ({ handleEdit }) => {
   const toast = useToast()
   const saveEdit = () => {
     toast({
-      title: "Saved",
+      title: "Changes saved",
       status: "success",
       duration: 2000,
       isClosable: true,
