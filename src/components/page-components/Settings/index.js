@@ -16,6 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { UserAccount } from "./components/userAccount";
+import { UserSecurity } from "./components/security";
+import { ChangePassword } from "./components/screens/changePassword";
 
 export const UserSettings = () => {
   const modalDisclosure = useDisclosure();
@@ -118,7 +120,7 @@ export const UserSettings = () => {
           </TabPanels>
         </HStack>
       </Tabs> */}
-    <UserAccount/>
+      <UserSecurity/>
       {/* Main Content */}
     </Stack>
   );
@@ -141,7 +143,7 @@ const tabs = [
     tabs: [
       {
         tablist: "Billing & Payments",
-        component: UserAccount,
+        component: UserSecurity,
         icon: CreditIcon,
         index: 1
       },

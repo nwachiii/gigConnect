@@ -180,3 +180,16 @@ export const userProfileSchema = Yup.object().shape({
     "Phone number is not valid"
   ),
 });
+
+export const passwordValues = {
+  password: "",
+  confirmPassword: "",
+}
+
+export const passwordSchema = Yup.object().shape({
+  password: Yup.string()
+    .required('Required'),
+  confirmPassword: Yup.string()
+    .required('Required')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+});

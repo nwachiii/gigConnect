@@ -179,13 +179,14 @@ const EditAccount = ({ handleEdit }) => {
       gap={2}
       pb={6}
     >
-      <HStack w="full" borderBottom="1px solid #EDEEEF" px={4} py={2}>
+      <HStack cursor='pointer' onClick={handleEdit} w="full" borderBottom="1px solid #EDEEEF" px={4} py={2}>
         <Stack
           bg={"#F6F7F7"}
           border="1px solid #EDEEEF"
           justify={"center"}
           p={1.5}
           rounded={"full"}
+          
         >
           <BsChevronLeft />
         </Stack>
