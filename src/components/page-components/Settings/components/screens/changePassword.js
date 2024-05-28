@@ -33,6 +33,7 @@ export const ChangePassword = ({ handleEdit }) => {
   const toast = useToast()
   const saveEdit = () => {
     toast({
+      position: 'top-right',
       title: "Your password has been updated",
       status: "success",
       duration: 2000,

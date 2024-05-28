@@ -9,15 +9,17 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { PhoneFA } from "./phoneFA";
+import { QRCode } from "./qrCode";
+import { GoogleFA } from "./googleFA";
 
 export const TwoFAModal = ({ isOpen, onClose }) => {
-    const [step, setStep] = useState(0);
-    const SecuritySteps = verificationSteps[step];
+  const [step, setStep] = useState(2);
+  const SecuritySteps = verificationSteps[step];
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay bg="rgba(0, 0,0, 0.5)" />
-      <ModalContent rounded='16px' maxW={980}>
+      <ModalContent rounded="16px" w="full" maxW={step === 1 ? 650 : 980}>
         <ModalHeader
           display={"flex"}
           paddingInline={0}
@@ -43,14 +45,14 @@ export const TwoFAModal = ({ isOpen, onClose }) => {
             />
           </Stack>
         </ModalHeader>
-        <ModalBody w='full'>
-          <SecuritySteps step={step} setStep={setStep} />
+        <ModalBody w="full">
+          <Stack w="full">
+            <SecuritySteps step={step} setStep={setStep} onClose={onClose} />
+          </Stack>
         </ModalBody>
       </ModalContent>
     </Modal>
   );
 };
 
-const verificationSteps = [
-  PhoneFA
-]
+const verificationSteps = [PhoneFA, QRCode, GoogleFA];

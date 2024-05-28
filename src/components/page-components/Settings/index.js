@@ -18,6 +18,7 @@ import { useState } from "react";
 import { UserAccount } from "./components/userAccount";
 import { UserSecurity } from "./components/security";
 import { ChangePassword } from "./components/screens/changePassword";
+import { Billings } from "./components/billings";
 
 export const UserSettings = () => {
   const modalDisclosure = useDisclosure();
@@ -60,8 +61,8 @@ export const UserSettings = () => {
           Get Started
         </Button>
       </Flex>
-      {/* <Tabs variant="unstyled" w="full" tabIndex={activeIndex}>
-        <HStack align='start' w="full">
+      <Tabs variant="unstyled" w="full" tabIndex={activeIndex}>
+        <HStack align='start' w="full" gap={8}>
           <Stack
             borderRadius="12px"
             border="1px solid #EDEEEF"
@@ -119,9 +120,7 @@ export const UserSettings = () => {
             )}
           </TabPanels>
         </HStack>
-      </Tabs> */}
-      <UserSecurity/>
-      {/* Main Content */}
+      </Tabs>
     </Stack>
   );
 };
@@ -143,13 +142,13 @@ const tabs = [
     tabs: [
       {
         tablist: "Billing & Payments",
-        component: UserSecurity,
+        component: Billings,
         icon: CreditIcon,
         index: 1
       },
       {
         tablist: "Security",
-        component: UserAccount,
+        component: UserSecurity,
         icon: SecureIcon,
         index: 2
       },
