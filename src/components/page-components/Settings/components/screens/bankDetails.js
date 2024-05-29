@@ -5,7 +5,6 @@ import {
   Select,
   Stack,
   Text,
-  VStack,
   useToast,
 } from "@chakra-ui/react";
 import { BsChevronLeft } from "react-icons/bs";
