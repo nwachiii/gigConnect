@@ -685,3 +685,31 @@ export const conversations = [
   },
   // Add more conversations as needed
 ];
+
+export const cards = [
+  {
+    id: "1",
+    cardNumber: "4111 1111 1111 1111",
+    cardName: "Visa"
+  },
+  {
+    id: "2",
+    cardNumber: "5500 0000 0000 0004",
+    cardName: "Mastercard"
+  },
+  {
+    id: "3",
+    cardNumber: "4111 1111 1111 1112",
+    cardName: "Visa"
+  },
+  {
+    id: "4",
+    cardNumber: "5500 0000 0000 0005",
+    cardName: "Mastercard"
+  },
+  {
+    id: "5",
+    cardNumber: "4111 1111 1111 1113",
+    cardName: "Visa"
+  }
+]
