@@ -13,30 +13,13 @@ import {
   useColorModeValue,
   Icon,
 } from "@chakra-ui/react";
-import { FaUserCircle, FaCog, FaSignOutAlt, FaUserPlus } from "react-icons/fa";
+import { FaCog, FaSignOutAlt, FaUserPlus } from "react-icons/fa";
 // import { AiOutlineUser } from '@chakra-ui/icons'
-import { AiOutlineUser } from "react-icons/ai";
 import { UserIcon } from "@/assets/icons/Navbar/user-icon";
 import { useRouter } from "next/navigation";
 
 export const UserProfileMenu = () => {
   const router = useRouter();
-  const emailStyle = {
-    color: "#7D7D7D",
-    fontSize: "10px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "10px",
-  };
-
-  const userNameStyle = {
-    color: "#2E2E2E",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "20px",
-  };
-
   return (
     <Menu>
       <MenuButton p={1}>
@@ -83,6 +66,22 @@ export const UserProfileMenu = () => {
       </MenuList>
     </Menu>
   );
+};
+
+export const emailStyle = {
+  color: "#7D7D7D",
+  fontSize: "10px",
+  fontStyle: "normal",
+  fontWeight: "400",
+  lineHeight: "10px",
+};
+
+export const userNameStyle = {
+  color: "#2E2E2E",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: "500",
+  lineHeight: "20px",
 };
 
 export default UserProfileMenu;
