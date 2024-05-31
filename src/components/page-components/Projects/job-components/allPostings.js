@@ -6,9 +6,7 @@ import dayjs from "dayjs";
 export const AllPostings = ({ tabIndex, handleSaveJob }) => {
   const sortedJobs =
     tabIndex === 1
-      ? [...techJobs].sort(
-          (a, b) => dayjs(b.postedDate) - dayjs(a.postedDate)
-        )
+      ? [...techJobs].sort((a, b) => dayjs(b.postedDate) - dayjs(a.postedDate))
       : techJobs;
 
   return (
@@ -27,7 +25,15 @@ export const AllPostings = ({ tabIndex, handleSaveJob }) => {
         </Text>
       </Flex>
       {sortedJobs.map((job, index) => {
-        return <JobListing handleJob={handleSaveJob} job={job} key={index} />;
+        return (
+          <JobListing
+            buttonText={"Apply"}
+            link={`/projects/apply/${job.id}`}
+            handleJob={handleSaveJob}
+            job={job}
+            key={index}
+          />
+        );
       })}
     </Stack>
   );
