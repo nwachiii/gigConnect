@@ -2,8 +2,6 @@ import {
   Button,
   Flex,
   HStack,
-  Heading,
-  Image,
   Stack,
   Tab,
   TabList,
@@ -11,7 +9,6 @@ import {
   TabPanels,
   Tabs,
   Text,
-  VStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import { ProfileSetup } from "../Projects/job-components/modals/profileSetup";
