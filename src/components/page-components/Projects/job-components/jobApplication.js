@@ -74,7 +74,7 @@ export const JobApplication = () => {
         </HStack>
         <Stack p={4}>
           <Heading pb={2} fontSize={24}>Application Process</Heading>
-          <JobListing isApplying job={job} />
+          <JobListing buttonText={'View Details'} job={job} />
           <VStack
             align={"start"}
             borderRadius="12px"

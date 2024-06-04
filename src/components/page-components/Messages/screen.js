@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   HStack,
   Image,
@@ -13,7 +14,7 @@ import { useState } from "react";
 import parse from "html-react-parser";
 import dayjs from "dayjs";
 
-export const MessageScreen = ({ person }) => {
+export const MessageScreen = ({ person, hideUserInfo }) => {
   const [messages, setMessages] = useState([]);
 
   const addMessage = (message) => {
@@ -23,7 +24,7 @@ export const MessageScreen = ({ person }) => {
 
   return (
     <Stack gap={4} p={6} flex={1}>
-      <Flex justify={"space-between"}>
+      {!hideUserInfo && <Flex justify={"space-between"}>
         <VStack align={"start"} gap={1}>
           <Flex gap={4} align={"start"}>
             <Image src={"/img/profilePicture.png"} boxSize={"40px"} />
@@ -48,8 +49,7 @@ export const MessageScreen = ({ person }) => {
             <Image src="/img/icons/info-circle.svg" />
           </Box>
         </HStack>
-      </Flex>
-
+      </Flex>}
       <Stack
         justify={"end"}
         h={"100%"}
@@ -57,6 +57,10 @@ export const MessageScreen = ({ person }) => {
         border={"1px solid #EDEEEF"}
         p={4}
       >
+        <Button alignSelf={'end'} w={'176px'} bg='#202329' gap={2} p='6px' rounded='12px' _hover={{ bg: '' }} mb={4}>
+          <Image boxSize={'24px'} src={"/img/icons/calendar.svg"} />
+          <Text fontSize={14} color='#fff' fontWeight={400}>Schedule a Meeting</Text>
+        </Button>
         <Stack align={"start"} pb={4}>
           <Box
             bg={"#F6F7F7"}
@@ -67,7 +71,7 @@ export const MessageScreen = ({ person }) => {
           >
             <Text>{person.lastMessage}</Text>
           </Box>
-          <Text fontSize={12}>Today, {dayjs().format("hh:mm a")}</Text>
+          <Text fontSize={12}>Today, {dayjs().format("hh:mma")}</Text>
         </Stack>
         {messages.map((msg, index) => (
           <Stack align={"end"} key={index} pb={4}>

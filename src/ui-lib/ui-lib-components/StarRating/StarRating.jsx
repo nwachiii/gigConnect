@@ -3,10 +3,10 @@ import ReactStars from 'react-rating-stars-component';
 
 import {Box} from '@chakra-ui/react';
 
-export const StarRating = ({ratingNumber, isFeedback, ...rest}) => {
+export const StarRating = ({ratingNumber, size, isFeedback, ...rest}) => {
   const [stars, setStars] = useState(ratingNumber);
   var data = {
-		size: 20,
+		size: size ?? 20,
 		value: stars,
 		activeColor: '#053AF9',
 		onChange: (newValue) => {

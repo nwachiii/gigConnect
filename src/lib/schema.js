@@ -169,7 +169,7 @@ export const userProfileSchema = Yup.object().shape({
   hourlyRate: Yup.string().required("Hourly rate is required"),
   freelancedBefore: Yup.string().required("Required"),
   freelancingGoal: Yup.string().required("Required"),
-  photoUrl: Yup.string().required("Required"),
+  photoUrl: Yup.string(),
   dob: Yup.date().required("Required"),
   city: Yup.string().required("Required"),
   country: Yup.string().required("Required"),
@@ -179,4 +179,17 @@ export const userProfileSchema = Yup.object().shape({
     /^\+?(\d{10,13})$/,
     "Phone number is not valid"
   ),
+});
+
+export const passwordValues = {
+  password: "",
+  confirmPassword: "",
+}
+
+export const passwordSchema = Yup.object().shape({
+  password: Yup.string()
+    .required('Required'),
+  confirmPassword: Yup.string()
+    .required('Required')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
