@@ -13,7 +13,7 @@ import { ProfileSidebar } from "./profileSidebar";
 import { ProfileSetup } from "./job-components/modals/profileSetup";
 
 export const ProjectList = () => {
-  const modalDisclosure = useDisclosure()
+  const modalDisclosure = useDisclosure();
 
   return (
     <Stack

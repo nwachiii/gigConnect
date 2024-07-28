@@ -266,11 +266,11 @@ const navTalentLinks = [
       },
       {
         listItem: "Billings & Earnings",
-        pageUrl: "/billings",
+        pageUrl: "/reports/billings",
       },
       {
         listItem: "Transaction History",
-        pageUrl: "/transaction-history",
+        pageUrl: "/reports/transaction-history",
       },
     ],
   },
