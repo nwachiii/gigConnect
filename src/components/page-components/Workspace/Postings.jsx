@@ -4,6 +4,7 @@ import {ArrowRight} from '@/assets/icons/ArrowRight';
 import Link from 'next/link';
 import {GCButton} from '@/ui-lib/ui-lib-components/Button';
 import {PlusIconDark, PlusIconWhite} from '@/assets/icons/PlusIcon';
+// import { useRouter } from '@/lib/router-events';
 import {useRouter} from 'next/navigation';
 
 export const JobPostings = () => {

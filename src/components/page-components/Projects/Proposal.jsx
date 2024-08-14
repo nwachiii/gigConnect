@@ -1,8 +1,8 @@
-import {Button, Flex, HStack, Heading, Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure} from '@chakra-ui/react';
-import {ActiveProposals} from './proposals-components/ActiveProps';
-import {ArchivedProposals} from './proposals-components/ArchivedProps';
-import {Referrals} from './proposals-components/Referrals';
+import { Button, Flex, Heading, Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure } from '@chakra-ui/react';
 import { ProfileSetup } from './ProfileSetupModal';
+import { Referrals } from './proposals-components/Referrals';
+import { ActiveProposals } from './proposals-components/ActiveProps';
+import { ArchivedProposals } from './proposals-components/ArchivedProps';
 
 export const Proposals = () => {
 	const modalDisclosure = useDisclosure();

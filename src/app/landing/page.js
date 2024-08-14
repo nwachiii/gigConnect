@@ -7,6 +7,7 @@ import TopTalents from './components/topTalents';
 import {Footer} from '@/components/generic-components/Footer';
 import { GCButton } from '@/ui-lib/ui-lib-components/Button';
 import { theme } from '@/themes';
+// import { Link } from '@/lib/router-events';
 
 const LandingPage = () => {
 	return (

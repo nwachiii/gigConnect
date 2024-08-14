@@ -21,7 +21,7 @@ export const PostAJob = () => {
 	useEffect(() => {
 		ScrollToTop();
 	}, [step]);
-	const SubPages = [<StepOne key={step} handleProgress={handleProgress} step={step} />, <StepTwo key={step} handleProgress={handleProgress} step={step} />, <StepThree key={step} handleProgress={handleProgress} step={step} />, <StepFour key={step} handleProgress={handleProgress} step={step} />, <StepFive key={step} handleProgress={handleProgress} step={step} />, <JobDetailsSummary key={step} handleProgress={handleProgress} step={step} />];
+	const SubPages = [<StepOne key={0} handleProgress={handleProgress} step={step} />, <StepTwo key={1} handleProgress={handleProgress} step={step} />, <StepThree key={2} handleProgress={handleProgress} step={step} />, <StepFour key={3} handleProgress={handleProgress} step={step} />, <StepFive key={4} handleProgress={handleProgress} step={step} />, <JobDetailsSummary key={5} handleProgress={handleProgress} step={step} />];
 
 	return (
 		<Box minH='100vh' bg='#F5F5F5'>

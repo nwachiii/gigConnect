@@ -4,7 +4,7 @@ import {HeaderWithNav} from '@/components/generic-components/Headers';
 import {Image, Stack, Text, Box, Flex} from '@chakra-ui/react';
 import {JobPostings} from '@/components/page-components/Workspace/Postings';
 import {DiscoverTopRatedTalent} from '@/components/page-components/Workspace/DiscoverTopRatedTalent';
-import WorkspaceContracts, {Contracts} from '@/components/page-components/Workspace/Contracts';
+import WorkspaceContracts from '@/components/page-components/Workspace/Contracts';
 import {GCButton} from '@/ui-lib/ui-lib-components/Button';
 import {PlusIconWhite} from '@/assets/icons/PlusIcon';
 

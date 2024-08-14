@@ -102,8 +102,8 @@ export const SkillsSelector = ({handleProgress}) => {
 						</Text>
 						<Box my={4}>
 							<Wrap>
-								{filterSkills(values.search).map((skill) => (
-									<WrapItem key={skill}>
+								{filterSkills(values.search).map((skill, idx) => (
+									<WrapItem key={idx}>
 										<Tag borderRadius={'16px'} size='lg' cursor='pointer' onClick={() => addSkill(skill)} style={handleActiveStyle(skill)}>
 											<TagLabel fontSize={'14px'} fontWeight={'500'}>
 												{skill}

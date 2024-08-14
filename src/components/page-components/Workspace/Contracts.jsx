@@ -2,6 +2,7 @@
 import React from 'react';
 import {Flex, Stack, Text, HStack, VStack, AbsoluteCenter} from '@chakra-ui/react';
 import {ArrowRight} from '@/assets/icons/ArrowRight';
+// import { Link } from '@/lib/router-events';
 import Link from 'next/link';
 
 export const WorkspaceContracts = () => {

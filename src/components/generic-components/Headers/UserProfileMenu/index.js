@@ -33,7 +33,7 @@ export const UserProfileMenu = () => {
 				</Box>
 				<VStack divider={<Box borderColor={useColorModeValue('gray.200', 'gray.600')} />} spacing={0}>
 					<MenuItem icon={<Icon as={FaUserPlus} />}>Invite a Coworker</MenuItem>
-					<MenuItem onClick={() => router.push('/settings')} icon={<Icon as={FaCog} />}>
+					<MenuItem onClick={() => router.push('/talent/settings')} icon={<Icon as={FaCog} />}>
 						Settings
 					</MenuItem>
 					<MenuItem onClick={() => router.push('/auth/sign-in')} icon={<Icon as={FaSignOutAlt} />}>

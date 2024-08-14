@@ -64,7 +64,7 @@ export const SignIn = () => {
 					<Formik
 						initialValues={{email: '', password: ''}}
 						onSubmit={(values, actions) => {
-							console.log('Formik actions', actions);
+							// console.log('Formik actions',actions);
 							mutation.mutate({...values});
 						}}
 						validationSchema={SignInSchema}>

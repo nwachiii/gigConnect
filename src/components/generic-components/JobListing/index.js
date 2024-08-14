@@ -13,7 +13,7 @@ export const JobListing = ({job, component, link, handleJob, isSaved, buttonText
 				{job.projectTitle}
 			</Text>
 			<HStack align={'start'} color={'#878C95'}>
-				<Image src='/img/icons/location.svg' alt='location' />
+				<Image src='/img/icons/locationIcon.svg' alt='location' />
 				<Text>Lagos, Nigeria | {job.location}</Text>
 			</HStack>
 			<Flex borderRadius='16px' border='1px solid #EDEEEF' w='full' px='12px' h={'55px'} align={'center'} justifyContent={'space-between'}>
@@ -35,7 +35,7 @@ export const JobListing = ({job, component, link, handleJob, isSaved, buttonText
 				</HStack>
 				<HStack>
 					{component}
-					<Link display={'contents'} href={link}>
+					<Link href={link}>
 						<Button bg={'#053AF9'} color={'white'} rounded={'12px'} fontWeight={400} p={'6px 16px'} w={'max-content'} fontSize={14} h={'32px'}>
 							{buttonText}
 						</Button>

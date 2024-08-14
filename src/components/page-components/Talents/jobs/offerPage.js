@@ -47,7 +47,7 @@ export const OfferPage = () => {
 							</Stack>
 						</Flex>
 						<HStack gap={1} fontSize={14} color={'#878C95'}>
-							<Image src='/img/icons/location.svg' alt='location' boxSize={'20px'} />
+							<Image src='/img/icons/locationIcon.svg' alt='location' boxSize={'20px'} />
 							<Text h={'max-content'} pr={2} borderRight={'1px solid #878C95'}>
 								Lagos, Nigeria
 							</Text>

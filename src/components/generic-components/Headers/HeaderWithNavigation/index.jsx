@@ -16,7 +16,9 @@ import {sharedGCButtonProps} from '@/ui-lib/ui-lib-components/Button/Button';
 import UserProfileMenu from '../UserProfileMenu';
 import {ProjectIcon} from '@/assets/icons/Navbar/project-icon';
 import {WorkIcon} from '@/assets/icons/Navbar/work-icon';
-import {FileIcon} from '@/assets/icons/Navbar/file-icon.js';
+import { FileIcon } from '@/assets/icons/Navbar/file-icon.js';
+import NextTopLoader from 'nextjs-toploader';
+
 
 export const HeaderWithNav = ({isLogin, isTalent}) => {
 	const getPath = usePathname();
@@ -89,8 +91,8 @@ export const HeaderWithNav = ({isLogin, isTalent}) => {
 					</DrawerHeader>
 					<DrawerBody>
 						<Stack p={'20px 10px'} display={{md: 'none'}}>
-							{navLinks.map((item) => (
-								<Text my='10px' key={item} w='full' fontSize={'20px'} fontWeight='500' lineHeight={'32px'}>
+							{navLinks.map((item, idx) => (
+								<Text my='10px' key={idx} w='full' fontSize={'20px'} fontWeight='500' lineHeight={'32px'}>
 									{item.text}
 								</Text>
 							))}
@@ -110,8 +112,8 @@ export const GCMenuComponent = ({item, handleRouter}) => {
 				{item.text}
 			</MenuButton>
 			<MenuList>
-				{item.menuList.map((val) => (
-					<MenuItem key={val} onClick={() => handleRouter(val.pageUrl)}>
+				{item.menuList.map((val, idx) => (
+					<MenuItem key={idx} onClick={() => handleRouter(val.pageUrl)}>
 						{val.listItem}
 					</MenuItem>
 				))}
@@ -134,8 +136,8 @@ const navClientLinks = [
 				listItem: 'Post a Job',
 				pageUrl: '/client/jobs/create',
 			},
-			{listItem: 'Job posts', pageUrl: '/jobs/posts'},
-			{listItem: 'Contracts', pageUrl: '/jobs/contracts'},
+			{listItem: 'Job posts', pageUrl: '/talent/projects'},
+			{listItem: 'Contracts', pageUrl: '/talent/my-jobs/contracts/view'},
 		],
 	},
 	{
@@ -156,7 +158,7 @@ const navClientLinks = [
 	{
 		text: 'Transaction History',
 		icon: <TransactionHistoryIcon />,
-		pageUrl: '/client/transaction-history',
+		pageUrl: '/talent/reports/transaction-history',
 	},
 ];
 
