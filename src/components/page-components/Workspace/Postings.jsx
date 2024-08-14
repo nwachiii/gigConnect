@@ -36,7 +36,7 @@ export const JobPostings = () => {
 				<Text mb={2} color='#7D7D7D' fontSize={'14px'} fontWeight={'400'}>
 					Post a job to the marketplace <br /> and let talents come to you.
 				</Text>
-				<GCButton onClick={() => router.push('/jobs/post-a-job')} color='#4C5361' fontSize='16px' fontWeight='400' bg='#F6F7F7' w='144px' h='48px' leftIcon={<PlusIconDark />}>
+				<GCButton onClick={() => router.push('/client/jobs/create')} color='#4C5361' fontSize='16px' fontWeight='400' bg='#F6F7F7' w='144px' h='48px' leftIcon={<PlusIconDark />}>
 					Post a Job
 				</GCButton>
 			</VStack>

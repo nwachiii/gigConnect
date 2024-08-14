@@ -40,7 +40,7 @@ export const SignIn = () => {
 
 	if (mutation?.isSuccess) {
 		console.log(mutation?.data?.data?.accessToken);
-		router.push('/workspace');
+		router.push('/client/workspace');
 	}
 
 	const togglePwrdView = () => {
@@ -64,7 +64,7 @@ export const SignIn = () => {
 					<Formik
 						initialValues={{email: '', password: ''}}
 						onSubmit={(values, actions) => {
-							console.log('Formik actions',actions);
+							console.log('Formik actions', actions);
 							mutation.mutate({...values});
 						}}
 						validationSchema={SignInSchema}>
@@ -114,7 +114,7 @@ export const SignIn = () => {
 											Sign in with Google
 										</GCButton>
 										<Text textAlign={'center'} color='#888A8F' fontSize={'14px'} fontWeight={'400'}>
-											{`Don’t have an Account?`}
+											{`Don’t have an Account? `}
 											<Link href='/auth/create-account/select-type' style={{fontWeight: '500', color: '#0D0D0D'}}>
 												Create an Account
 											</Link>

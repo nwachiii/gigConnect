@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import '../styles/globals.css';
-import {Providers} from './providers';
-import {useRouter} from 'next/navigation';
-import React, {useState} from 'react';
+import { Providers } from './providers';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import NProgress from 'nprogress';
-import {Progress} from '@chakra-ui/react';
-import {PAGE_URLS_EXCLUDED_FROM_PROGRESS_LOADER} from '../../constants/routes';
+import { Progress } from '@chakra-ui/react';
+import { PAGE_URLS_EXCLUDED_FROM_PROGRESS_LOADER } from '../../constants/routes';
 
 const metadata = {
 	title: 'Gig Connect App',
@@ -16,12 +16,6 @@ const metadata = {
 NProgress.configure({showSpinner: true, trickleRate: 0.02, trickleSpeed: 800, easing: 'ease', speed: 500});
 
 export default function RootLayout({children}) {
-	// const getPath = usePathname();
-	// const [isPageNavigated, setIsPageNavigated] = useState(true);
-
-	// useEffect(() => {
-	// 	getActivePage('auth', getPath) ? setIsPageNavigated(false) : setIsPageNavigated(true);
-	// }, []);
 	const router = useRouter();
 	const [pageLoader, setPageLoader] = useState(false);
 

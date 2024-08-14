@@ -9,6 +9,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +28,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    font-family: 'Inter', sans-serif;
-}
-
-html, body {
-  font-family: 'Inter', sans-serif !important;
+      font-family: 'Inter', sans-serif;
 }
 
 @layer utilities {

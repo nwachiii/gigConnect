@@ -1,57 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import {Footer} from '@/components/generic-components/Footer';
-// import Link from 'next/link';
-import {CheckboxBase} from '@/components/generic-components/CheckboxBase';
 import {HeaderEmpty} from '@/components/generic-components/Headers';
 import {GCButton} from '@/ui-lib/ui-lib-components/Button';
-import React from 'react';
-import {Box, Flex, Grid, HStack, Text, Image, Button, Heading, Link, VStack, useRadio, useRadioGroup, Stack} from '@chakra-ui/react';
-
-const SelectionCard = ({title, description, iconSrc, ...props}) => {
-	const {getInputProps, getCheckboxProps} = useRadio(props);
-
-	const input = getInputProps();
-	const checkbox = getCheckboxProps();
-
-	return (
-		<Box as='label'>
-			<input {...input} />
-			<VStack {...checkbox} borderWidth='1px' borderRadius='16px' p={6} shadow='md' _checked={{bg: '#053AF9', color: '#FFFFFF', transition: '200ms all ease-in-out'}} cursor='pointer' spacing={4} alignItems='center'>
-				<Image {...checkbox} boxSize='58px' src={iconSrc} alt={title} _checked={{filter: 'invert(50%)'}} />
-				<VStack spacing={2} alignItems='center'>
-					<Heading size='md' color='currentcolor'>
-						{title}
-					</Heading>
-					<Text fontSize='sm' textAlign='center'>
-						{description}
-					</Text>
-				</VStack>
-				<Box borderWidth='1px' width='full' />
-				<Text fontWeight='500'>Select</Text>
-			</VStack>
-		</Box>
-	);
-};
-
-// Component to manage the radio group state
-const SelectionGroup = ({options, setRole}) => {
-	const {getRootProps, getRadioProps} = useRadioGroup({
-		name: 'accountType',
-		defaultValue: options[0].value,
-		onChange: (e) => setRole(e),
-	});
-
-	const group = getRootProps();
-
-	return (
-		<Grid {...group} templateColumns='repeat(2, 1fr)' gap={'47px'}>
-			{options.map((option) => (
-				<SelectionCard key={option.value} {...getRadioProps({value: option.value})} {...option} />
-			))}
-		</Grid>
-	);
-};
+import {Box, Flex, Grid, Text, Image, Heading, Link, VStack, useRadio, useRadioGroup, Stack} from '@chakra-ui/react';
 
 export const SelectAccountType = ({handleScreen, setRole}) => {
 	const options = [
@@ -82,10 +34,10 @@ export const SelectAccountType = ({handleScreen, setRole}) => {
 							Select account type to proceed
 						</Text>
 					</VStack>
-					<Stack w='647px' px='70px' h='436px' borderRadius={'16px'} border='1px solid #EDEEEF' justify={'center'} align='center' spacing='27px'>
+					<Stack maxW={{base: 'fit-content', md: '647px'}} px={{base: '15px', md: '70px'}} h={{base: 'auto', md: '436px'}} borderRadius={'16px'} border='1px solid #EDEEEF' justify={'center'} align='center' py={{base: '20px'}} spacing={{base: '10px', md: '27px'}}>
 						<SelectionGroup options={options} setRole={setRole} />
 
-						<GCButton onClick={() => handleScreen('showCreateAccountForm')} w='371px' h='42px' bg='#0D0D0D' borderRadius='10px' color='#FFF' fontSize='14px' fontWeight='500' mx='auto'>
+						<GCButton onClick={() => handleScreen('showCreateAccountForm')} w={{base: '80%', md: '371px'}} h='42px' bg='#0D0D0D' borderRadius='10px' color='#FFF' fontSize='14px' fontWeight='500' mx='auto' my={{base: 2, md: ''}}>
 							Next
 						</GCButton>
 
@@ -99,6 +51,54 @@ export const SelectAccountType = ({handleScreen, setRole}) => {
 				</VStack>
 			</Flex>
 			<Footer />
+		</Box>
+	);
+};
+
+// Component to manage the radio group state
+const SelectionGroup = ({options, setRole}) => {
+	const handleChange = (e) => {
+		const val = e.toString();
+		setRole(val);
+	};
+
+	const {getRootProps, getRadioProps} = useRadioGroup({
+		name: 'accountType',
+		defaultValue: options?.[0]?.value,
+		onChange: handleChange,
+	});
+
+	return (
+		<Grid templateColumns={{base: '1fr', md: 'repeat(2, 1fr)'}} gap={{base: '20px', md: '47px'}} {...getRootProps()}>
+			{options.map((option) => (
+				<SelectionCard key={option.value} {...getRadioProps({value: option.value})} {...option} />
+			))}
+		</Grid>
+	);
+};
+
+const SelectionCard = ({title, description, iconSrc, ...props}) => {
+	const {getInputProps, getCheckboxProps, getRadioProps, getLabelProps} = useRadio(props);
+
+	const input = getInputProps({});
+	const checkbox = getRadioProps();
+
+	return (
+		<Box as='label'>
+			<input {...input} hidden />
+			<VStack borderWidth='1px' borderRadius='16px' p={6} shadow='md' _checked={{bg: '#053AF9', color: '#FFFFFF', transition: '200ms all ease-in-out'}} cursor='pointer' spacing={4} alignItems='center' {...checkbox}>
+				<Image boxSize='58px' src={iconSrc} alt={title} _checked={{filter: 'invert(50%)'}} {...getLabelProps()} />
+				<VStack spacing={2} alignItems='center'>
+					<Heading size='md' color='currentcolor'>
+						{title}
+					</Heading>
+					<Text fontSize='sm' textAlign='center'>
+						{description}
+					</Text>
+				</VStack>
+				<Box borderWidth='1px' width='full' />
+				<Text fontWeight='500'>Select</Text>
+			</VStack>
 		</Box>
 	);
 };

@@ -26,7 +26,7 @@ const AccountCreated = () => {
 	if (mutation?.isSuccess) {
 		localStorage.removeItem('GIG_CONNECT_SIGNUP_INFO');
 		console.log(mutation?.response);
-		router.push('/workspace');
+		router.push('/client/workspace');
 	}
 
 	return (

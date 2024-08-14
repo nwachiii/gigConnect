@@ -4,7 +4,7 @@ export const JobDetailsSummary = ({handleStep, step}) => {
 	return (
 		<Flex justify={'space-between'} gap={'20px'}>
 			<Stack spacing={'18px'} maxW={290}>
-				<Image src='/img/summary-tag.svg' alt='' w="86px" />
+				<Image src='/img/summary-tag.svg' alt='' w='86px' />
 				<Text w='95%' color='#202329' fontSize='32px' fontWeight='700' lineHeight='48px'>{`Job Details`}</Text>
 				<Text w='95%' color='#202329' fontSize='14px' fontWeight='400' lineHeight='20px'>{`A detailed summary of your job post before posting`}</Text>
 			</Stack>

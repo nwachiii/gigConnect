@@ -1,22 +1,22 @@
 'use client';
-import {Fragment, useState} from 'react';
-import {VStack, Heading, Text, Link, useToast, Stack, Input, FormControl, FormLabel, Flex, Spinner} from '@chakra-ui/react';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-import {HeaderEmpty} from '@/components/generic-components/Headers';
-import {Footer} from '@/components/generic-components/Footer';
-import {sharedInputStyles} from '../sign-in/page';
-import {GCButton} from '@/ui-lib/ui-lib-components/Button';
-import {GoogleBtn} from '@/assets/icons/GoogleBtn';
+import {Fragment, useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {GIG_CONNECT_SIGNUP_INFO} from '@/constants/auth-constants';
-import {capitalizeTextFormat} from '@/utils/formatText';
 import {CreateNewAccount} from '@/api/auth';
+import {sharedInputStyles} from '../sign-in/page';
+import {GoogleBtn} from '@/assets/icons/GoogleBtn';
 import {useMutation} from '@tanstack/react-query';
-import {RequestResponseAlert} from '@/ui-lib/ui-lib-components/Alert';
 import {SelectAccountType} from './select-type/page';
+import {capitalizeTextFormat} from '@/utils/formatText';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {GCButton} from '@/ui-lib/ui-lib-components/Button';
+import {Footer} from '@/components/generic-components/Footer';
+import {GIG_CONNECT_SIGNUP_INFO} from '@/constants/auth-constants';
+import {HeaderEmpty} from '@/components/generic-components/Headers';
+import {RequestResponseAlert} from '@/ui-lib/ui-lib-components/Alert';
+import {VStack, Heading, Text, Link, useToast, Stack, Input, FormControl, FormLabel, Flex, Spinner} from '@chakra-ui/react';
 
-// InputField Component
+
 export const InputField = ({id, label, type, placeholder, ...rest}) => (
 	<FormControl id={id}>
 		<FormLabel fontSize={'12px'} color='#0D0D0D' fontWeight={'500'}>
@@ -54,7 +54,7 @@ const CreateAnAccountForm = ({selectedRole, mutation}) => {
 			lastName: capitalizeTextFormat(values?.lastName),
 			userName: 'baddest_talent',
 		};
-		console.log({...formattedPayload});
+		// console.log({...formattedPayload});
 		mutation.mutate({...formattedPayload});
 		localStorage.setItem('GIG_CONNECT_SIGNUP_INFO', JSON.stringify({...formattedPayload}, null, 2));
 	};
@@ -112,10 +112,14 @@ export const CreateAnAccount = () => {
 	const router = useRouter();
 
 	const handleScreen = (arg) => {
-		// console.log(arg, role);
 		setScreen(arg);
 	};
-	const mutation = useMutation({mutationFn: (formData) => CreateNewAccount(formData)});
+	const mutation = useMutation({
+		mutationFn: (formData) => CreateNewAccount(formData),
+		onSuccess: (data, variables, context) => {
+			console.log(data?.data);
+		},
+	});
 	if (mutation.isSuccess) {
 		router.push('/auth/create-account/email-verification');
 	}
@@ -129,7 +133,7 @@ export const CreateAnAccount = () => {
 					<HeaderEmpty />
 					<VStack bg='#ffffff' align='center' w='full' spacing={4} maxW={{base: '90%', md: '460px'}} mx='auto'>
 						{mutation?.isError && <RequestResponseAlert status={'isError'} title={mutation.error.message || 'An Error occured'} />}
-						<Stack spacing={4} m={8} p={8} bg='#ffffffcc' rounded='12px' boxShadow='md' w='full' maxW={{base: '90%', md: '500px'}}>
+						<Stack spacing={4} m={8} px={8} py={4} bg='#ffffffcc' rounded='12px' boxShadow='md' w='full' maxW={{base: '90%', md: '500px'}}>
 							<Heading>
 								Create an <br /> Account
 							</Heading>
@@ -147,8 +151,8 @@ export const CreateAnAccount = () => {
 								</Link>
 							</Flex>
 						</Stack>
-						<Footer />
 					</VStack>
+					<Footer />
 				</>
 			)}
 		</Fragment>
